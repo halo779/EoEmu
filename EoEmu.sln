@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\GameServer.csproj", "{EC88284A-45D3-4606-80D1-840FEF46AD4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginServer", "LoginServer\LoginServer.csproj", "{349F15AB-78D6-4676-931A-5AC474A98BE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketSplitter", "PacketSplitter\PacketSplitter.csproj", "{2BF1784A-8AEB-46CB-B213-5900C2EEF866}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC88284A-45D3-4606-80D1-840FEF46AD4F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EC88284A-45D3-4606-80D1-840FEF46AD4F}.Debug|Any CPU.Build.0 = Debug|x86
+		{EC88284A-45D3-4606-80D1-840FEF46AD4F}.Debug|x86.ActiveCfg = Debug|x86
+		{EC88284A-45D3-4606-80D1-840FEF46AD4F}.Debug|x86.Build.0 = Debug|x86
+		{EC88284A-45D3-4606-80D1-840FEF46AD4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC88284A-45D3-4606-80D1-840FEF46AD4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC88284A-45D3-4606-80D1-840FEF46AD4F}.Release|x86.ActiveCfg = Release|x86
+		{EC88284A-45D3-4606-80D1-840FEF46AD4F}.Release|x86.Build.0 = Release|x86
+		{349F15AB-78D6-4676-931A-5AC474A98BE8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{349F15AB-78D6-4676-931A-5AC474A98BE8}.Debug|x86.ActiveCfg = Debug|x86
+		{349F15AB-78D6-4676-931A-5AC474A98BE8}.Debug|x86.Build.0 = Debug|x86
+		{349F15AB-78D6-4676-931A-5AC474A98BE8}.Release|Any CPU.ActiveCfg = Release|x86
+		{349F15AB-78D6-4676-931A-5AC474A98BE8}.Release|x86.ActiveCfg = Release|x86
+		{349F15AB-78D6-4676-931A-5AC474A98BE8}.Release|x86.Build.0 = Release|x86
+		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Debug|x86.ActiveCfg = Debug|x86
+		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Debug|x86.Build.0 = Debug|x86
+		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Release|Any CPU.ActiveCfg = Release|x86
+		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Release|x86.ActiveCfg = Release|x86
+		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

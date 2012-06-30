@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EC88284A-45D3-4606-80D1-840FEF46AD4F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GameServer</RootNamespace>
+    <AssemblyName>GameServer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="INIFileParser, Version=1.7.1.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL" />
+    <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\lua51.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface, Version=2.0.0.16708, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\LuaInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ManagedOpenSsl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ManagedOpenSsl.dll</HintPath>
+    </Reference>
+    <Reference Include="mysql.data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\mysql.data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Calculations\Attack.cs" />
+    <Compile Include="Calculations\BP.cs" />
+    <Compile Include="Calculations\Calculation.cs" />
+    <Compile Include="Calculations\CanSee.cs" />
+    <Compile Include="Calculations\Damage.cs" />
+    <Compile Include="Calculations\Direction.cs" />
+    <Compile Include="Calculations\doMonsterPlayer.cs" />
+    <Compile Include="Calculations\Exp.cs" />
+    <Compile Include="Calculations\GetDistance.cs" />
+    <Compile Include="Calculations\Item.cs" />
+    <Compile Include="Calculations\ItemTypes.cs" />
+    <Compile Include="Calculations\MagicCost.cs" />
+    <Compile Include="Calculations\NextLevelEquip.cs" />
+    <Compile Include="Calculations\PercentSuccess.cs" />
+    <Compile Include="Calculations\Quality.cs" />
+    <Compile Include="Calculations\Range.cs" />
+    <Compile Include="Calculations\SkillExp.cs" />
+    <Compile Include="Calculations\Vitals.cs" />
+    <Compile Include="Connections\AuthHandler.cs" />
+    <Compile Include="Connections\ClientSocket.cs" />
+    <Compile Include="Connections\ConnectionRequest.cs" />
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="Database\DatabaseConnection.cs" />
+    <Compile Include="Encryption\GameEncryption.cs" />
+    <Compile Include="Entities\Character.cs" />
+    <Compile Include="Entities\Monster.cs" />
+    <Compile Include="Entities\MonsterInfo.cs" />
+    <Compile Include="Entities\MonsterSpawn.cs" />
+    <Compile Include="Entities\Spawn.cs" />
+    <Compile Include="Handlers\Attack.cs" />
+    <Compile Include="Handlers\Chat.cs" />
+    <Compile Include="Handlers\DropItem.cs" />
+    <Compile Include="Handlers\EudemonTopIndicator.cs" />
+    <Compile Include="Handlers\Handler.cs" />
+    <Compile Include="Handlers\ItemBuy.cs" />
+    <Compile Include="Handlers\ItemEquip.cs" />
+    <Compile Include="Handlers\ItemSell.cs" />
+    <Compile Include="Handlers\ItemUnEquip.cs" />
+    <Compile Include="Handlers\Jump.cs" />
+    <Compile Include="Handlers\NewCharacter.cs" />
+    <Compile Include="Handlers\NpcTalk.cs" />
+    <Compile Include="Handlers\PickupItem.cs" />
+    <Compile Include="Handlers\Portal.cs" />
+    <Compile Include="Handlers\SocketGem.cs" />
+    <Compile Include="Handlers\Teleport.cs" />
+    <Compile Include="Handlers\UseItem.cs" />
+    <Compile Include="Handlers\Walk.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Connections\MasterSocket.cs" />
+    <Compile Include="Nano.cs" />
+    <Compile Include="PacketProcessor.cs" />
+    <Compile Include="Packets\Attack.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\CharacterInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Chat.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\ConquerPacket.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\DropItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Effect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Exit.cs" />
+    <Compile Include="Packets\Exp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Dialog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\General.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\ItemInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\ItemUsage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\MagicAttack.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Map.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\MiniMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\MobSpawnEffect.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\NewMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\NPCTalk.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\PacketBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\PrintPacket.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\RemoveItemDrop.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Send.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Skill.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\SpawnCharacter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\SpawnMonster.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\SpawnNPC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Status.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Team.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\TerrainNPC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\Walk.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Packets\WHSItems.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Calculations\SpellDamage.cs" />
+    <Compile Include="Structs\ActionType.cs" />
+    <Compile Include="Structs\ChatType.cs" />
+    <Compile Include="Structs\Class.cs" />
+    <Compile Include="Structs\DataLoader.cs" />
+    <Compile Include="Structs\DataType.cs" />
+    <Compile Include="Structs\DmapData.cs" />
+    <Compile Include="Structs\Item.cs" />
+    <Compile Include="Structs\ItemUsage.cs" />
+    <Compile Include="Structs\Map.cs" />
+    <Compile Include="Structs\NPC.cs" />
+    <Compile Include="Structs\ObjTypes.cs" />
+    <Compile Include="Structs\PkType.cs" />
+    <Compile Include="Structs\Portal.cs" />
+    <Compile Include="Structs\Skill.cs" />
+    <Compile Include="Structs\StatusType.cs" />
+    <Compile Include="Structs\Struct.cs" />
+    <Compile Include="Structs\Team.cs" />
+    <Compile Include="Structs\TerrainNPC.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
