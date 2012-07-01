@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs.cs" />
     <Compile Include="Connections\AuthSocket.cs" />
     <Compile Include="Connections\ClientSocket.cs" />
     <Compile Include="Connections\MasterSocket.cs" />

@@ -10,16 +10,12 @@ namespace LoginServer.Database
     /// </summary>
     public static class DatabaseConnection
     {
-        public const string USER_NAME = "root";
-        public const string PASSWORD = "";
-        public const string SERVER = "127.0.0.1";
-        public const string DATA_BASE = "conqueremu";
         public static MySqlConnection NewConnection()
         {
             MySqlConnection C = null;
             try
             {
-                C = new MySqlConnection("Server=" + SERVER + ";Database='" + DATA_BASE + "';Username='" + USER_NAME + "';Password='" + PASSWORD + "'");
+                C = new MySqlConnection("Server=" + Configs.DATABASE_SERVER_IP + ";Database='" + Configs.DATABASE_TABLE + "';Username='" + Configs.DATABASE_USER_NAME + "';Password='" + Configs.DATABASE_PASSWORD + "'");
                 C.Open();
             }
             catch (Exception e)

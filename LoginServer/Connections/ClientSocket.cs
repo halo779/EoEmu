@@ -54,7 +54,7 @@ namespace LoginServer.Connections
                 }
                 if (Data != null && Data.Length > 3)
                 {
-                    //Crypt.Decrypt(ref Data); //decryption removed but here incase there is encryption added in a later verion ... that way we are able to add an encryption key and uncomment and it works perfectly 
+                    //Crypt.Decrypt(ref Data); //decryption removed but here incase there is encryption added in a later version ... that way we are able to add an encryption key and uncomment and it works perfectly 
                     PacketProcessor.ProcessPacket(Data, this);
                 }
                 else
@@ -69,7 +69,7 @@ namespace LoginServer.Connections
         {
             lock (this.Sync)
             {
-                //Crypt.Encrypt(ref Data);//encryption removed but here incase there is encryption added in a later verion ... that way we are able to add an encryption key and uncomment and it works perfectly 
+                //Crypt.Encrypt(ref Data);//encryption removed but here incase there is encryption added in a later version ... that way we are able to add an encryption key and uncomment and it works perfectly 
                 try
                 {
                     CSocket.Send(Data, Data.Length, SocketFlags.None);

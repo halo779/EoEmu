@@ -112,7 +112,7 @@ namespace LoginServer
                     Key2[3] = (byte)(Key & 0xff);
                     if (ServerName == "ghost")
                     {
-                        if (AuthSocket.Authorize(AccountName, Key, false))//checks if the sending to the game server is successful (no error check atm so if it fails to send there will be an error)
+                        if (AuthSocket.Authorize(AccountName, Key))//checks if the sending to the game server is successful (no error check atm so if it fails to send there will be an error)
                         {
                             CSocket.Send(Packets.AuthResponse("127.0.0.1", Key1, Key2));
                         }

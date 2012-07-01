@@ -5,12 +5,12 @@ using MySql.Data.MySqlClient;
 namespace LoginServer.Database
 {
     /// <summary>
-    /// Provides connections for information retrevial from the database, which is MySQL based.
+    /// Provides connections for information retrieval from the database, which is MySQL based.
     /// </summary>
     public static class Database
     {
         /// <summary>
-        /// Tests the connection to the Databaase
+        /// Tests the connection to the Database
         /// </summary>
         /// <returns>returns true/false depending on the connection status of the database</returns>
         public static bool TestConnect()

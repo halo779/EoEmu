@@ -11,22 +11,16 @@ namespace LoginServer.Connections
     public class MasterSocket
     {
         protected Socket LoginSocket;
-        protected const int LOGIN_PORT = 9958;
-        protected const string SERVER_IP = "10.1.1.6";
-        protected const string SITE_IP = "25.86.1.1";
-        protected const int AUTH_PORT = 5817;
-        protected const int GAME_PORT = 5816;
-        protected string ServerName;
         protected static bool Continue = true;
 
         public MasterSocket(string name)
         {
             LoginSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint IPE = new IPEndPoint(new IPAddress(0), LOGIN_PORT);
+            IPEndPoint IPE = new IPEndPoint(new IPAddress(0), Configs.LOGIN_PORT);
             try
             {
                 LoginSocket.Bind(IPE);
-                Console.WriteLine("[LoginServer-Int] listening on port " + LOGIN_PORT);
+                Console.WriteLine("[LoginServer-Int] listening on port " + Configs.LOGIN_PORT);
             }
             catch (Exception e)
             {
@@ -54,7 +48,7 @@ namespace LoginServer.Connections
                 }
                 if (CSocket != null)
                 {
-                    if (!CSocket.RemoteEndPoint.ToString().Contains(SITE_IP))
+                    if (!CSocket.RemoteEndPoint.ToString().Contains(Configs.SITE_IP))
                     {
                         ClientSocket CS = new ClientSocket(CSocket);
                         new Thread(CS.Run).Start();
