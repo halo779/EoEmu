@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="INIFileParser, Version=1.7.1.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL" />
+    <Reference Include="ItemtypeData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\lua51.dll</HintPath>
@@ -225,7 +226,6 @@
     <Compile Include="Structs\Team.cs" />
     <Compile Include="Structs\TerrainNPC.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

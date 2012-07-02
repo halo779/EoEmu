@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameServer.Database;
 using GameServer.Entities;
+using ItemtypeData;
 
 namespace GameServer.Structs
 {
@@ -12,6 +13,59 @@ namespace GameServer.Structs
     /// </summary>
     public partial class Struct
     {
+        public static void LoadItemType(string FileLoc)
+        {
+            if (File.Exists(FileLoc))
+            {
+                int start = System.Environment.TickCount;
+
+                ItemtypeData.Manager Items = new Manager(FileLoc);
+                foreach (var item in Items.Items.Values)
+                {
+                    ItemData NewItem = new ItemData();
+                    NewItem.ID = (int)item.ID;
+                    NewItem.Name = item.Name;
+                    NewItem.Class = (int)item.RequiredProfession;
+                    NewItem.Level = item.RequiredLevel;
+
+                    NewItem.Sex = (int)item.RequiredSex;
+                    NewItem.Str_Require = 0;//@TODO:Remove
+                    NewItem.Dex_Require = item.RequiredDexterity;
+                    NewItem.Vit_Require = 0;//@TODO:Remove
+                    NewItem.Spi_Require = 0;//@TODO:Remove
+                    NewItem.Tradeable = item.Monopoly;
+                    NewItem.Cost = (int)item.GoldPrice;
+                    NewItem.MaxDamage = item.PhysicalAttackMin;
+                    NewItem.MinDamage = item.PhysicalAttackMax;
+                    NewItem.DefenseAdd = item.PhysicalDefence;
+                    NewItem.DexAdd = 0;
+                    NewItem.DodgeAdd = item.Dodge;
+                    NewItem.HPAdd = 0;
+                    NewItem.MPAdd = 0;
+                    NewItem.Dura = (int)item.Amount;
+                    NewItem.MaxDura = (int)item.AmountLimit;
+                    NewItem.MagicAttack = item.MagicalAttackMin;
+                    NewItem.MDefenseAdd = item.MagicalDefence;
+                    NewItem.Range = item.AttackRange;
+                    NewItem.Frequency = item.Hitrate;
+                    NewItem.CPCost = (int)item.EPCost;
+
+                    if (!Nano.Items.ContainsKey(NewItem.ID))
+                        Nano.Items.Add(NewItem.ID, NewItem);
+                }
+                Console.WriteLine("[GameServer] Loaded: " + Nano.Items.Count + " items in " + (System.Environment.TickCount - start) + "MS");
+            }
+            else
+            {
+                Console.WriteLine("[GameServer-ERROR] Itemtype.dat not found!, items will not work.");
+            }
+
+
+        }
+        /// <summary>
+        /// OLD LOADING METHOD
+        /// </summary>
+        /// <param name="FileLoc"></param>
         public static void LoadItems(string FileLoc)
         {
             if (File.Exists(FileLoc))

@@ -19,7 +19,7 @@ namespace LoginServer
             Console.WriteLine("COEMUv2 was created by andyd123");
             Console.WriteLine("The CoEMUv2 source can be found at: http://tinyurl.com/coemuv2");
             Console.WriteLine("\nThis is made to work with the game server created by hio77 not any eo binary!");
-;
+
             Console.WriteLine("[LoginServer] Starting MasterSocket Thread.");
             Connections.MasterSocket LoginSocket = new Connections.MasterSocket("LoginServer");
             new Thread(LoginSocket.AcceptNewConnections).Start();
@@ -44,9 +44,11 @@ namespace LoginServer
             Console.WriteLine("[LoginServer] Press enter to kill the server.");
             Console.Read();
             LoginSocket.Close();
+            
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("[LoginServer-End] Mastersocket closed, thread killed.");
             Console.WriteLine("[LoginServer-End] Server Shutdown");
+
         }
     }
 }

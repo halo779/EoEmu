@@ -54,7 +54,7 @@ namespace GameServer
         {
             GenerateKey();
             int startload = System.Environment.TickCount;
-            Struct.LoadItems("items.txt");
+            Struct.LoadItemType("itemtype.dat");
             Struct.LoadItemPluses("itemadd.ini");
             Struct.LoadMaps();
             Struct.LoadMonsters();
@@ -64,9 +64,7 @@ namespace GameServer
             Struct.LoadTNpcs();
             Console.WriteLine("[GameServer] Loaded all config files and data in " + (System.Environment.TickCount - startload) + "MS");
             //Database.Database.PurgeGuilds();
-            //Please DO NOT REMOVE THIS LINE!
-            //Console.WriteLine("This program is a branch of CoEmu.Nano, property of the CoEmu Foundation.");
-            //
+
             Console.WriteLine("[GameServer-Init] Creating Game Thread..");
             Nano.GameServerNano = new MasterSocket("GameServer");
             new Thread(Nano.GameServerNano.AcceptNewConnections).Start();
