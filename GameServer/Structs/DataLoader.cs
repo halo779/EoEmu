@@ -29,26 +29,42 @@ namespace GameServer.Structs
                     NewItem.Level = item.RequiredLevel;
 
                     NewItem.Sex = (int)item.RequiredSex;
-                    NewItem.Str_Require = 0;//@TODO:Remove
+
+                    NewItem.force_Require = item.RequiredForce;
                     NewItem.Dex_Require = item.RequiredDexterity;
-                    NewItem.Vit_Require = 0;//@TODO:Remove
-                    NewItem.Spi_Require = 0;//@TODO:Remove
+                    NewItem.Health_Require = item.RequiredHealth;
+                    NewItem.soul_Require = item.RequiredSoul;
+
+                    NewItem.soul_value = (int)item.Soul;
+
                     NewItem.Tradeable = item.Monopoly;
                     NewItem.Cost = (int)item.GoldPrice;
+
+                    NewItem.ident = Convert.ToByte(item.Identified);
+                    NewItem.gem1 = item.GemOne;
+                    NewItem.gem2 = item.GemTwo;
+                    NewItem.magic1 = item.MagicOne;
+                    NewItem.magic2 = item.MagicTwo;
+                    NewItem.magic3 = item.MagicThree;
+
                     NewItem.MaxDamage = item.PhysicalAttackMin;
                     NewItem.MinDamage = item.PhysicalAttackMax;
                     NewItem.DefenseAdd = item.PhysicalDefence;
-                    NewItem.DexAdd = 0;
+
                     NewItem.DodgeAdd = item.Dodge;
                     NewItem.HPAdd = 0;
                     NewItem.MPAdd = 0;
                     NewItem.Dura = (int)item.Amount;
                     NewItem.MaxDura = (int)item.AmountLimit;
-                    NewItem.MagicAttack = item.MagicalAttackMin;
+                    NewItem.MinMagicAttack = item.MagicalAttackMin;
+                    NewItem.MaxMagicAttack = item.MagicalAttackMax;
+
                     NewItem.MDefenseAdd = item.MagicalDefence;
                     NewItem.Range = item.AttackRange;
                     NewItem.Frequency = item.Hitrate;
-                    NewItem.CPCost = (int)item.EPCost;
+                    NewItem.AttackRate = item.AttackSpeed;
+
+                    NewItem.EPCost = (int)item.EPCost;
 
                     if (!Nano.Items.ContainsKey(NewItem.ID))
                         Nano.Items.Add(NewItem.ID, NewItem);
@@ -90,29 +106,29 @@ namespace GameServer.Structs
                                 NewItem.ID = Convert.ToInt32(data[0]);
                                 NewItem.Name = data[1].Trim();
                                 NewItem.Class = Convert.ToInt32(data[2]);
-                                NewItem.Prof = Convert.ToInt32(data[3]);
+                                //NewItem.Prof = Convert.ToInt32(data[3]);
                                 NewItem.Level = Convert.ToInt32(data[4]);
                                 NewItem.Sex = Convert.ToInt32(data[5]);
-                                NewItem.Str_Require = Convert.ToInt32(data[6]);
+                                //NewItem.Str_Require = Convert.ToInt32(data[6]);
                                 NewItem.Dex_Require = Convert.ToInt32(data[7]);
-                                NewItem.Vit_Require = Convert.ToInt32(data[8]);
-                                NewItem.Spi_Require = Convert.ToInt32(data[9]);
+                                NewItem.Health_Require = Convert.ToInt32(data[8]);
+                                //NewItem.Spi_Require = Convert.ToInt32(data[9]);
                                 NewItem.Tradeable = Convert.ToInt32(data[10]);
                                 NewItem.Cost = Convert.ToInt32(data[12]);
                                 NewItem.MaxDamage = Convert.ToInt32(data[14]);
                                 NewItem.MinDamage = Convert.ToInt32(data[15]);
                                 NewItem.DefenseAdd = Convert.ToInt32(data[16]);
-                                NewItem.DexAdd = Convert.ToInt32(data[17]);
+                                //NewItem.DexAdd = Convert.ToInt32(data[17]);
                                 NewItem.DodgeAdd = Convert.ToInt32(data[18]);
                                 NewItem.HPAdd = Convert.ToInt32(data[19]);
                                 NewItem.MPAdd = Convert.ToInt32(data[20]);
                                 NewItem.Dura = Convert.ToInt32(data[21]);
                                 NewItem.MaxDura = Convert.ToInt32(data[22]);
-                                NewItem.MagicAttack = Convert.ToInt32(data[29]);
+                                NewItem.MinMagicAttack = Convert.ToInt32(data[29]);
                                 NewItem.MDefenseAdd = Convert.ToInt32(data[30]);
                                 NewItem.Range = Convert.ToInt32(data[31]);
                                 NewItem.Frequency = Convert.ToInt32(data[32]);
-                                NewItem.CPCost = Convert.ToInt32(data[36]);
+                                NewItem.EPCost = Convert.ToInt32(data[36]);
                                 if (!Nano.Items.ContainsKey(NewItem.ID))
                                     Nano.Items.Add(NewItem.ID, NewItem);
                             }
@@ -126,6 +142,14 @@ namespace GameServer.Structs
                 Console.WriteLine("[GameServer] items.txt NOT FOUND! ITEMS WILL NOT WORK!");
             }
         }
+
+        public static void LoadItemPlusesDatabase()
+        {
+            int start = System.Environment.TickCount;
+            Database.Database.LoadItemPluses();
+            Console.WriteLine("[GameServer] Loaded: " + Nano.ItemPluses.Count + " item plus data in " + (System.Environment.TickCount - start) + "MS");
+        }
+
         public static void LoadItemPluses(string FileLoc)
         {
             if (File.Exists(FileLoc))
@@ -155,9 +179,9 @@ namespace GameServer.Structs
                                     NewItem.MinDmg = Convert.ToInt32(data[3]);
                                     NewItem.MaxDmg = Convert.ToInt32(data[4]);
                                     NewItem.DefenseAdd = Convert.ToInt32(data[5]);
-                                    NewItem.MDamageAdd = Convert.ToInt32(data[6]);
+                                    //NewItem.MDamageAdd = Convert.ToInt32(data[6]);
                                     NewItem.MDefAdd = Convert.ToInt32(data[7]);
-                                    NewItem.AccuracyAdd = Convert.ToInt32(data[8]);
+                                    //NewItem.AccuracyAdd = Convert.ToInt32(data[8]);
                                     NewItem.DodgeAdd = Convert.ToInt32(data[9]);
                                 }
                                 if (!Nano.ItemPluses.ContainsKey(NewItem.ID))

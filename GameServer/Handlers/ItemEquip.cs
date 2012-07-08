@@ -35,7 +35,7 @@ namespace GameServer.Handlers
                     //TODO: Position checks, class requirements
                     if (CSocket.Client.Equipment.ContainsKey(Location))
                     {
-                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Could not equip the item into that slot.", Struct.ChatType.Top));
+                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Could not equip the item into that slot.", Struct.ChatType.System));
                         return;
                     }
                     CSocket.Client.Inventory.Remove(UID);
@@ -158,14 +158,14 @@ namespace GameServer.Handlers
                             }
                         default:
                             {
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid bless: " + Item.Bless, Struct.ChatType.Top));
+                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid bless: " + Item.Bless, Struct.ChatType.System));
                                 break;
                             }
                     }
                     if (Nano.Items.ContainsKey(Item.ItemID))
                     {
                         Struct.ItemData ItemD = Nano.Items[Item.ItemID];
-                        CSocket.Client.BaseMagicAttack += ItemD.MagicAttack;
+                        CSocket.Client.BaseMagicAttack += ItemD.MinMagicAttack;
                         if (Item.Position == 5)
                         {
                             CSocket.Client.BaseMaxAttack += (int)Math.Floor(.5 * ItemD.MaxDamage);
@@ -228,8 +228,8 @@ namespace GameServer.Handlers
                                 CSocket.Client.BaseMaxAttack += iPlus.MaxDmg;
                                 CSocket.Client.BaseMinAttack += iPlus.MinDmg;
                                 CSocket.Client.Defense += iPlus.DefenseAdd;
-                                CSocket.Client.BaseMagicAttack += iPlus.MDamageAdd;
-                                CSocket.Client.BonusMagicAttack += iPlus.MDamageAdd;
+                               // CSocket.Client.BaseMagicAttack += iPlus.MDamageAdd;//@TODO: recalc this
+                               // CSocket.Client.BonusMagicAttack += iPlus.MDamageAdd;
                                 CSocket.Client.BonusMagicDefense += iPlus.MDefAdd;
                                 CSocket.Client.MaxHP += iPlus.HPAdd;
                                 CSocket.Client.Dodge += iPlus.DodgeAdd;
@@ -243,7 +243,7 @@ namespace GameServer.Handlers
                 }
                 else if (TrueLoc > 0 && TrueLoc != Location)
                 {
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Incorrect equip location.", Struct.ChatType.Top));
+                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Incorrect equip location.", Struct.ChatType.System));
                 }
                 else if (TrueLoc == -1)
                 {
@@ -252,7 +252,7 @@ namespace GameServer.Handlers
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item doesn't exist.", Struct.ChatType.Top));
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item doesn't exist.", Struct.ChatType.System));
             }
         }
         public static int DeterminePosition(int ItemID, int EquipLocation)

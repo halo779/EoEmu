@@ -218,6 +218,7 @@
     <Compile Include="Structs\Map.cs" />
     <Compile Include="Structs\NPC.cs" />
     <Compile Include="Structs\ObjTypes.cs" />
+    <Compile Include="Structs\PacketTypes.cs" />
     <Compile Include="Structs\PkType.cs" />
     <Compile Include="Structs\Portal.cs" />
     <Compile Include="Structs\Skill.cs" />

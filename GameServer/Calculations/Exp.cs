@@ -110,11 +110,11 @@ namespace GameServer.Calculations
                         {
                             ExpToGive *= Nano.EXP_MULTIPLER;
                             if (noobexp && ((int)Member.Value.Client.Class >= 133 && (int)Member.Value.Client.Class <= 135))
-                                Member.Value.Send(ConquerPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "You gained " + ExpToGive + " exp from team killings, with additional exp for low level team-mates, and for being a water tao.", Struct.ChatType.Top));
+                                Member.Value.Send(ConquerPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "You gained " + ExpToGive + " exp from team killings, with additional exp for low level team-mates, and for being a water tao.", Struct.ChatType.System));
                             else if (!noobexp && ((int)Member.Value.Client.Class >= 133 && (int)Member.Value.Client.Class <= 135))
-                                Member.Value.Send(ConquerPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "You gained " + ExpToGive + " exp from team killings, with additional exp for low level team-mate.", Struct.ChatType.Top));
+                                Member.Value.Send(ConquerPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "You gained " + ExpToGive + " exp from team killings, with additional exp for low level team-mate.", Struct.ChatType.System));
                             else
-                                Member.Value.Send(ConquerPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "You gained " + ExpToGive + " exp from team killings.", Struct.ChatType.Top));
+                                Member.Value.Send(ConquerPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "You gained " + ExpToGive + " exp from team killings.", Struct.ChatType.System));
                             Member.Value.Client.Exp += (ulong)ExpToGive;
                             if (NeededExp(Member.Value.Client.Level) <= Member.Value.Client.Exp)
                             {
@@ -180,8 +180,8 @@ namespace GameServer.Calculations
             CSocket.Client.CurrentHP = CSocket.Client.MaxHP;
             CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
             ConquerPacket.ToLocal(ConquerPacket.Effect(CSocket.Client.ID, "LevelUp"), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
-            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Congratulations! You have attained level " + CSocket.Client.Level + ". Keep going!", Struct.ChatType.Top));
-            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You have gained three attribute points! Use them wiesely!", Struct.ChatType.Top));
+            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Congratulations! You have attained level " + CSocket.Client.Level + ". Keep going!", Struct.ChatType.System));
+            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You have gained three attribute points! Use them wiesely!", Struct.ChatType.System));
             if (CSocket.Client.Level == 135)
                 ConquerPacket.ToServer(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "CONGRATULATIONS! " + CSocket.Client.Name + " has just achieved level 135! Great job!", Struct.ChatType.NewBroadcast), 0);
             if (CSocket.Client.Level < 135)

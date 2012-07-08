@@ -43,7 +43,7 @@ namespace GameServer.Calculations
                                     {
                                         Skill.Level++;
                                         Skill.Exp -= (uint)ReqExp;
-                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Congratulations! One of your skill's level just increased!", Struct.ChatType.Top));
+                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Congratulations! One of your skill's level just increased!", Struct.ChatType.System));
                                         CSocket.Send(ConquerPacket.Skill(Skill.ID, Skill.Level, Skill.Exp));
                                         Database.Database.SetSkill(Skill.ID, Skill.Level, Skill.Exp, CSocket.Client.ID, true);
                                     }

@@ -27,7 +27,7 @@ namespace GameServer.Handlers
             int ID = PacketProcessor.ReadLong(Data, 8);
             if (CSocket.Client.Inventory.Count == 40)
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.Top));
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.System));
                 return;
             }
             string Shop = System.IO.File.ReadAllText("Shop.dat");
@@ -37,11 +37,11 @@ namespace GameServer.Handlers
                 if (Nano.Items.ContainsKey(ID))
                 {
                     Struct.ItemData NewItem = Nano.Items[ID];
-                    if (NewItem.CPCost > 0)
+                    if (NewItem.EPCost > 0)
                     {
-                        if (CSocket.Client.EPs >= NewItem.CPCost)
+                        if (CSocket.Client.EPs >= NewItem.EPCost)
                         {
-                            Handler.CPs(NewItem.CPCost * -1, CSocket);
+                            Handler.CPs(NewItem.EPCost * -1, CSocket);
                             Item.ItemID = NewItem.ID;
                             Item.UID = Nano.Rand.Next(1, 9999999);
                             bool created = Database.Database.NewItem(Item, CSocket);
@@ -55,7 +55,7 @@ namespace GameServer.Handlers
                         }
                         else
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have enough EPs.", Struct.ChatType.Top));
+                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have enough EPs.", Struct.ChatType.System));
                         }
                     }
                     else if (NewItem.Cost > 0)
@@ -76,7 +76,7 @@ namespace GameServer.Handlers
                         }
                         else
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have enough money.", Struct.ChatType.Top));
+                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have enough money.", Struct.ChatType.System));
                         }
                     }
                     else
@@ -96,7 +96,7 @@ namespace GameServer.Handlers
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item does not exist in Shop.dat", Struct.ChatType.Top));
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item does not exist in Shop.dat", Struct.ChatType.System));
             }
         }
     }

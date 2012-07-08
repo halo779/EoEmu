@@ -508,6 +508,42 @@ namespace GameServer.Database
             DR.Close();
             Cmd.Dispose();
         }
+        public static void LoadItemPluses()
+        {
+            MySqlCommand CMD = new MySqlCommand("SELECT * FROM `itemplus`", DatabaseConnection.NewConnection());
+            MySqlDataReader DR = CMD.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (DR.Read())
+            {
+                Struct.ItemPlus NewItem = new Struct.ItemPlus();
+                if (DR["typeid"] != "0")
+                {
+                    NewItem.ID = Convert.ToInt32(DR["typeid"]);
+                    NewItem.Plus = Convert.ToInt32(DR["plus"]);
+                    NewItem.HPAdd = Convert.ToInt32(DR["life"]);
+                    NewItem.MinDmg = Convert.ToInt32(DR["attack_min"]);
+                    NewItem.MaxDmg = Convert.ToInt32(DR["attack_max"]);
+                    NewItem.DefenseAdd = Convert.ToInt32(DR["defense"]);
+                    NewItem.MinMDamageAdd = Convert.ToInt32(DR["mgcatk_min"]);
+                    NewItem.MaxMDamageAdd = Convert.ToInt32(DR["mgcatk_max"]);
+                    NewItem.MDefAdd = Convert.ToInt32(DR["magic_def"]);
+                    NewItem.DexAdd = Convert.ToInt32(DR["dexterity"]);
+                    NewItem.DodgeAdd = Convert.ToInt32(DR["dodge"]);
+                }
+                if (!Nano.ItemPluses.ContainsKey(NewItem.ID))
+                {
+                    Struct.ItemPlusDB DB = new Struct.ItemPlusDB();
+                    DB.DB.Add(NewItem.Plus, NewItem);
+                    Nano.ItemPluses.Add(NewItem.ID, DB);
+                }
+                else
+                {
+                    Struct.ItemPlusDB DB = Nano.ItemPluses[NewItem.ID];
+                    if (!DB.DB.ContainsKey(NewItem.Plus))
+                        DB.DB.Add(NewItem.Plus, NewItem);
+                }
+            }
+        }
         public static void LoadPortals()
         {
             MySqlCommand Cmd = new MySqlCommand("SELECT * FROM `portals`", DatabaseConnection.NewConnection());

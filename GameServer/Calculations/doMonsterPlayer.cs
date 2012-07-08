@@ -203,7 +203,7 @@ namespace GameServer.Calculations
         {
             if (AttackedTNpc.UID >= 6700)
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] GuildWar is not ready yet.", Struct.ChatType.Top));
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] GuildWar is not ready yet.", Struct.ChatType.System));
             }
             else
             {

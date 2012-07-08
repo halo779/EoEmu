@@ -18,43 +18,54 @@ namespace GameServer.Structs
             public string Name;
 
             public int Class;
-            public int Prof;
             public int Level;
             public int Sex;
-            public int Str_Require;
-            public int Dex_Require;
-            public int Vit_Require;
-            public int Spi_Require;
 
-            public int Tradeable;
-            // public int Unknown1;
-            public int Cost;
-            public int CPCost;
-            // public int Unknown2;
+            public int force_Require;
+            public int Dex_Require;
+            public int Health_Require;
+            public int soul_Require;
+
+            public int Tradeable;//monopoly
+
+            public int weight;
+
+            public int Cost;//price 
+            public int EPCost;
+
+            public int soul_value;
+
+            public byte ident;//@TODO: look into use of this, is it useless.
+            public byte gem1;//@TODO: look into use of this, is it useless.
+            public byte gem2;//@TODO: look into use of this, is it useless.
+            public byte magic1;//@TODO: look into use of this, is it useless.
+            public byte magic2;//@TODO: look into use of this, is it useless.
+            public byte magic3;//@TODO: look into use of this, is it useless.
+
+
             public int MaxDamage;
             public int MinDamage;
             public int DefenseAdd;
-            public int DexAdd;
+
             public int DodgeAdd;
             public int HPAdd;
             public int MPAdd;
             public int Dura;
             public int MaxDura;
-            /* public int Unknown3;
-             public int Unknwon4;
-             public int Unknown5;
-             public int Unknown6;
-             public int Unknown7;
-             public int Unknown8;*/
-            public int MagicAttack;
+
+            public int MinMagicAttack;
+            public int MaxMagicAttack;
             public int MDefenseAdd;
             public int Range;
-            public int Frequency;
-            /* public int Unknown9;
-             public int Unknown10;
-             public int Unknown11;
-             public int Unknown12;*/
-            //public string ItemType;
+            public int AttackRate; //speed off attacks
+            public int Frequency;//atk hitrate
+
+            //@TODO: Move these to their own class
+            public int MonsterType;// if its a eudemon it has a type
+            public int AbleMask;//@TODO: remind self of use of this.
+            public int ExpType;
+
+            public int Target;//@TODO: look into this too
         }
         public class ItemInfo
         {
@@ -78,9 +89,10 @@ namespace GameServer.Structs
             public int MinDmg;
             public int MaxDmg;
             public int DefenseAdd;
-            public int MDamageAdd;
+            public int MinMDamageAdd;
+            public int MaxMDamageAdd;
+            public int DexAdd;
             public int MDefAdd;
-            public int AccuracyAdd;
             public int DodgeAdd;
         }
         public class ItemPlusDB

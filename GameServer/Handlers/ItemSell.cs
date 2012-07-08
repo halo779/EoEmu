@@ -35,7 +35,7 @@ namespace GameServer.Handlers
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have that item..", Struct.ChatType.Top));
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have that item..", Struct.ChatType.System));
             }
         }
     }

@@ -111,6 +111,9 @@ namespace GameServer
         {
             try
             {
+                #region Packet Splitter
+                //@TODO: move packetsplitting to a faster function, possibly async for faster packet processing (consider thread counts of doing so however.. also need to remove the creation of a new thread for each client, upon a lot of load it wouldn't work out well)
+                
                 byte[] Split1 = null;
                 byte[] Split2 = null;
                 byte[] Split3 = null;
@@ -160,6 +163,7 @@ namespace GameServer
                         }
                     }
                 }
+                #endregion
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("[PacketLog] New Packet Received, Type: " + Type);
                 Console.ResetColor();
@@ -179,6 +183,7 @@ namespace GameServer
                             Keys = (Keys << 8) | data[5];
                             Keys = (Keys << 8) | data[4];
                             Console.WriteLine("[GameServer] Confirming login with LoginServer");
+                            
                             if (Nano.AuthenticatedLogins.ContainsKey(Keys))
                             {
                                 CSocket.AccountName = Nano.AuthenticatedLogins[Keys].Account;
@@ -277,10 +282,11 @@ namespace GameServer
                     case 1009:
                         {
                             int Subtype = data[12];
-                            //TODO: Prevent this packet from being used as a ghost.
+                            
+
                             if (CSocket.Client.Dead && Subtype != 27)
                             {
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You are dead.", Struct.ChatType.Top));
+                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You are dead.", Struct.ChatType.System));
                                 break;
                             }
                             if (CSocket.Client.Attack != null)
@@ -480,7 +486,7 @@ namespace GameServer
                                         CSocket.Client.Save = new System.Timers.Timer();
                                         CSocket.Client.Save.Elapsed += delegate {
                                             Database.Database.SaveCharacter(CSocket.Client);
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Saved " + CSocket.Client.Name, Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Saved " + CSocket.Client.Name, Struct.ChatType.System));
                                         };
                                         CSocket.Client.Save.Interval = 200000;
                                         CSocket.Client.Save.Start();
@@ -576,7 +582,7 @@ namespace GameServer
                                         }
                                         else
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are already in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are already in a team!", Struct.ChatType.System));
                                         }
                                         break;
                                     }
@@ -584,7 +590,7 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team != null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are already in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are already in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         int Leader = ReadLong(data, 8);
@@ -600,26 +606,26 @@ namespace GameServer
                                                         if (TeamLeader.Client.Team.Members.Count < 5)
                                                         {
                                                             TeamLeader.Send(ConquerPacket.Team(CSocket.Client.ID, Struct.TeamOption.JoinTeam));
-                                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Team] Request to join team sent to " + TeamLeader.Client.Name, Struct.ChatType.Top));
+                                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Team] Request to join team sent to " + TeamLeader.Client.Name, Struct.ChatType.System));
                                                         }
                                                         else
                                                         {
-                                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + TeamLeader.Client.Name + "'s team is full.", Struct.ChatType.Top));
+                                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + TeamLeader.Client.Name + "'s team is full.", Struct.ChatType.System));
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + TeamLeader.Client.Name + "'s team forbids new members.", Struct.ChatType.Top));
+                                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + TeamLeader.Client.Name + "'s team forbids new members.", Struct.ChatType.System));
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + TeamLeader.Client.Name + " is not the team leader.", Struct.ChatType.Top));
+                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + TeamLeader.Client.Name + " is not the team leader.", Struct.ChatType.System));
                                                 }
                                             }
                                             else
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + TeamLeader.Client.Name + " has not created a team.", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + TeamLeader.Client.Name + " has not created a team.", Struct.ChatType.System));
                                             }
                                         }
                                         break;
@@ -633,7 +639,7 @@ namespace GameServer
                                             {
                                                 if (Member.Value.Client.ID != CSocket.Client.ID)
                                                 {
-                                                    Member.Value.Send(ConquerPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "[Team] " + CSocket.Client.Name + " has just left the team!", Struct.ChatType.Top));
+                                                    Member.Value.Send(ConquerPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "[Team] " + CSocket.Client.Name + " has just left the team!", Struct.ChatType.System));
                                                     Member.Value.Send(ConquerPacket.Team(CSocket.Client.ID, Struct.TeamOption.LeaveTeam));
                                                 }
                                             }
@@ -644,7 +650,7 @@ namespace GameServer
                                         }
                                         else
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                         }
                                         break;
                                     }
@@ -652,7 +658,7 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team != null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are already in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are already in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         int Inviter = ReadLong(data, 8);
@@ -675,22 +681,22 @@ namespace GameServer
                                                     }
                                                     else
                                                     {
-                                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Inviter's team does not accept new members.", Struct.ChatType.Top));
+                                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Inviter's team does not accept new members.", Struct.ChatType.System));
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Inviter's team is full.", Struct.ChatType.Top));
+                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Inviter's team is full.", Struct.ChatType.System));
                                                 }
                                             }
                                             else
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Inviter no longer has a team.", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Inviter no longer has a team.", Struct.ChatType.System));
                                             }
                                         }
                                         else
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Inviter is no longer online.", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Inviter is no longer online.", Struct.ChatType.System));
                                         }
                                         break;
                                     }
@@ -698,14 +704,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot invite new members!", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot invite new members!", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -717,22 +723,22 @@ namespace GameServer
                                             {
                                                 if (!CSocket.Client.Team.Forbid)
                                                 {
-                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Team] Invited " + InvitedCSocket.Client.Name + " to join your team.", Struct.ChatType.Top));
+                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Team] Invited " + InvitedCSocket.Client.Name + " to join your team.", Struct.ChatType.System));
                                                     InvitedCSocket.Send(ConquerPacket.Team(CSocket.Client.ID, Struct.TeamOption.Invite));
                                                 }
                                                 else
                                                 {
-                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your team forbids new members from joining.", Struct.ChatType.Top));
+                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your team forbids new members from joining.", Struct.ChatType.System));
                                                 }
                                             }
                                             else
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target is already in a team.", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target is already in a team.", Struct.ChatType.System));
                                             }
                                         }
                                         else
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target does not exist.", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target does not exist.", Struct.ChatType.System));
                                         }
                                         break;
                                     }
@@ -740,14 +746,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot accept join requests.", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot accept join requests.", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -769,17 +775,17 @@ namespace GameServer
                                                 }
                                                 else
                                                 {
-                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your team forbids new members from joining.", Struct.ChatType.Top));
+                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your team forbids new members from joining.", Struct.ChatType.System));
                                                 }
                                             }
                                             else
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target is already in a team.", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target is already in a team.", Struct.ChatType.System));
                                             }
                                         }
                                         else
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target does not exist.", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target does not exist.", Struct.ChatType.System));
                                         }
                                         break;
                                     }
@@ -787,14 +793,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot dismiss the team.", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot dismiss the team.", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -814,14 +820,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot kick team members.", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot kick team members.", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -842,12 +848,12 @@ namespace GameServer
                                             }
                                             else
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target not in team.", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target not in team.", Struct.ChatType.System));
                                             }
                                         }
                                         else
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target does not exist.", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target does not exist.", Struct.ChatType.System));
                                         }
                                         break;
                                     }
@@ -855,14 +861,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -876,14 +882,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -897,14 +903,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -918,14 +924,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -939,14 +945,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -960,14 +966,14 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team == null)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not in a team!", Struct.ChatType.System));
                                             break;
                                         }
                                         else
                                         {
                                             if (CSocket.Client.Team.LeaderID != CSocket.Client.ID)
                                             {
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You are not the leader and cannot forbid new joins!", Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -979,7 +985,7 @@ namespace GameServer
                                     }
                                 default:
                                     {
-                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown team subtype: " + subtype, Struct.ChatType.Top));
+                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown team subtype: " + subtype, Struct.ChatType.System));
                                         break;
                                     }
                             }
@@ -1054,7 +1060,7 @@ namespace GameServer
                                     }
                                 default:
                                     {
-                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Handler-Error] Please report: Unable to handle 1002 subtype " + AType, Struct.ChatType.Top));
+                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Handler-Error] Please report: Unable to handle 1002 subtype " + AType, Struct.ChatType.System));
                                         break;
                                     }
                             }
@@ -1071,7 +1077,7 @@ namespace GameServer
                     default:
                         {
                             Console.WriteLine("[GameServer] Unknown packet type: " + Type);
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Handler-Error] Please report: Unable to handle packet type " + Type, Struct.ChatType.Top));
+                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Handler-Error] Please report: Unable to handle packet type " + Type, Struct.ChatType.System));
                             break;
                         }
                 }

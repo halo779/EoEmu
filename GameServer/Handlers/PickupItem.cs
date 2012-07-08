@@ -69,7 +69,7 @@ namespace GameServer.Handlers
                                 {
                                     CSocket.Client.Money += IG.Money;
                                     CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.Money, Struct.StatusTypes.InvMoney));
-                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You picked up " + IG.Money + " silvers!", Struct.ChatType.Top));
+                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You picked up " + IG.Money + " silvers!", Struct.ChatType.System));
                                     ConquerPacket.ToLocal(ConquerPacket.RemoveItemDrop(UID), IG.X, IG.Y, IG.Map, 0, 0);
                                     return;
                                 }
@@ -94,13 +94,13 @@ namespace GameServer.Handlers
                                     created = Database.Database.NewItem(Item, CSocket);
                                 }
                                 CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You have picked up a(n) " + iData.Name + " off the ground.", Struct.ChatType.Top));
+                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You have picked up a(n) " + iData.Name + " off the ground.", Struct.ChatType.System));
                                 if (!CSocket.Client.Inventory.ContainsKey(Item.UID))
                                     CSocket.Client.Inventory.Add(Item.UID, Item);
                             }
                             else
                             {
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] That item is not yet yours to pick up.", Struct.ChatType.Top));
+                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] That item is not yet yours to pick up.", Struct.ChatType.System));
                             }
                         }
                         else
@@ -129,7 +129,7 @@ namespace GameServer.Handlers
                             {
                                 CSocket.Client.Money += IG.Money;
                                 CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.Money, Struct.StatusTypes.InvMoney));
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You picked up " + IG.Money + " silvers!", Struct.ChatType.Top));
+                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You picked up " + IG.Money + " silvers!", Struct.ChatType.System));
                                 ConquerPacket.ToLocal(ConquerPacket.RemoveItemDrop(UID), IG.X, IG.Y, IG.Map, 0, 0);
                                 return;
                             }
@@ -155,24 +155,24 @@ namespace GameServer.Handlers
                             }
                             Database.Database.NewItem(Item, CSocket);
                             CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You have picked up a(n) " + iData.Name + " off the ground.", Struct.ChatType.Top));
+                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You have picked up a(n) " + iData.Name + " off the ground.", Struct.ChatType.System));
                             if (!CSocket.Client.Inventory.ContainsKey(Item.UID))
                                 CSocket.Client.Inventory.Add(Item.UID, Item);
                         }
                     }
                     else
                     {
-                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item is not in range!", Struct.ChatType.Top));
+                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item is not in range!", Struct.ChatType.System));
                     }
                 }
                 else
                 {
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item does not exist in Nano floor.", Struct.ChatType.Top));
+                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item does not exist in Nano floor.", Struct.ChatType.System));
                 }
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.Top));
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.System));
             }
         }
     }

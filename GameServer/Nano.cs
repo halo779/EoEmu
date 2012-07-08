@@ -55,7 +55,7 @@ namespace GameServer
             GenerateKey();
             int startload = System.Environment.TickCount;
             Struct.LoadItemType("itemtype.dat");
-            Struct.LoadItemPluses("itemadd.ini");
+            Struct.LoadItemPlusesDatabase();
             Struct.LoadMaps();
             Struct.LoadMonsters();
             Struct.LoadNpcs();

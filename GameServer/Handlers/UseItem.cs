@@ -370,7 +370,7 @@ namespace GameServer.Handlers
                     }
                 default:
                     {
-                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unable to handle item ID: " + Item.ItemID, Struct.ChatType.Top));
+                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unable to handle item ID: " + Item.ItemID, Struct.ChatType.System));
                         Delete = false;
                         break;
                     }

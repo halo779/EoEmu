@@ -26,7 +26,7 @@ namespace GameServer.Packets
             Packet.Short(0);//placeholder
             Packet.Short(CSocket.Client.BP);
             Packet.Short(0);//placeholder
-            Packet.Short(CSocket.Client.Power);//power
+            Packet.Short(CSocket.Client.Power);//power aka. force
             Packet.Short(CSocket.Client.Constitution);//Constitution
             Packet.Short(CSocket.Client.Dexterity);//Dexterity
             Packet.Short(CSocket.Client.Speed);//Speed

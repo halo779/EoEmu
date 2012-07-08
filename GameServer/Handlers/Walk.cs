@@ -80,7 +80,7 @@ namespace GameServer.Handlers
                 if (!Map.CheckLoc((ushort)(CSocket.Client.X), (ushort)(CSocket.Client.Y)))
                 {
                     CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 0, 0, CSocket.Client.X, CSocket.Client.Y, 0, Struct.DataType.CorrectCords));
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid coordinates.", Struct.ChatType.Top));
+                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid coordinates.", Struct.ChatType.System));
                     return;
                 }
             }

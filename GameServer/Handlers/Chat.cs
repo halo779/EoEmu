@@ -56,7 +56,7 @@ namespace GameServer.Handlers
                         case "heal":
                             {
                                 CSocket.Send(ConquerPacket.Status(CSocket, Struct.StatusTypes.Hp, CSocket.Client.MaxHP));
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[GameServer] Healed " + CSocket.Client.Name, Struct.ChatType.Top));
+                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[GameServer] Healed " + CSocket.Client.Name, Struct.ChatType.System));
                                 break;
                             }
                         case "dc":
@@ -66,9 +66,9 @@ namespace GameServer.Handlers
                             }
                         case "stattest":
                             {
-                                
-                                    CSocket.Send(ConquerPacket.Status(CSocket, Struct.StatusTypes.Hp, 50));
-                                
+
+                                CSocket.Send(ConquerPacket.Status(CSocket, Struct.StatusTypes.Hp, 50));
+
                                 break;
                             }
                         case "kick":
@@ -89,10 +89,10 @@ namespace GameServer.Handlers
                                             if (Player.Value.Client.Name.ToLower() == Command[1].ToLower())
                                             {
                                                 if (Player.Value.Client.isPM && !CSocket.Client.isPM)
-                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "GMs cannot kick PMs, sorry!", Struct.ChatType.Top));
+                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "GMs cannot kick PMs, sorry!", Struct.ChatType.System));
                                                 else
                                                 {
-                                                    ConquerPacket.ToServer(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", Player.Value.Client.Name + " has been kicked from the server", Struct.ChatType.Center), 0);
+                                                    ConquerPacket.ToServer(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", Player.Value.Client.Name + " has been kicked from the server", Struct.ChatType.CenterGm), 0);
                                                     Player.Value.Disconnect();
                                                     kicked = true;
                                                 }
@@ -133,7 +133,7 @@ namespace GameServer.Handlers
                                         {
                                             if (Player.Value.Client.Name.ToLower() == Command[1].ToLower())
                                             {
-                                                ConquerPacket.ToServer(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", Player.Value.Client.Name + " has been kicked & banned from the server.", Struct.ChatType.Center), 0);
+                                                ConquerPacket.ToServer(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", Player.Value.Client.Name + " has been kicked & banned from the server.", Struct.ChatType.CenterGm), 0);
                                                 Player.Value.Disconnect();
                                                 kicked = true;
                                                 break;
@@ -158,7 +158,7 @@ namespace GameServer.Handlers
                         case "save":
                             {
                                 Database.Database.SaveCharacter(CSocket.Client);
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[GameServer] Saved " + CSocket.Client.Name, Struct.ChatType.Top));
+                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[GameServer] Saved " + CSocket.Client.Name, Struct.ChatType.System));
                                 break;
                             }
                         case "reload":
@@ -228,12 +228,12 @@ namespace GameServer.Handlers
                                     if (!CSocket.Client.Invincible)
                                     {
                                         CSocket.Client.Invincible = true;
-                                        ConquerPacket.ToLocal(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", CSocket.Client.Name + " has just become even more godly..", Struct.ChatType.Center), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
+                                        ConquerPacket.ToLocal(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", CSocket.Client.Name + " has just become even more godly..", Struct.ChatType.CenterGm), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
                                     }
                                     else
                                     {
                                         CSocket.Client.Invincible = false;
-                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You are no longer flagged as invincible.", Struct.ChatType.Top));
+                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You are no longer flagged as invincible.", Struct.ChatType.System));
                                     }
                                     ConquerPacket.ToLocal(ConquerPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                                     ConquerPacket.ToLocal(ConquerPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
@@ -257,7 +257,7 @@ namespace GameServer.Handlers
                                 {
                                     int Ep = Convert.ToInt32(Command[1]);
                                     CSocket.Client.EPs += Ep;
-                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You now have " + CSocket.Client.EPs + " EPs.", Struct.ChatType.Top));
+                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You now have " + CSocket.Client.EPs + " EPs.", Struct.ChatType.System));
                                     CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.EPs, Struct.StatusTypes.InvEPoints));
                                 }
                                 break;
@@ -410,11 +410,11 @@ namespace GameServer.Handlers
                                         if (Target != null)
                                         {
                                             Handler.Teleport((int)CSocket.Client.Map, CSocket.Client.X, CSocket.Client.Y, 0, Target);
-                                            Target.Send(ConquerPacket.Chat(0, "SYSTEM", Target.Client.Name, "You have been summoned by " + CSocket.Client.Name, Struct.ChatType.Top));
+                                            Target.Send(ConquerPacket.Chat(0, "SYSTEM", Target.Client.Name, "You have been summoned by " + CSocket.Client.Name, Struct.ChatType.System));
                                         }
                                         else
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Player not found!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Player not found!", Struct.ChatType.System));
                                         }
                                     }
                                 }
@@ -451,11 +451,11 @@ namespace GameServer.Handlers
                                         if (Target != null)
                                         {
                                             Handler.Teleport((int)Target.Client.Map, Target.Client.X, Target.Client.Y, 0, CSocket);
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Teleported to " + Target.Client.Name, Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Teleported to " + Target.Client.Name, Struct.ChatType.System));
                                         }
                                         else
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Player not found!", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Player not found!", Struct.ChatType.System));
                                         }
                                     }
                                 }
@@ -473,7 +473,7 @@ namespace GameServer.Handlers
                             {
                                 if (CSocket.Client.isPM || CSocket.Client.isGM)
                                 {
-                                    ConquerPacket.ToServer(ConquerPacket.Chat(0, CSocket.Client.Name, "ALLUSERS", Message.Substring(2 + Command[0].Length), Struct.ChatType.Center), 0);
+                                    ConquerPacket.ToServer(ConquerPacket.Chat(0, CSocket.Client.Name, "ALLUSERS", Message.Substring(2 + Command[0].Length), Struct.ChatType.CenterGm), 0);
                                 }
                                 break;
                             }
@@ -506,12 +506,12 @@ namespace GameServer.Handlers
                                     CSocket.Send(ConquerPacket.ItemInfo(NewItem.UID, NewItem.ItemID, NewItem.Plus, NewItem.Soc1, NewItem.Soc2, NewItem.Dura, NewItem.MaxDura, NewItem.Position, 0, 0, 0));
 
 
-                                   // CSocket.Send(ConquerPacket.ItemInfo(NewItem.UID, NewItem.ItemID, NewItem.Plus, NewItem.Bless, NewItem.Enchant, NewItem.Soc1, NewItem.Soc2, NewItem.Dura, NewItem.MaxDura, NewItem.Position, NewItem.Color));
+                                    // CSocket.Send(ConquerPacket.ItemInfo(NewItem.UID, NewItem.ItemID, NewItem.Plus, NewItem.Bless, NewItem.Enchant, NewItem.Soc1, NewItem.Soc2, NewItem.Dura, NewItem.MaxDura, NewItem.Position, NewItem.Color));
                                     //CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Created a(n) " + Item.Name + " Plus: " + Plus + ", Bless: " + Bless + ", Enchant: " + Enchant + ", Version: " + version, Struct.ChatType.Top));
                                 }
                                 else
                                 {
-                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Error in command", Struct.ChatType.Top));
+                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Error in command", Struct.ChatType.System));
 
                                 }
 
@@ -525,7 +525,7 @@ namespace GameServer.Handlers
                                     {
                                         if (CSocket.Client.Inventory.Count == 40)
                                         {
-                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.Top));
+                                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.System));
                                             break;
                                         }
                                         foreach (KeyValuePair<int, Struct.ItemData> Items in Nano.Items)
@@ -558,17 +558,17 @@ namespace GameServer.Handlers
                                                 if (Color < 2 || Color > 9)
                                                     if (Bless != 1 && Bless != 3 && Bless != 5 && Bless != 7 && Bless != 0)
                                                     {
-                                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + Bless + " is an invalid bless amount. Accepted amounts are 0/1/3/5/7.", Struct.ChatType.Top));
+                                                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + Bless + " is an invalid bless amount. Accepted amounts are 0/1/3/5/7.", Struct.ChatType.System));
                                                         break;
                                                     }
                                                 if (Enchant > 255 || Enchant < 0)
                                                 {
-                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + Enchant + " is an invalid enchant amount. Accepted amounts are 255>x>0.", Struct.ChatType.Top));
+                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + Enchant + " is an invalid enchant amount. Accepted amounts are 255>x>0.", Struct.ChatType.System));
                                                     break;
                                                 }
                                                 if (Plus > 12 || Plus < 0)
                                                 {
-                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + Plus + " is an invalid plus amount. Accepted amounts are 12>x>0.", Struct.ChatType.Top));
+                                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] " + Plus + " is an invalid plus amount. Accepted amounts are 12>x>0.", Struct.ChatType.System));
                                                     break;
                                                 }
                                                 string ItemID = Item.ID.ToString();
@@ -1025,7 +1025,7 @@ namespace GameServer.Handlers
                                                 }
                                                 CSocket.Client.Inventory.Add(NewItem.UID, NewItem);
                                                 CSocket.Send(ConquerPacket.ItemInfo(NewItem.UID, NewItem.ItemID, NewItem.Plus, NewItem.Bless, NewItem.Enchant, NewItem.Soc1, NewItem.Soc2, NewItem.Dura, NewItem.MaxDura, NewItem.Position, NewItem.Color));
-                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Created a(n) " + Item.Name + " Plus: " + Plus + ", Bless: " + Bless + ", Enchant: " + Enchant + ", Version: " + version, Struct.ChatType.Top));
+                                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Created a(n) " + Item.Name + " Plus: " + Plus + ", Bless: " + Bless + ", Enchant: " + Enchant + ", Version: " + version, Struct.ChatType.System));
                                                 break;
                                             }
                                         }
@@ -1267,7 +1267,7 @@ namespace GameServer.Handlers
             }
             catch (Exception Except)
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Exception thrown during command parsing/message handling.", Struct.ChatType.Top));
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Exception thrown during command parsing/message handling.", Struct.ChatType.System));
                 Console.WriteLine(Except.ToString());
             }
         }

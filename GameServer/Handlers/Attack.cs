@@ -24,7 +24,7 @@ namespace GameServer.Handlers
             {
                 if (!CSocket.Client.Skills.ContainsKey(MagicID))
                 {
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have the skill.", Struct.ChatType.Top));
+                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have the skill.", Struct.ChatType.System));
                     return;
                 }
                 else
@@ -75,7 +75,7 @@ namespace GameServer.Handlers
                 //CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target not found.", Struct.ChatType.Top));
                 return;
             }
-            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Target: " + ASocket.Client.Name + "Max HP: " + ASocket.Client.MaxHP.ToString() + "Current HP: " + ASocket.Client.CurrentHP , Struct.ChatType.Top));
+            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Target: " + ASocket.Client.Name + "Max HP: " + ASocket.Client.MaxHP.ToString() + "Current HP: " + ASocket.Client.CurrentHP , Struct.ChatType.System));
                 
             if (AttackedChar != null)
             {

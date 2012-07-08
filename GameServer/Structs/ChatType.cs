@@ -10,32 +10,45 @@ namespace GameServer.Structs
     {
         public enum ChatType : int
         {
-            Talk = 2007,
+            Normal = 2000,
             Whisper = 2001,
             Action = 2002,
             Team = 2003,
             Guild = 2004,
-            Top = 2005,
-            Spouse = 2006,
+            System = 2005,
+            Family = 2006,
+            Talk = 2007,
             Yell = 2008,
             Friend = 2009,
             Broadcast = 2010,
-            Center = 2011,
+            CenterGm = 2011,
+            WhisperTRYME = 2012,
             Ghost = 2013,
             Service = 2014,
             Dialog = 2100,
             LoginInformation = 2101,
+            ShopTRYME = 2102,
+            EudemonTalk = 2103,
             VendorHawk = 2104,
-            TopRight = 2109,
+            WebpageTRYME = 2105,
+            /// <summary>
+            /// Useless, Doesn't Do anything in current version
+            /// </summary>
+            NewMessage = 2106,
+            Task = 2107,
             ClearTopRight = 2108,
+            TopRight = 2109,
             FriendsOfflineMessage = 2110,
             GuildBulletin = 2111,
+            DialogMessageBox = 2112,
+            RejectTRYME = 2113,
+            SyntentTRYME = 2124,
             TradeBoard = 2201,
             FriendBoard = 2202,
-            NewBroadcast = 2500,
             TeamBoard = 2203,
             GuildBoard = 2204,
-            OthersBoard = 2205
+            OthersBoard = 2205,
+            NewBroadcast = 2500
         }
     }
 }

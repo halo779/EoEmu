@@ -25,7 +25,7 @@ namespace GameServer.Handlers
             else
             {
                 Handler.Teleport((int)CSocket.Client.Map, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, CSocket);
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown portal: " + PID, Struct.ChatType.Top));
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown portal: " + PID, Struct.ChatType.System));
             }
         }
     }
