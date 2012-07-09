@@ -36,8 +36,8 @@ namespace GameServer.Handlers
                 CSocket.Client.Inventory.Remove(GItemID);
                 Database.Database.UpdateItem(Item);
                 Database.Database.DeleteItem(GItemID);
-                CSocket.Send(ConquerPacket.ItemUsage(ItemID, 255, Struct.ItemUsage.RemoveItem));
-                CSocket.Send(ConquerPacket.ItemUsage(GItemID, 255, Struct.ItemUsage.RemoveItem));
+                CSocket.Send(ConquerPacket.ItemUsage(ItemID, 255, Struct.ItemUsage.RemoveDropItem));
+                CSocket.Send(ConquerPacket.ItemUsage(GItemID, 255, Struct.ItemUsage.RemoveDropItem));
                 CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
             }
             else

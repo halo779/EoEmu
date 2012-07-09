@@ -18,6 +18,11 @@ namespace GameServer.Handlers
     {
         public static void PickupItem(int UID, ClientSocket CSocket)
         {
+            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Pickup: " + UID, Struct.ChatType.Normal));
+            foreach (Struct.ItemGround IG in Nano.ItemFloor.Values)
+            {
+                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Item On Ground: " + IG.UID, Struct.ChatType.Normal));
+            }
             if (CSocket.Client.Inventory.Count < 40)
             {
                 if (Nano.ItemFloor.ContainsKey(UID))
@@ -83,7 +88,7 @@ namespace GameServer.Handlers
                                 Item.Color = IG.Color;
                                 Item.MaxDura = IG.MaxDura;
                                 Item.Plus = IG.Plus;
-                                Item.Position = IG.Position;
+                                Item.Position = (int)Struct.ItemPosition.Invetory;
                                 Item.Soc1 = IG.Soc1;
                                 Item.Soc2 = IG.Soc2;
                                 Item.UID = IG.UID;

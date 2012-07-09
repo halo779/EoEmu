@@ -18,12 +18,13 @@ namespace GameServer.Handlers
     {
         public static void DropItem(int UID, ClientSocket CSocket)
         {
+            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Item UID: " + UID, Struct.ChatType.Normal));
             if (CSocket.Client.Inventory.ContainsKey(UID))
             {
                 Struct.ItemInfo Ii = CSocket.Client.Inventory[UID];
                 Struct.ItemGround IG = new Struct.ItemGround();
                 IG.CopyItem(Ii);
-                IG.Position = 0;
+                IG.Position = (int)Struct.ItemPosition.Ground;
                 IG.Map = (int)CSocket.Client.Map;
                 IG.X = (CSocket.Client.X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
                 IG.Y = (CSocket.Client.Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
@@ -55,8 +56,11 @@ namespace GameServer.Handlers
                 {
                     Database.Database.DeleteItem(UID);
                     CSocket.Client.Inventory.Remove(UID);
-                    CSocket.Send(ConquerPacket.ItemUsage(UID, 255, Struct.ItemUsage.RemoveItem));
+                    CSocket.Send(ConquerPacket.ItemUsage(UID, 254, Struct.ItemUsage.RemoveDropItem));
+                    //ConquerPacket.ToLocal(tmp, IG.X, IG.Y, IG.Map, 0, 0);
                     ConquerPacket.ToLocal(ConquerPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
+                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Ground UID: " + IG.UID + " Dropped at X:  " + IG.X + " Y: " + IG.Y, Struct.ChatType.Normal));
+
                     //lock(Nano.ItemFloor)
                     //{
                     try

@@ -297,25 +297,26 @@ namespace GameServer
                                     CSocket.Client.Attack.Dispose();
                                 }
                             }
-                            switch (Subtype)
+                            
+                            switch ((Struct.ItemUsage)Subtype)
                             {
-                                case 1://Buy Item
+                                case Struct.ItemUsage.BuyItem://Buy Item
                                     {
                                         CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not implemented packet 1009 Subtype: " + Subtype, Struct.ChatType.Talk));
                                         break;
                                     }
-                                case 2://Sell Item
+                                case Struct.ItemUsage.SellItem://Sell Item
                                     {
                                         CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not implemented packet 1009 Subtype: " + Subtype, Struct.ChatType.Talk));
                                         break;
                                     }
-                                case 3://Drop item
+                                case Struct.ItemUsage.RemoveDropItem://Drop item
                                     {
                                         int UID = ReadLong(data, 4);
                                         Handler.DropItem(UID, CSocket);
                                         break;
                                     }
-                                case 4://Use Item
+                                case Struct.ItemUsage.EquipUseItem://Use Item
                                     {
                                         int UID = ReadLong(data, 4);
                                         int location = data[8];
@@ -323,31 +324,31 @@ namespace GameServer
                                         break;
 
                                     }
-                                case 6://Unequip Item
+                                case Struct.ItemUsage.UnequipItem://Unequip Item
                                     {
                                         int UID = ReadLong(data, 4);
                                         int location = data[8];
                                         Handler.ItemUnequip(location, UID, CSocket);
                                         break;
                                     }
-                                case 7://Split Item
+                                case Struct.ItemUsage.SplitItem://Split Item
                                     {
                                         CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not implemented packet 1009 Subtype: " + Subtype, Struct.ChatType.Talk));
                                         break;
                                     }
-                                case 8://Combie Item
+                                case Struct.ItemUsage.CombineItem://Combie Item
                                     {
                                         CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not implemented packet 1009 Subtype: " + Subtype, Struct.ChatType.Talk));
                                         break;
                                     }
-                                case 9://Request Money in Wharehouse
+                                case Struct.ItemUsage.ViewWarehouse://Request Money in Warehouse
                                     {
 
                                         int NPCID = (BitConverter.ToInt16(data, 4));
                                         CSocket.Send(ConquerPacket.ItemUsage(NPCID, CSocket.Client.WHMoney, Struct.ItemUsage.ViewWarehouse));
                                         break;
                                     }
-                                case 10://Deposit money to Wharehouse
+                                case Struct.ItemUsage.DepositCash://Deposit money to Warehouse
                                     {
                                         int NPCID = (BitConverter.ToInt16(data, 4));
                                         int Money = (BitConverter.ToInt16(data, 8));
@@ -359,7 +360,7 @@ namespace GameServer
                                         }
                                         break;
                                     }
-                                case 11://Withdraw Money from Wharehouse
+                                case Struct.ItemUsage.WithdrawCash://Withdraw Money from Warehouse
                                     {
                                         int NPCID = (BitConverter.ToInt16(data, 4));
                                         int Amount = (BitConverter.ToInt16(data, 8));
@@ -371,12 +372,12 @@ namespace GameServer
                                         }
                                         break;
                                     }
-                                case 12://Drop money
+                                case Struct.ItemUsage.DropMoney://Drop money
                                     {
                                         CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not implemented packet 1009 Subtype: " + Subtype, Struct.ChatType.Talk));
                                         break;
                                     }
-                                case 14://repair item
+                                case Struct.ItemUsage.Repair://repair item
                                     {
                                         CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not implemented packet 1009 Subtype: " + Subtype, Struct.ChatType.Talk));
                                         break;
@@ -461,8 +462,9 @@ namespace GameServer
                             }
                             int RX = (BitConverter.ToInt16(data, 12));
                             int RY = (BitConverter.ToInt16(data, 14));
-                            CSocket.Client.X = RX;
-                            CSocket.Client.Y = RY;
+                            //@TODO: check last cords vs current.
+                            //CSocket.Client.X = RX;
+                            //CSocket.Client.Y = RY;
                             int Direction = (BitConverter.ToInt16(data, 16)) % 8;
                             //CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "X: " + RX + " Y: " + RY + " ukwn: " + ukwn, Struct.ChatType.Talk));
                             Handler.Walk(Direction, CSocket);
@@ -557,6 +559,8 @@ namespace GameServer
                     #region ItemPickup
                     case 1101: //Item pickup
                         {
+                            data[4] = (byte)(data[4] ^ 0x37);
+                            data[5] = (byte)(data[5] ^ 0x25);
                             int UID = BitConverter.ToInt32(data, 4);
                             Handler.PickupItem(UID, CSocket);
                             break;

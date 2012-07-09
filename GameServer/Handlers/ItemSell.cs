@@ -27,7 +27,7 @@ namespace GameServer.Handlers
                     {
                         CSocket.Client.Money += Money;
                         CSocket.Client.Inventory.Remove(Item.UID);
-                        CSocket.Send(ConquerPacket.ItemUsage(Item.UID, 255, Struct.ItemUsage.RemoveItem));
+                        CSocket.Send(ConquerPacket.ItemUsage(Item.UID, 255, Struct.ItemUsage.RemoveDropItem));
                         Database.Database.DeleteItem(Item.UID);
                         CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.Money, Struct.StatusTypes.InvMoney));
                     }

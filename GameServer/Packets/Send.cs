@@ -15,6 +15,15 @@ namespace GameServer.Packets
     /// </summary>
     public partial class ConquerPacket
     {
+        /// <summary>
+        /// Sends Packet To all players within the given ranges
+        /// </summary>
+        /// <param name="Data">Packet to send</param>
+        /// <param name="X">X coordinates of the object</param>
+        /// <param name="Y">Y coordinates of the object</param>
+        /// <param name="Map">Map Object is in</param>
+        /// <param name="MapInstance">MapInsantce, not currently used</param>
+        /// <param name="ForbidID">Player ID to not send any information to</param>
         public static void ToLocal(byte[] Data, int X, int Y, int Map, int MapInstance, int ForbidID)
         {
             //lock(Nano.ClientPool)
@@ -42,6 +51,12 @@ namespace GameServer.Packets
                 Monitor.Exit(Nano.ClientPool);
             }
         }
+
+        /// <summary>
+        /// Sends Packet to everyone on the server
+        /// </summary>
+        /// <param name="Data">Packet to Send</param>
+        /// <param name="ForbidID">User ID to not send any packet to</param>
         public static void ToServer(byte[] Data, int ForbidID)
         {
             //	lock(Nano.ClientPool)

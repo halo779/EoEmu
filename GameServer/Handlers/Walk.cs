@@ -86,6 +86,8 @@ namespace GameServer.Handlers
             }
             CSocket.Client.PrevX = CSocket.Client.X;
             CSocket.Client.PrevY = CSocket.Client.Y;
+            CSocket.Client.X += DX;
+            CSocket.Client.Y += DY;
             //TODO: Map / Guild wall / other checks
             byte[] WalkPacket = ConquerPacket.Walk(Direction, CSocket.Client.ID, CSocket.Client.X,CSocket.Client.Y);
             //lock(Nano.ClientPool)

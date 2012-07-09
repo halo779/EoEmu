@@ -378,7 +378,7 @@ namespace GameServer.Handlers
             if (Delete)
             {
                 CSocket.Client.Inventory.Remove(Item.UID);
-                CSocket.Send(ConquerPacket.ItemUsage(Item.UID, 255, Struct.ItemUsage.RemoveItem));
+                CSocket.Send(ConquerPacket.ItemUsage(Item.UID, 255, Struct.ItemUsage.RemoveDropItem));
                 Database.Database.DeleteItem(Item.UID);
             }
         }

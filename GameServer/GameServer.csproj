@@ -214,6 +214,7 @@
     <Compile Include="Structs\DataType.cs" />
     <Compile Include="Structs\DmapData.cs" />
     <Compile Include="Structs\Item.cs" />
+    <Compile Include="Structs\ItemPosition.cs" />
     <Compile Include="Structs\ItemUsage.cs" />
     <Compile Include="Structs\Map.cs" />
     <Compile Include="Structs\NPC.cs" />
