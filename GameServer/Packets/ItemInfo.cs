@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Description of ItemInfo.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
        /* public static byte[] ItemInfo(int UID, int itemid, int Plus, int Minus, int Enchant, int soc1, int soc2, int currentdura, int maxdura, int Location, int Color)
         {

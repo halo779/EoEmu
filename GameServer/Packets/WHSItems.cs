@@ -10,7 +10,7 @@ using GameServer.Database;
 
 namespace GameServer.Packets
 {
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] WarehouseItems(ClientSocket CSocket, int ID)
         {

@@ -16,7 +16,7 @@ namespace GameServer.Handlers
     /// </summary>
     public partial class Handler
     {
-        public static void Jump(int X, int Y, ClientSocket CSocket)
+        public static void Jump(ushort X, ushort Y, ClientSocket CSocket)
         {
             //Check if jump distance is too large!
             int Dis1 = 0;
@@ -31,8 +31,8 @@ namespace GameServer.Handlers
                 Dis2 = Math.Abs(CSocket.Client.Y - Y);
             if (Dis1 > 18 || Dis2 > 18)
             {
-                CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 0, 0, CSocket.Client.X, CSocket.Client.Y, 0, Struct.DataType.CorrectCords));
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Jump too large!", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 0, 0, CSocket.Client.X, CSocket.Client.Y, 0, Struct.DataType.CorrectCords));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Jump too large!", Struct.ChatType.System));
                 return;
             }
             if (Nano.Maps.ContainsKey((int)CSocket.Client.Map))
@@ -40,15 +40,15 @@ namespace GameServer.Handlers
                 Struct.DmapData Map = Nano.Maps[(int)CSocket.Client.Map];
                 if (!Map.CheckLoc((ushort)X, (ushort)Y))
                 {
-                    CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 0, 0, CSocket.Client.X, CSocket.Client.Y, 0, Struct.DataType.CorrectCords));
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid coordinates.", Struct.ChatType.System));
+                    CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 0, 0, CSocket.Client.X, CSocket.Client.Y, 0, Struct.DataType.CorrectCords));
+                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid coordinates.", Struct.ChatType.System));
                     return;
                 }
             }
             else
             {
-                CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 0, 0, CSocket.Client.X, CSocket.Client.Y, 0, Struct.DataType.CorrectCords));
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Map[" + (int)CSocket.Client.Map + "] not loaded.", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 0, 0, CSocket.Client.X, CSocket.Client.Y, 0, Struct.DataType.CorrectCords));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Map[" + (int)CSocket.Client.Map + "] not loaded.", Struct.ChatType.System));
                 return;
             }
             //TODO: Map / Guild wall / other checks
@@ -56,7 +56,7 @@ namespace GameServer.Handlers
             CSocket.Client.PrevY = CSocket.Client.Y;
             CSocket.Client.X = X;
             CSocket.Client.Y = Y;
-            byte[] JumpPacket = ConquerPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, Struct.DataType.Jump);
+            byte[] JumpPacket = EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, Struct.DataType.Jump);
             //lock(Nano.ClientPool)
             //{
             try
@@ -72,7 +72,7 @@ namespace GameServer.Handlers
                         {
                             if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, C.Client.X, C.Client.Y))
                             {
-                                C.Send(ConquerPacket.SpawnCharacter(CSocket));
+                                C.Send(EudemonPacket.SpawnCharacter(CSocket));
                             }
                         }
                         else
@@ -80,7 +80,7 @@ namespace GameServer.Handlers
                             if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, C.Client.X, C.Client.Y))
                                 C.Send(JumpPacket);
                             else
-                                C.Send(ConquerPacket.General(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, 0, 0, Struct.DataType.EntityRemove));
+                                C.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, 0, 0, Struct.DataType.EntityRemove));
                         }
                     }
                 }

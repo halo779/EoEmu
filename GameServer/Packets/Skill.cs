@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Tells a client it knows a skill.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] Skill(int ID, int Level, uint Exp)
         {

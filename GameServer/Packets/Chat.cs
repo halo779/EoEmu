@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// The packet used for all forms of chatting on Conquer.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] Chat(int MessageID, string From, string To, string Message, Struct.ChatType CType)
         {

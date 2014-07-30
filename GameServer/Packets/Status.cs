@@ -8,7 +8,7 @@ namespace GameServer.Packets
     /// <summary>
     /// All forms of statuses in the conquer world.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] Status(ClientSocket CSocket, Struct.StatusTypes Type, int Value)
         {

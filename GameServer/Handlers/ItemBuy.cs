@@ -27,7 +27,7 @@ namespace GameServer.Handlers
             int ID = PacketProcessor.ReadLong(Data, 8);
             if (CSocket.Client.Inventory.Count == 40)
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.System));
                 return;
             }
             string Shop = System.IO.File.ReadAllText("Shop.dat");
@@ -51,11 +51,11 @@ namespace GameServer.Handlers
                                 created = Database.Database.NewItem(Item, CSocket);
                             }
                             CSocket.Client.Inventory.Add(Item.UID, Item);
-                            CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                            CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, 0, 0, 0, 0, 0, 0, 0, 0, 0));
                         }
                         else
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have enough EPs.", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have enough EPs.", Struct.ChatType.System));
                         }
                     }
                     else if (NewItem.Cost > 0)
@@ -72,11 +72,11 @@ namespace GameServer.Handlers
                                 created = Database.Database.NewItem(Item, CSocket);
                             }
                             CSocket.Client.Inventory.Add(Item.UID, Item);
-                            CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                            CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, 0, 0, 0, 0, 0, 0, 0, 0, 0));
                         }
                         else
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have enough money.", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have enough money.", Struct.ChatType.System));
                         }
                     }
                     else
@@ -90,13 +90,13 @@ namespace GameServer.Handlers
                             created = Database.Database.NewItem(Item, CSocket);
                         }
                         CSocket.Client.Inventory.Add(Item.UID, Item);
-                        CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                        CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, 0, 0, 0, 0, 0, 0, 0, 0, 0));
                     }
                 }
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item does not exist in Shop.dat", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item does not exist in Shop.dat", Struct.ChatType.System));
             }
         }
     }

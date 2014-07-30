@@ -9,12 +9,12 @@ namespace GameServer.Structs
     {
         public enum DataType : int
         {
-            testingloginitemcount = 9542,
-            PkmodeAndUi = 9556,
-            UiMaybe2 = 9554,
-            eudtype = 9737,
-            UnkownLogin = 9737,
-            MapShow = 9541,
+            actionGetItemSet = 15,
+            actionSetPkMode = 29,
+            actionGetWeaponSkillSet = 27,
+            UnkownLogin = 210,//@TODO CHECK THIS - aka eudtype apparently.
+            actionEnterMap = 14,
+            actionKickBack = 57,
             HotKeys = 75,
             ConfirmFriends = 76,
             ConfirmProf = 77,

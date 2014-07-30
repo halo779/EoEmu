@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Sends attacking(1022) packets
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] Attack(int Attacker, int Attacked, int X, int Y, int Damage, int AType)
         {

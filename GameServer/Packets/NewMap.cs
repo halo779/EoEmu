@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Notifies a client of a new map being loaded.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] NewMap(int MapID)
         {

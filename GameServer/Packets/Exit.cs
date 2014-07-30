@@ -2,7 +2,7 @@
 
 namespace GameServer.Packets
 {
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] ExitPacket()
         {

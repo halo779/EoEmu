@@ -8,7 +8,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Description of CharacterInfo.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] CharacterInfo(ClientSocket CSocket)
         {

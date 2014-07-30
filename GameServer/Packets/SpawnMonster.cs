@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Description of MonsterSpawn.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] SpawnMonster(int UID, int Mesh, int X, int Y, string Name, int HP, int Level, int Direction)
         {

@@ -5,7 +5,7 @@ namespace GameServer.Packets
     /// <summary>
     /// sending friendshare packet (2036)
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] Dialog(int ActionID)
         {

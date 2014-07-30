@@ -110,8 +110,8 @@ namespace GameServer.Entities
                             }
                             //}
                         }
-                        ConquerPacket.ToLocal(ConquerPacket.SpawnMonster(Mon.UID, MobInfo.Mesh, Mon.X, Mon.Y, MobInfo.Name, Mon.CurrentHP, Mon.Level, Mon.Direction), Mon.X, Mon.Y, Mon.Map, 0, 0);
-                        ConquerPacket.ToLocal(ConquerPacket.MobSpawnEffect(Mon.UID, Mon.X, Mon.Y, Mon.Direction, 131), Mon.X, Mon.Y, Mon.Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.SpawnMonster(Mon.UID, MobInfo.Mesh, Mon.X, Mon.Y, MobInfo.Name, Mon.CurrentHP, Mon.Level, Mon.Direction), Mon.X, Mon.Y, Mon.Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.MobSpawnEffect(Mon.UID, Mon.X, Mon.Y, Mon.Direction, 131), Mon.X, Mon.Y, Mon.Map, 0, 0);
                         Interlocked.Add(ref SpawnNumber, 1);
                     }
                 }

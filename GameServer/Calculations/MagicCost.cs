@@ -40,13 +40,13 @@ namespace GameServer.Calculations
                             ManaCost = 17;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -63,13 +63,13 @@ namespace GameServer.Calculations
                             ManaCost = 38;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -94,13 +94,13 @@ namespace GameServer.Calculations
                             ManaCost = 105;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -125,13 +125,13 @@ namespace GameServer.Calculations
                             ManaCost = 300;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -148,13 +148,13 @@ namespace GameServer.Calculations
                             ManaCost = 210;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -171,13 +171,13 @@ namespace GameServer.Calculations
                             ManaCost = 64;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -194,13 +194,13 @@ namespace GameServer.Calculations
                             ManaCost = 105;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -219,13 +219,13 @@ namespace GameServer.Calculations
                             ManaCost = 500;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -244,13 +244,13 @@ namespace GameServer.Calculations
                             ManaCost = 400;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -269,13 +269,13 @@ namespace GameServer.Calculations
                             ManaCost = 400;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -294,13 +294,13 @@ namespace GameServer.Calculations
                             ManaCost = 360;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -309,13 +309,13 @@ namespace GameServer.Calculations
                         int ManaCost = 1000;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -356,13 +356,13 @@ namespace GameServer.Calculations
                         }
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -403,13 +403,13 @@ namespace GameServer.Calculations
                         }
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -450,13 +450,13 @@ namespace GameServer.Calculations
                         }
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -475,13 +475,13 @@ namespace GameServer.Calculations
                             ManaCost = 400;
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -490,13 +490,13 @@ namespace GameServer.Calculations
                         int StamCost = 30;
                         if (CSocket.Client.CurrentStam < StamCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough stamina!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough stamina!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentStam -= StamCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
                             return true;
                         }
                     }
@@ -521,13 +521,13 @@ namespace GameServer.Calculations
                         }
                         if (CSocket.Client.CurrentMP < ManaCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough mana!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentMP -= ManaCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             return true;
                         }
                     }
@@ -536,13 +536,13 @@ namespace GameServer.Calculations
                         int StamCost = 22;
                         if (CSocket.Client.CurrentStam < StamCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough stamina!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough stamina!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentStam -= StamCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
                             return true;
                         }
                     }
@@ -551,13 +551,13 @@ namespace GameServer.Calculations
                         int StamCost = 22;
                         if (CSocket.Client.CurrentStam < StamCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough stamina!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough stamina!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentStam -= StamCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
                             return true;
                         }
                     }
@@ -566,13 +566,13 @@ namespace GameServer.Calculations
                         int StamCost = 33;
                         if (CSocket.Client.CurrentStam < StamCost)
                         {
-                            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough stamina!", Struct.ChatType.System));
+                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Not enough stamina!", Struct.ChatType.System));
                             return false;
                         }
                         else
                         {
                             CSocket.Client.CurrentStam -= StamCost;
-                            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
+                            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
                             return true;
                         }
                     }

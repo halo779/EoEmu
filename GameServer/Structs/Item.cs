@@ -130,8 +130,8 @@ namespace GameServer.Structs
                     }
                     //}
                 }
-                ConquerPacket.ToLocal(ConquerPacket.RemoveItemDropEffect(UID, ItemID, X, Y), X, Y, Map, 0, 0);
-                ConquerPacket.ToLocal(ConquerPacket.RemoveItemDrop(UID), X, Y, Map, 0, 0);
+                EudemonPacket.ToLocal(EudemonPacket.RemoveItemDropEffect(UID, ItemID, X, Y), X, Y, Map, 0, 0);
+                EudemonPacket.ToLocal(EudemonPacket.RemoveItemDrop(UID), X, Y, Map, 0, 0);
                 Stop();
             }
             public void Stop()

@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Creates the eud at the top of the screen - seems a 1010 packet must send the eud data after this packet
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] EudemonTopIndicator(int EudUid, int EudType)
         {

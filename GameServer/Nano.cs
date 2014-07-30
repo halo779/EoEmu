@@ -43,16 +43,9 @@ namespace GameServer
         public const int PROF_MULTIPLER = 6;
         public const int SKILL_MULTIPLER = 4;
         public static System.Timers.Timer Shutdown;
-        private static string P = "E7A69EBDF105F2A6BBDEAD7E798F76A209AD73FB466431E2E7352ED262F8C558F10BEFEA977DE9E21DCEE9B04D245F300ECCBBA03E72630556D011023F9E857F", G = "05";
-        public static OpenSSL.DH ServerKey;
-        public static void GenerateKey()
-        {
-            Nano.ServerKey = new OpenSSL.DH(OpenSSL.BigNumber.FromHexString(P), OpenSSL.BigNumber.FromHexString(G));
-            Nano.ServerKey.GenerateKeys();
-        }
+
         public static void StartServer()
         {
-            GenerateKey();
             int startload = System.Environment.TickCount;
             Struct.LoadItemType("itemtype.dat");
             Struct.LoadItemPlusesDatabase();
@@ -86,7 +79,7 @@ namespace GameServer
                             Shutdown.AutoReset = false;
                             Shutdown.Elapsed += delegate { Kill(); };
                             Shutdown.Start();*/
-                GameServer.Packets.ConquerPacket.ToServer(GameServer.Packets.ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 3 minutes.", GameServer.Structs.Struct.ChatType.Talk), 0);
+                GameServer.Packets.EudemonPacket.ToServer(GameServer.Packets.EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 3 minutes.", GameServer.Structs.Struct.ChatType.Talk), 0);
                 Kill();
             }
             else
@@ -97,15 +90,15 @@ namespace GameServer
         }
         public static void Kill()
         {
-            GameServer.Packets.ConquerPacket.ToServer(GameServer.Packets.ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 5 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
+            GameServer.Packets.EudemonPacket.ToServer(GameServer.Packets.EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 5 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
             Thread.Sleep(1000);
-            GameServer.Packets.ConquerPacket.ToServer(GameServer.Packets.ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 4 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
+            GameServer.Packets.EudemonPacket.ToServer(GameServer.Packets.EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 4 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
             Thread.Sleep(1000);
-            GameServer.Packets.ConquerPacket.ToServer(GameServer.Packets.ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 3 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
+            GameServer.Packets.EudemonPacket.ToServer(GameServer.Packets.EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 3 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
             Thread.Sleep(1000);
-            GameServer.Packets.ConquerPacket.ToServer(GameServer.Packets.ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 2 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
+            GameServer.Packets.EudemonPacket.ToServer(GameServer.Packets.EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 2 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
             Thread.Sleep(1000);
-            GameServer.Packets.ConquerPacket.ToServer(GameServer.Packets.ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 1 second.", GameServer.Structs.Struct.ChatType.Talk), 0);
+            GameServer.Packets.EudemonPacket.ToServer(GameServer.Packets.EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 1 second.", GameServer.Structs.Struct.ChatType.Talk), 0);
             Nano.AuthServer.Close();
             Nano.GameServerNano.Close();
             System.Environment.Exit(1);

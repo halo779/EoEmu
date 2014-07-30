@@ -14,6 +14,11 @@ namespace GameServer.Packets
         protected int Position = 0;
         protected byte[] TQ_SERVER = Encoding.ASCII.GetBytes("TQServer");
 
+        /// <summary>
+        /// Initilizes the Packet Builder.
+        /// </summary>
+        /// <param name="T">Packet Type</param>
+        /// <param name="L">Packet Size</param>
         public PacketBuilder(int T, int L)
         {
             Length(L);

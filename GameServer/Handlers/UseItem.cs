@@ -34,13 +34,13 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentHP + AddHP > CSocket.Client.MaxHP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, (CSocket.Client.MaxHP - CSocket.Client.CurrentHP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                             else
                             {
                                 //Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                         }
                         break;
@@ -59,12 +59,12 @@ namespace GameServer.Handlers
                             {
 
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, (CSocket.Client.MaxHP - CSocket.Client.CurrentHP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                         }
                         break;
@@ -82,12 +82,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentHP + AddHP > CSocket.Client.MaxHP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, (CSocket.Client.MaxHP - CSocket.Client.CurrentHP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                         }
                         break;
@@ -105,12 +105,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentHP + AddHP > CSocket.Client.MaxHP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, (CSocket.Client.MaxHP - CSocket.Client.CurrentHP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                         }
                         break;
@@ -128,12 +128,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentHP + AddHP > CSocket.Client.MaxHP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, (CSocket.Client.MaxHP - CSocket.Client.CurrentHP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                         }
                         break;
@@ -151,12 +151,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentHP + AddHP > CSocket.Client.MaxHP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, (CSocket.Client.MaxHP - CSocket.Client.CurrentHP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                         }
                         break;
@@ -174,12 +174,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentHP + AddHP > CSocket.Client.MaxHP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, (CSocket.Client.MaxHP - CSocket.Client.CurrentHP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                         }
                         break;
@@ -197,12 +197,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentHP + AddHP > CSocket.Client.MaxHP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, (CSocket.Client.MaxHP - CSocket.Client.CurrentHP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentHP, AddHP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentHP, Struct.StatusTypes.Hp));
                             }
                         }
                         break;
@@ -220,12 +220,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentMP + AddMP > CSocket.Client.MaxMP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, (CSocket.Client.MaxMP - CSocket.Client.CurrentMP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, AddMP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                         }
                         break;
@@ -243,12 +243,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentMP + AddMP > CSocket.Client.MaxMP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, (CSocket.Client.MaxMP - CSocket.Client.CurrentMP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, AddMP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                         }
                         break;
@@ -266,12 +266,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentMP + AddMP > CSocket.Client.MaxMP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, (CSocket.Client.MaxMP - CSocket.Client.CurrentMP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, AddMP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                         }
                         break;
@@ -289,12 +289,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentMP + AddMP > CSocket.Client.MaxMP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, (CSocket.Client.MaxMP - CSocket.Client.CurrentMP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, AddMP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                         }
                         break;
@@ -312,12 +312,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentMP + AddMP > CSocket.Client.MaxMP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, (CSocket.Client.MaxMP - CSocket.Client.CurrentMP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, AddMP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                         }
                         break;
@@ -335,12 +335,12 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentMP + AddMP > CSocket.Client.MaxMP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, (CSocket.Client.MaxMP - CSocket.Client.CurrentMP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, AddMP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                         }
                         break;
@@ -358,19 +358,19 @@ namespace GameServer.Handlers
                             if (CSocket.Client.CurrentMP + AddMP > CSocket.Client.MaxMP)
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, (CSocket.Client.MaxMP - CSocket.Client.CurrentMP));
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                             else
                             {
                                 Interlocked.Add(ref CSocket.Client.CurrentMP, AddMP);
-                                CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
+                                CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentMP, Struct.StatusTypes.Mp));
                             }
                         }
                         break;
                     }
                 default:
                     {
-                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unable to handle item ID: " + Item.ItemID, Struct.ChatType.System));
+                        CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unable to handle item ID: " + Item.ItemID, Struct.ChatType.System));
                         Delete = false;
                         break;
                     }
@@ -378,7 +378,7 @@ namespace GameServer.Handlers
             if (Delete)
             {
                 CSocket.Client.Inventory.Remove(Item.UID);
-                CSocket.Send(ConquerPacket.ItemUsage(Item.UID, 255, Struct.ItemUsage.RemoveDropItem));
+                CSocket.Send(EudemonPacket.ItemUsage(Item.UID, 255, Struct.ItemUsage.RemoveDropItem));
                 Database.Database.DeleteItem(Item.UID);
             }
         }

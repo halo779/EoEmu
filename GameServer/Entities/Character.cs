@@ -25,9 +25,9 @@ namespace GameServer.Entities
         public string Spouse = "";
         public int ID = 0;
         public int EPs = 0;
-        public int X = 438;
-        public int Y = 377;
-        public int Direction = 0;
+        public ushort X = 438;
+        public ushort Y = 377;
+        public ushort Direction = 0;
         public int MentorExp = 0;
         public int MercenaryExp = 0;
         public int Action = 0;
@@ -65,8 +65,8 @@ namespace GameServer.Entities
         public int LastNPC = 0;
         public ulong Exp = 0;
         public int PkPoints = 0;
-        public int PrevX = 0;
-        public int PrevY = 0;
+        public ushort PrevX = 0;
+        public ushort PrevY = 0;
         public int BaseMinAttack = 0;
         public int BaseMaxAttack = 0;
         public int BaseMagicAttack = 0;

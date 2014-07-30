@@ -23,16 +23,16 @@ namespace GameServer.Handlers
                 X++;
             }
             if (!ValidName(Name))
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "Error: Invalid character name.", Struct.ChatType.Dialog));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "Error: Invalid character name.", Struct.ChatType.Dialog));
             else if (Database.Database.CharExists(Name))
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "Error: Character already exists.", Struct.ChatType.Dialog));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "Error: Character already exists.", Struct.ChatType.Dialog));
             else
             {
                 Console.WriteLine("NewCharacter");
                 int CharID = Database.Database.NewCharacter(Name, Mesh, Class, CSocket.AccountName);
                 if (CharID > -1)
                 {
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", "ALLUSERS", "Characted created! Please hit back twice and then re-log in to the game!", Struct.ChatType.Dialog));
+                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "Characted created! Please hit back twice and then re-log in to the game!", Struct.ChatType.Dialog));
                     CSocket.Disconnect();
                 }
                 else

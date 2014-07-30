@@ -9,7 +9,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Description of SpawnCharacter.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] SpawnCharacter(ClientSocket CSocket)
         {

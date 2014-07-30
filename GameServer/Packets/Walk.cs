@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Walking(1005 or 3ED) conquer packet.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] Walk(int Direction, int UID, int x, int y)
         {

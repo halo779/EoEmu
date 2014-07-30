@@ -40,7 +40,7 @@ namespace GameServer.Calculations
             CSocket.Client.MinAttack += MinAdd;
 
             CSocket.Client.MagicAttack += MagicAdd;
-            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Max: " + CSocket.Client.MaxAttack + " Min: " + CSocket.Client.MinAttack + " Magic: " + CSocket.Client.MagicAttack + " / " + CSocket.Client.BonusMagicAttack + " Defense: " + CSocket.Client.Defense + " Bless: " + CSocket.Client.Bless + "% Dodge: " + CSocket.Client.Dodge + " % MaxHP/MP: " + CSocket.Client.MaxHP + "/" + CSocket.Client.MaxMP, Struct.ChatType.CenterGm));
+            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Max: " + CSocket.Client.MaxAttack + " Min: " + CSocket.Client.MinAttack + " Magic: " + CSocket.Client.MagicAttack + " / " + CSocket.Client.BonusMagicAttack + " Defense: " + CSocket.Client.Defense + " Bless: " + CSocket.Client.Bless + "% Dodge: " + CSocket.Client.Dodge + " % MaxHP/MP: " + CSocket.Client.MaxHP + "/" + CSocket.Client.MaxMP, Struct.ChatType.CenterGm));
         }
     }
 }

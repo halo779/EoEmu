@@ -161,7 +161,7 @@ namespace GameServer.Connections
                                 {
                                     if (Member.Value.Client.ID != Client.ID)
                                     {
-                                        Member.Value.Send(ConquerPacket.Team(Member.Value.Client.ID, Struct.TeamOption.DismissTeam));
+                                        Member.Value.Send(EudemonPacket.Team(Member.Value.Client.ID, Struct.TeamOption.DismissTeam));
                                         Member.Value.Client.Team = null;
                                     }
                                 }
@@ -175,14 +175,14 @@ namespace GameServer.Connections
                                 {
                                     if (Member.Value.Client.ID != Client.ID)
                                     {
-                                        Member.Value.Send(ConquerPacket.Team(Client.ID, Struct.TeamOption.LeaveTeam));
+                                        Member.Value.Send(EudemonPacket.Team(Client.ID, Struct.TeamOption.LeaveTeam));
                                     }
                                 }
                                 Leader.Client.Team.Members.Remove(Client.ID);
                                 Client.Team = null;
                             }
                         }
-                        ConquerPacket.ToLocal(ConquerPacket.General(Client.ID, Client.X, Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), Client.X, Client.Y, (int)Client.Map, 0, Client.ID);
+                        EudemonPacket.ToLocal(EudemonPacket.General(Client.ID, Client.X, Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), Client.X, Client.Y, (int)Client.Map, 0, Client.ID);
                     }
                     Database.Database.SaveCharacter(Client);
                     if (Client.UpStam != null)
@@ -219,14 +219,14 @@ namespace GameServer.Connections
                     if (Client.CurrentStam != 99)
                     {
                         Client.CurrentStam += 10;
-                       // Send(ConquerPacket.Status(this, 2, Client.CurrentStam, Struct.StatusTypes.Stamina));
-                        Send(ConquerPacket.Status(this, Struct.StatusTypes.Stamina, Client.CurrentStam));
+                       // Send(EudemonPacket.Status(this, 2, Client.CurrentStam, Struct.StatusTypes.Stamina));
+                        Send(EudemonPacket.Status(this, Struct.StatusTypes.Stamina, Client.CurrentStam));
                     }
                     else
                     {
                         Client.CurrentStam += 1;
-                        //Send(ConquerPacket.Status(this, 2, Client.CurrentStam, Struct.StatusTypes.Stamina));
-                        Send(ConquerPacket.Status(this, Struct.StatusTypes.Stamina, Client.CurrentStam));
+                        //Send(EudemonPacket.Status(this, 2, Client.CurrentStam, Struct.StatusTypes.Stamina));
+                        Send(EudemonPacket.Status(this, Struct.StatusTypes.Stamina, Client.CurrentStam));
                     }
                 }
             }

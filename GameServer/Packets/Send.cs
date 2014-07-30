@@ -13,7 +13,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Contains methods for sending packets to Player, Monster, and item locals as well as globally to the server, a guild, or entire maps.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         /// <summary>
         /// Sends Packet To all players within the given ranges

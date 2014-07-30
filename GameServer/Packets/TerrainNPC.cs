@@ -13,7 +13,7 @@ namespace GameServer.Packets
     /// <summary>
     /// TG, GW, etc
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] TerrainNPC(Struct.TerrainNPC TNpc)
         {

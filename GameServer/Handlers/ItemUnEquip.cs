@@ -28,8 +28,8 @@ namespace GameServer.Handlers
                         Item.Position = 50;
                         CSocket.Client.Inventory.Add(Item.UID, Item);
                         Database.Database.UpdateItem(Item);
-                        CSocket.Send(ConquerPacket.ItemUsage(UID, Location, Struct.ItemUsage.UpdateItem));
-                        //CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
+                        CSocket.Send(EudemonPacket.ItemUsage(UID, Location, Struct.ItemUsage.UpdateItem));
+                        //CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
                         #region ItemCalculations
                         switch (Item.Soc1)
                         {
@@ -65,7 +65,7 @@ namespace GameServer.Handlers
                                 }
                             default:
                                 {
-                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown GemID: " + Item.Soc1, Struct.ChatType.Talk));
+                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown GemID: " + Item.Soc1, Struct.ChatType.Talk));
                                     break;
                                 }
 
@@ -104,7 +104,7 @@ namespace GameServer.Handlers
                                 }
                             default:
                                 {
-                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown GemID: " + Item.Soc2, Struct.ChatType.Talk));
+                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown GemID: " + Item.Soc2, Struct.ChatType.Talk));
                                     break;
                                 }
 
@@ -137,7 +137,7 @@ namespace GameServer.Handlers
                                 }
                             default:
                                 {
-                                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid bless: " + Item.Bless, Struct.ChatType.System));
+                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid bless: " + Item.Bless, Struct.ChatType.System));
                                     break;
                                 }
                         }
@@ -218,17 +218,17 @@ namespace GameServer.Handlers
                         }
                         #endregion
                         Calculation.Attack(CSocket);
-                        ConquerPacket.ToLocal(ConquerPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
+                        EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                     }
                 }
                 else
                 {
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.System));
+                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.System));
                 }
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] That item is not equipped.", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] That item is not equipped.", Struct.ChatType.System));
             }
         }
     }

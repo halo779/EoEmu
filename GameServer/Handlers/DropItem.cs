@@ -18,7 +18,7 @@ namespace GameServer.Handlers
     {
         public static void DropItem(int UID, ClientSocket CSocket)
         {
-            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Item UID: " + UID, Struct.ChatType.Normal));
+            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Item UID: " + UID, Struct.ChatType.Normal));
             if (CSocket.Client.Inventory.ContainsKey(UID))
             {
                 Struct.ItemInfo Ii = CSocket.Client.Inventory[UID];
@@ -56,10 +56,10 @@ namespace GameServer.Handlers
                 {
                     Database.Database.DeleteItem(UID);
                     CSocket.Client.Inventory.Remove(UID);
-                    CSocket.Send(ConquerPacket.ItemUsage(UID, 254, Struct.ItemUsage.RemoveDropItem));
-                    //ConquerPacket.ToLocal(tmp, IG.X, IG.Y, IG.Map, 0, 0);
-                    ConquerPacket.ToLocal(ConquerPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Ground UID: " + IG.UID + " Dropped at X:  " + IG.X + " Y: " + IG.Y, Struct.ChatType.Normal));
+                    CSocket.Send(EudemonPacket.ItemUsage(UID, 254, Struct.ItemUsage.RemoveDropItem));
+                    //EudemonPacket.ToLocal(tmp, IG.X, IG.Y, IG.Map, 0, 0);
+                    EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
+                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Ground UID: " + IG.UID + " Dropped at X:  " + IG.X + " Y: " + IG.Y, Struct.ChatType.Normal));
 
                     //lock(Nano.ItemFloor)
                     //{
@@ -81,7 +81,7 @@ namespace GameServer.Handlers
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item does not exist.", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item does not exist.", Struct.ChatType.System));
             }
         }
     }

@@ -13,7 +13,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Sends visual effects to the client
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] Effect(int UID, string value)
         {

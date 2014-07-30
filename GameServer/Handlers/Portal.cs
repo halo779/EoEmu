@@ -20,12 +20,12 @@ namespace GameServer.Handlers
             if (Nano.Portals.ContainsKey(PID))
             {
                 Struct.Portal Port = Nano.Portals[PID];
-                Handler.Teleport(Port.EndMap, Port.EndX, Port.EndY, Port.EndInstance, CSocket);
+                Handler.Teleport(Port.EndMap, (ushort)Port.EndX, (ushort)Port.EndY, Port.EndInstance, CSocket);
             }
             else
             {
                 Handler.Teleport((int)CSocket.Client.Map, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, CSocket);
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown portal: " + PID, Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown portal: " + PID, Struct.ChatType.System));
             }
         }
     }

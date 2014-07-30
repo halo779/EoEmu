@@ -26,7 +26,7 @@ namespace GameServer.Handlers
                     {
                         if (LinkBack == 0)
                         {
-                            Text("Hello! The Compser of market.", CSocket);
+                            Text("Hello! The Composer of market.", CSocket);
                             Text("What would you like to do?", CSocket);
                             Link("Main Composing", 1, CSocket);
                             Link("Nevermind!", 255, CSocket);
@@ -34,39 +34,65 @@ namespace GameServer.Handlers
                         }
                         else if (LinkBack == 1)
                         {
-                            CSocket.Send(ConquerPacket.General(0, CSocket.Client.ID, 319, 445, 4, 37, Struct.DataType.Dialog));
+                            CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, 319, 445, 4, 37, Struct.DataType.Dialog));
                         }
                         break;
                     }
-                case 8://TC - WHS
+                case 1504://high Bonus person
                     {
-                        //CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
-                        CSocket.Send(ConquerPacket.General(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, 3, Struct.DataType.Dialog));
+                        if (LinkBack == 0)
+                        {
+                            Text("Hello! How can I help?.", CSocket);
+                            Link("[Add a high Bonus to Gear]", 1, CSocket);
+                            Link("[Nevermind]", 255, CSocket);
+                            End(CSocket);
+                        }
+                        else if (LinkBack == 1)
+                        {
+                            CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, (int)Struct.Dialog.ItemHighBonus, Struct.DataType.Dialog));
+                        }
+
+                        break;
+                    }
+                case 741://Low Bonus person
+                    {
+                        if (LinkBack == 0)
+                        {
+                            Text("Hello! How can I help?.", CSocket);
+                            Link("[Add Bonus to Gear]", 1, CSocket);
+                            Link("[Nevermind]", 255, CSocket);
+                            End(CSocket);
+                        }
+                        else if (LinkBack == 1)
+                        {
+                            CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, (int)Struct.Dialog.ItemBonus, Struct.DataType.Dialog));
+                        }
+                        
                         break;
                     }
                 case 10012://PC - WHS
                     {
-                        CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 10011://DC - WHS
                     {
-                        CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 10028://AM - WHS
                     {
-                        CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 10027://BI - WHS
                     {
-                        CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 44://MA - WHS
                     {
-                        CSocket.Send(ConquerPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 10050: //TC - Conductress
@@ -428,29 +454,29 @@ namespace GameServer.Handlers
         }
         public static void Text(string value, ClientSocket CSocket)
         {
-            CSocket.Send(ConquerPacket.NPCTalk(255, 1, value));
+            CSocket.Send(EudemonPacket.NPCTalk(255, 1, value));
         }
         public static void Money(int value, ClientSocket CSocket)
         {
             CSocket.Client.Money += value;
-            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.Money, Struct.StatusTypes.InvMoney));
+            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.Money, Struct.StatusTypes.InvMoney));
         }
         public static void CPs(int value, ClientSocket CSocket)
         {
             CSocket.Client.EPs += value;
-            CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.EPs, Struct.StatusTypes.InvEPoints));
+            CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.EPs, Struct.StatusTypes.InvEPoints));
         }
         public static void Link(string value, int LinkBack, ClientSocket CSocket)
         {
-            CSocket.Send(ConquerPacket.NPCTalk(LinkBack, 2, value));
+            CSocket.Send(EudemonPacket.NPCTalk(LinkBack, 2, value));
         }
         public static void Input(int LinkBack, ClientSocket CSocket)
         {
-            CSocket.Send(ConquerPacket.NPCTalk(LinkBack, 3, ""));
+            CSocket.Send(EudemonPacket.NPCTalk(LinkBack, 3, ""));
         }
         public static void End(ClientSocket CSocket)
         {
-            CSocket.Send(ConquerPacket.NPCTalk(0, 0, 255, 100));
+            CSocket.Send(EudemonPacket.NPCTalk(0, 0, 255, 100));
         }
     }
 }

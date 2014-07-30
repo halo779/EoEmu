@@ -35,15 +35,15 @@ namespace GameServer.Handlers
                     //TODO: Position checks, class requirements
                     if (CSocket.Client.Equipment.ContainsKey(Location))
                     {
-                        CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Could not equip the item into that slot.", Struct.ChatType.System));
+                        CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Could not equip the item into that slot.", Struct.ChatType.System));
                         return;
                     }
                     CSocket.Client.Inventory.Remove(UID);
                     Item.Position = Location;
                     CSocket.Client.Equipment.Add(Location, Item);
                     Database.Database.UpdateItem(Item);
-                    //CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
-                    CSocket.Send(ConquerPacket.ItemUsage(Item.UID, Location, Struct.ItemUsage.UpdateItem));
+                    //CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
+                    CSocket.Send(EudemonPacket.ItemUsage(Item.UID, Location, Struct.ItemUsage.UpdateItem));
                     if (Location == 4 || Location == 5)
                     {
                         if (Item.ItemID != 1050002 && Item.ItemID != 1050001 & Item.ItemID != 1050000)
@@ -86,7 +86,7 @@ namespace GameServer.Handlers
                             }
                         default:
                             {
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown GemID: " + Item.Soc1, Struct.ChatType.Talk));
+                                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown GemID: " + Item.Soc1, Struct.ChatType.Talk));
                                 break;
                             }
 
@@ -125,7 +125,7 @@ namespace GameServer.Handlers
                             }
                         default:
                             {
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown GemID: " + Item.Soc2, Struct.ChatType.Talk));
+                                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Please report: Unknown GemID: " + Item.Soc2, Struct.ChatType.Talk));
                                 break;
                             }
 
@@ -158,7 +158,7 @@ namespace GameServer.Handlers
                             }
                         default:
                             {
-                                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid bless: " + Item.Bless, Struct.ChatType.System));
+                                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid bless: " + Item.Bless, Struct.ChatType.System));
                                 break;
                             }
                     }
@@ -239,11 +239,11 @@ namespace GameServer.Handlers
                     }
                     #endregion
                     Calculation.Attack(CSocket);
-                    ConquerPacket.ToLocal(ConquerPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
+                    EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                 }
                 else if (TrueLoc > 0 && TrueLoc != Location)
                 {
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Incorrect equip location.", Struct.ChatType.System));
+                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Incorrect equip location.", Struct.ChatType.System));
                 }
                 else if (TrueLoc == -1)
                 {
@@ -252,7 +252,7 @@ namespace GameServer.Handlers
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item doesn't exist.", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Item doesn't exist.", Struct.ChatType.System));
             }
         }
         public static int DeterminePosition(int ItemID, int EquipLocation)

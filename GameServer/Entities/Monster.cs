@@ -129,7 +129,7 @@ namespace GameServer.Entities
                         Monitor.Exit(Nano.ItemFloor);
                     }
                     //}
-                    ConquerPacket.ToLocal(ConquerPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
+                    EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                 }
             }
             else
@@ -189,7 +189,7 @@ namespace GameServer.Entities
                         Monitor.Exit(Nano.ItemFloor);
                     }
                     //}
-                    ConquerPacket.ToLocal(ConquerPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
+                    EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                 }
                 if (Calculation.PercentSuccess(27)) //Drop an item
                 {
@@ -299,7 +299,7 @@ namespace GameServer.Entities
                         //}
                         DropItem.OwnerOnly.Start();
                         DropItem.Dispose.Start();
-                        ConquerPacket.ToLocal(ConquerPacket.DropItem(DropItem.UID, DropItem.ItemID, DropItem.X, DropItem.Y), X, Y, Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.DropItem(DropItem.UID, DropItem.ItemID, DropItem.X, DropItem.Y), X, Y, Map, 0, 0);
                     }
                 }
                 /*if(Calculation.PercentSuccess(3))
@@ -322,7 +322,7 @@ namespace GameServer.Entities
                     IG.Dispose.Elapsed += delegate { IG.Disappear(); };
                     IG.Dispose.Start();
                     Nano.ItemFloor.Add(IG.UID, IG);
-                    ConquerPacket.ToLocal(ConquerPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
+                    EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                 }*/
             }
         }
@@ -337,7 +337,7 @@ namespace GameServer.Entities
             }
             Despawn.Stop();
             Despawn.Dispose();
-            ConquerPacket.ToLocal(ConquerPacket.General(UID, X, Y, 0, 0, 0, Struct.DataType.EntityRemove), X, Y, Map, 0, 0);
+            EudemonPacket.ToLocal(EudemonPacket.General(UID, X, Y, 0, 0, 0, Struct.DataType.EntityRemove), X, Y, Map, 0, 0);
         }
         public void TriggerMove()
         {
@@ -508,8 +508,8 @@ namespace GameServer.Entities
                 }
                 X += AddX;
                 Y += AddY;
-                //ConquerPacket.ToLocal(ConquerPacket.Walk(ToDir, UID), X, Y, Map, 0, 0);
-                //ConquerPacket.ToLocal(ConquerPacket.Chat(0, Info.Name, "ALL", "Rawr! I must move to attack " + Attacked.Client.Name + "!, But I cannot for I am too lazy.", Struct.ChatType.Talk), X, Y, Map, 0, 0);
+                //EudemonPacket.ToLocal(EudemonPacket.Walk(ToDir, UID), X, Y, Map, 0, 0);
+                //EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "Rawr! I must move to attack " + Attacked.Client.Name + "!, But I cannot for I am too lazy.", Struct.ChatType.Talk), X, Y, Map, 0, 0);
                 Move.Start();
             }
             else if (Calculation.InRange(Attacked.Client.X, Attacked.Client.Y, X, Y, Info.AggroRange) && Calculation.InRange(Attacked.Client.X, Attacked.Client.Y, X, Y, AttackRange))
@@ -537,10 +537,10 @@ namespace GameServer.Entities
                 Move.Interval = Info.AttackSpeed;
                 Move.Start();
                 if (Info.Name == "CoEmuGuard")
-                    ConquerPacket.ToLocal(ConquerPacket.Chat(0, Info.Name, "ALL", "How dare you try to PK here, " + Attacked.Client.Name + ", you must die!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
+                    EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "How dare you try to PK here, " + Attacked.Client.Name + ", you must die!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
                 else if (Info.Name == "CoEmuPatrol")
-                    ConquerPacket.ToLocal(ConquerPacket.Chat(0, Info.Name, "ALL", "How dare you shows your shamed face here, " + Attacked.Client.Name + ", you must die!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
-                //ConquerPacket.ToLocal(ConquerPacket.Chat(0, Info.Name, "ALL", "Die, " + Attacked.Client.Name +"!!!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
+                    EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "How dare you shows your shamed face here, " + Attacked.Client.Name + ", you must die!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
+                //EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "Die, " + Attacked.Client.Name +"!!!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
             }
             else
             {

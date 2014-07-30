@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Things like db upgrade, item movement, etc
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] ItemUsage(int UID, int Pos, Struct.ItemUsage Usage)
         {

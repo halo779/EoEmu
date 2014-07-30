@@ -24,7 +24,7 @@ namespace GameServer.Handlers
             {
                 if (!CSocket.Client.Skills.ContainsKey(MagicID))
                 {
-                    CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have the skill.", Struct.ChatType.System));
+                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have the skill.", Struct.ChatType.System));
                     return;
                 }
                 else
@@ -72,10 +72,10 @@ namespace GameServer.Handlers
                 AttackedTNpc = Nano.TerrainNpcs[Target];
             else if (Target > 0)
             {
-                //CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target not found.", Struct.ChatType.Top));
+                //CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target not found.", Struct.ChatType.Top));
                 return;
             }
-            CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Target: " + ASocket.Client.Name + "Max HP: " + ASocket.Client.MaxHP.ToString() + "Current HP: " + ASocket.Client.CurrentHP , Struct.ChatType.System));
+            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Target: " + ASocket.Client.Name + "Max HP: " + ASocket.Client.MaxHP.ToString() + "Current HP: " + ASocket.Client.CurrentHP , Struct.ChatType.System));
                 
             if (AttackedChar != null)
             {
@@ -245,16 +245,16 @@ namespace GameServer.Handlers
                                     {
                                         ASocket.Client.CurrentHP = ASocket.Client.MaxHP;
                                         ASocket.Client.Dead = false;
-                                        ASocket.Send(ConquerPacket.Status(ASocket, 2, 0, Struct.StatusTypes.StatusEffect));
-                                        ASocket.Send(ConquerPacket.Status(ASocket, 2, ASocket.Client.Model, Struct.StatusTypes.Model));
-                                        ASocket.Send(ConquerPacket.Status(ASocket, 2, ASocket.Client.CurrentHP, Struct.StatusTypes.Hp));
-                                        ConquerPacket.ToLocal(ConquerPacket.General(ASocket.Client.ID, ASocket.Client.X, ASocket.Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), ASocket.Client.X, ASocket.Client.Y, (int)ASocket.Client.Map, 0, ASocket.Client.ID);
-                                        ConquerPacket.ToLocal(ConquerPacket.SpawnCharacter(ASocket), ASocket.Client.X, ASocket.Client.Y, (int)ASocket.Client.Map, 0, 0);
+                                        ASocket.Send(EudemonPacket.Status(ASocket, 2, 0, Struct.StatusTypes.StatusEffect));
+                                        ASocket.Send(EudemonPacket.Status(ASocket, 2, ASocket.Client.Model, Struct.StatusTypes.Model));
+                                        ASocket.Send(EudemonPacket.Status(ASocket, 2, ASocket.Client.CurrentHP, Struct.StatusTypes.Hp));
+                                        EudemonPacket.ToLocal(EudemonPacket.General(ASocket.Client.ID, ASocket.Client.X, ASocket.Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), ASocket.Client.X, ASocket.Client.Y, (int)ASocket.Client.Map, 0, ASocket.Client.ID);
+                                        EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(ASocket), ASocket.Client.X, ASocket.Client.Y, (int)ASocket.Client.Map, 0, 0);
                                     }
                                     Damage = 0;
                                     Dictionary<int, int> Targets = new Dictionary<int, int>();
                                     Targets.Add(AttackedChar.ID, Damage);
-                                    ConquerPacket.ToLocal(ConquerPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, AttackedChar.X, AttackedChar.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
+                                    EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, AttackedChar.X, AttackedChar.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
                                     Targets.Clear();
                                     break;
                                 }
@@ -264,7 +264,7 @@ namespace GameServer.Handlers
                                     Damage = Calculation.Damage(CSocket.Client, AttackedChar, AType, AttackSkill.ID, AttackSkill.Level);
                                     Calculation.doPlayer(CSocket, ASocket, Damage, AType);
                                     Targets.Add(AttackedChar.ID, Damage);
-                                    ConquerPacket.ToLocal(ConquerPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, AttackedChar.X, AttackedChar.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
+                                    EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, AttackedChar.X, AttackedChar.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
                                     Targets.Clear();
                                     break;
                                 }
@@ -298,7 +298,7 @@ namespace GameServer.Handlers
                                     Damage = Calculation.Damage(CSocket.Client, AttackedMob, AType, AttackSkill.ID, AttackSkill.Level);
                                     bool killed = Calculation.doMonster(AttackedMob, Damage, AType, CSocket);
                                     Targets.Add(AttackedMob.UID, Damage);
-                                    ConquerPacket.ToLocal(ConquerPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, AttackedMob.X, AttackedMob.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
+                                    EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, AttackedMob.X, AttackedMob.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
                                     Targets.Clear();
                                     if (!killed)
                                     {
@@ -351,7 +351,7 @@ namespace GameServer.Handlers
                         Dictionary<int, int> Targets = new Dictionary<int, int>();
                         Targets.Add(AttackedTNpc.UID, Damage);
                         Calculation.doTNpc(CSocket, AttackedTNpc, Damage, AType);
-                        ConquerPacket.ToLocal(ConquerPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, X, Y), AttackedTNpc.X, AttackedTNpc.Y, AttackedTNpc.Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, X, Y), AttackedTNpc.X, AttackedTNpc.Y, AttackedTNpc.Map, 0, 0);
                         Targets.Clear();
                         Calculation.SkillExp(AttackSkill.ID, CSocket, Damage / 10);
                         if (CSocket.Client.Attack != null)
@@ -632,7 +632,7 @@ namespace GameServer.Handlers
                                 Targets.Add(Mob.Key, Damage);
                         }
                         ToDo.Clear();
-                        ConquerPacket.ToLocal(ConquerPacket.MagicAttack(CSocket.Client.ID, Skill.ID, Skill.Level, Targets, CSocket.Client.X, CSocket.Client.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, Skill.ID, Skill.Level, Targets, CSocket.Client.X, CSocket.Client.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
                         Targets.Clear();
                         break;
                     }
@@ -759,7 +759,7 @@ namespace GameServer.Handlers
                             }
                             ToDo.Clear();
                         }
-                        ConquerPacket.ToLocal(ConquerPacket.MagicAttack(CSocket.Client.ID, Skill.ID, Skill.Level, Targets, X, Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, Skill.ID, Skill.Level, Targets, X, Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
                         Targets.Clear();
                         break;
                     }
@@ -886,7 +886,7 @@ namespace GameServer.Handlers
                             }
                             ToDo.Clear();
                         }
-                        ConquerPacket.ToLocal(ConquerPacket.MagicAttack(CSocket.Client.ID, Skill.ID, Skill.Level, Targets, X, Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, Skill.ID, Skill.Level, Targets, X, Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
                         Targets.Clear();
                         break;
                     }
@@ -1003,7 +1003,7 @@ namespace GameServer.Handlers
                                 Targets.Add(Mob.Key, Damage);
                         }
                         ToDo.Clear();
-                        ConquerPacket.ToLocal(ConquerPacket.MagicAttack(CSocket.Client.ID, Skill.ID, Skill.Level, Targets, CSocket.Client.X, CSocket.Client.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, Skill.ID, Skill.Level, Targets, CSocket.Client.X, CSocket.Client.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
                         Targets.Clear();
                         break;
                     }

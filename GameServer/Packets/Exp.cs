@@ -12,7 +12,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Sends Exp to client
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] Exp(int UID, int Type, ulong value)
         {

@@ -3,7 +3,7 @@
 
 namespace GameServer.Packets
 {
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         /// <summary>
         /// Drops an item into the conquer world.

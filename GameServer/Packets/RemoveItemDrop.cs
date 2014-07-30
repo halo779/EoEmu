@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Tells clients an item is no longer there.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] RemoveItemDropEffect(int UID, int GID, int X, int Y)
         {

@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// spawns NPCs of type Struct.NPC
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] SpawnNPC(int Type, int X, int Y, int SubType, int Dir, int Flag)
         {
@@ -16,7 +16,8 @@ namespace GameServer.Packets
             Packet.Short(Y);
             Packet.Long(SubType);
             Packet.Short(Dir);
-            Packet.Long(Flag);
+            Packet.Short(Flag);
+            Packet.Short(0);
             Packet.Long(0);
             Packet.Short(0);
             Packet.Long(0);

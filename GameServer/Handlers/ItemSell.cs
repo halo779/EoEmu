@@ -27,15 +27,15 @@ namespace GameServer.Handlers
                     {
                         CSocket.Client.Money += Money;
                         CSocket.Client.Inventory.Remove(Item.UID);
-                        CSocket.Send(ConquerPacket.ItemUsage(Item.UID, 255, Struct.ItemUsage.RemoveDropItem));
+                        CSocket.Send(EudemonPacket.ItemUsage(Item.UID, 255, Struct.ItemUsage.RemoveDropItem));
                         Database.Database.DeleteItem(Item.UID);
-                        CSocket.Send(ConquerPacket.Status(CSocket, 2, CSocket.Client.Money, Struct.StatusTypes.InvMoney));
+                        CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.Money, Struct.StatusTypes.InvMoney));
                     }
                 }
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have that item..", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] You do not have that item..", Struct.ChatType.System));
             }
         }
     }

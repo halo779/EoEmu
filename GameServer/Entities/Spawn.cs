@@ -27,11 +27,11 @@ namespace GameServer.Entities
                     ClientSocket C = Locals.Value;
                     if ((int)C.Client.Map == (int)CSocket.Client.Map && CSocket.Client.ID != C.Client.ID)
                     {
-                        CSocket.Send(ConquerPacket.SpawnCharacter(C));//testing
+                        CSocket.Send(EudemonPacket.SpawnCharacter(C));//testing
                         if (!Calculation.CanSee(CSocket.Client.PrevX, CSocket.Client.PrevY, C.Client.X, C.Client.Y))
                         {
                             if (!Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, C.Client.X, C.Client.Y))
-                                CSocket.Send(ConquerPacket.SpawnCharacter(C));
+                                CSocket.Send(EudemonPacket.SpawnCharacter(C));
                         }
                         //TODO: Send guild string packet
                     }
@@ -60,7 +60,7 @@ namespace GameServer.Entities
                         {
                             if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, Mob.X, Mob.Y))
                             {
-                                CSocket.Send(ConquerPacket.SpawnMonster(Mob.UID, Mob.Info.Mesh, Mob.X, Mob.Y, Mob.Info.Name, Mob.CurrentHP, Mob.Level, Mob.Direction));
+                                CSocket.Send(EudemonPacket.SpawnMonster(Mob.UID, Mob.Info.Mesh, Mob.X, Mob.Y, Mob.Info.Name, Mob.CurrentHP, Mob.Level, Mob.Direction));
                                 //Mob.TriggerMove();
                             }
                         }
@@ -83,14 +83,14 @@ namespace GameServer.Entities
                 Struct.NPC Npc = Npcs.Value;
                 if ((int)CSocket.Client.Map == Npc.Map)
                 {
-                    //CSocket.Send(ConquerPacket.Chat(0,"SYSTEM",CSocket.Client.Name,"NPC: " + Npc.ID.ToString() + Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, Npc.X, Npc.Y),Struct.ChatType.Talk));
+                    //CSocket.Send(EudemonPacket.Chat(0,"SYSTEM",CSocket.Client.Name,"NPC: " + Npc.ID.ToString() + Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, Npc.X, Npc.Y),Struct.ChatType.Talk));
                     //if (!Calculation.CanSee(CSocket.Client.PrevX, CSocket.Client.PrevY, Npc.X, Npc.Y))
                     if(!(Calculation.GetDistance(CSocket.Client.PrevX,CSocket.Client.PrevY,Npc.X,Npc.Y) <= 15))
                     {
-                        //CSocket.Send(ConquerPacket.SpawnNPC(Npc.Type, Npc.X, Npc.Y, Npc.SubType, Npc.Direction, Npc.Flag));//testing purposes
+                        //CSocket.Send(EudemonPacket.SpawnNPC(Npc.Type, Npc.X, Npc.Y, Npc.SubType, Npc.Direction, Npc.Flag));//testing purposes
                         if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, Npc.X, Npc.Y))
                         {
-                            CSocket.Send(ConquerPacket.SpawnNPC(Npc.Type, Npc.X, Npc.Y, Npc.SubType, Npc.Direction, Npc.Flag));
+                            CSocket.Send(EudemonPacket.SpawnNPC(Npc.ID, Npc.X, Npc.Y, Npc.SubType, Npc.Direction, Npc.Flag));
                         }
                     }
                 }
@@ -109,7 +109,7 @@ namespace GameServer.Entities
                         {
                             if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, IG.X, IG.Y))
                             {
-                                CSocket.Send(ConquerPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y));
+                                CSocket.Send(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y));
                             }
                         }
                     }
@@ -137,16 +137,16 @@ namespace GameServer.Entities
                             {
                                 if (TNpc.UID == 6700)
                                 {
-                                    CSocket.Send(ConquerPacket.TerrainNPC(TNpc.UID, TNpc.MaximumHP, TNpc.CurrentHP, TNpc.X, TNpc.Y, TNpc.Type, Nano.PoleHolder, TNpc.Flag));
+                                    CSocket.Send(EudemonPacket.TerrainNPC(TNpc.UID, TNpc.MaximumHP, TNpc.CurrentHP, TNpc.X, TNpc.Y, TNpc.Type, Nano.PoleHolder, TNpc.Flag));
                                 }
                                 else
                                 {
-                                    CSocket.Send(ConquerPacket.TerrainNPC(TNpc.UID, TNpc.MaximumHP, TNpc.CurrentHP, TNpc.X, TNpc.Y, TNpc.Type, "Gate", TNpc.Flag));
+                                    CSocket.Send(EudemonPacket.TerrainNPC(TNpc.UID, TNpc.MaximumHP, TNpc.CurrentHP, TNpc.X, TNpc.Y, TNpc.Type, "Gate", TNpc.Flag));
                                 }
                             }
                             else
                             {
-                                CSocket.Send(ConquerPacket.TerrainNPC(TNpc));
+                                CSocket.Send(EudemonPacket.TerrainNPC(TNpc));
                             }
                         }
                     }

@@ -186,8 +186,8 @@ namespace GameServer.Database
                 }
                 Client.Name = Convert.ToString(DR["Name"]);
                 Client.Spouse = Convert.ToString(DR["Spouse"]);
-                Client.X = Convert.ToInt32(DR["xCord"]);
-                Client.Y = Convert.ToInt32(DR["yCord"]);
+                Client.X = (ushort)Convert.ToInt32(DR["xCord"]);
+                Client.Y = (ushort)Convert.ToInt32(DR["yCord"]);
                 Client.EPs = Convert.ToInt32(DR["EPoints"]);
                 Client.Level = Convert.ToInt32(DR["Level"]);
                 Client.CurrentHP = Convert.ToInt32(DR["HP"]);

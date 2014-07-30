@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Various spawn effects for monsters.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] MobSpawnEffect(int ID, int X, int Y, int Dir, int UK)
         {

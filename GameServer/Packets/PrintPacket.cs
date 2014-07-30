@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// A string to print packet datas
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static void PrintPacket(byte[] Data)
         {

@@ -7,7 +7,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Notifies clients that a dictionary of monsters has been hit by a magic attack.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] MagicAttack(int Attacker, int Spell, int Level, Dictionary<int, int> Targets, int X, int Y)
         {

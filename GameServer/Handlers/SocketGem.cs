@@ -36,13 +36,13 @@ namespace GameServer.Handlers
                 CSocket.Client.Inventory.Remove(GItemID);
                 Database.Database.UpdateItem(Item);
                 Database.Database.DeleteItem(GItemID);
-                CSocket.Send(ConquerPacket.ItemUsage(ItemID, 255, Struct.ItemUsage.RemoveDropItem));
-                CSocket.Send(ConquerPacket.ItemUsage(GItemID, 255, Struct.ItemUsage.RemoveDropItem));
-                CSocket.Send(ConquerPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
+                CSocket.Send(EudemonPacket.ItemUsage(ItemID, 255, Struct.ItemUsage.RemoveDropItem));
+                CSocket.Send(EudemonPacket.ItemUsage(GItemID, 255, Struct.ItemUsage.RemoveDropItem));
+                CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
             }
             else
             {
-                CSocket.Send(ConquerPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] One of your items does not exist.", Struct.ChatType.System));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] One of your items does not exist.", Struct.ChatType.System));
             }
         }
     }

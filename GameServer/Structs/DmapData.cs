@@ -49,7 +49,7 @@ namespace GameServer.Structs
                 dmReader.Close();
                 dmFile.Dispose();
             }
-            public bool CheckLoc(ushort x, ushort y)
+            public bool CheckLoc(int x, int y)
             {
                 try
                 {

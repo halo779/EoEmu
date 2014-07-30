@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Tells the client if the minimap should be shown or not.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] MiniMap(bool Show)
         {

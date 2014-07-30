@@ -6,7 +6,7 @@ namespace GameServer.Packets
     /// <summary>
     /// Sends various forms of NPC talking.
     /// </summary>
-    public partial class ConquerPacket
+    public partial class EudemonPacket
     {
         public static byte[] NPCTalk(int LinkBack, int DT, string Text)
         {
