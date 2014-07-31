@@ -203,6 +203,7 @@
     <Compile Include="Packets\TerrainNPC.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Packets\Tick.cs" />
     <Compile Include="Packets\Walk.cs">
       <SubType>Code</SubType>
     </Compile>

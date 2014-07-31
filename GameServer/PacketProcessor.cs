@@ -232,6 +232,7 @@ namespace GameServer
                                 }
                                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "ANSWER_OK", Struct.ChatType.LoginInformation));
                                 CSocket.Send(EudemonPacket.CharacterInfo(CSocket));
+                                CSocket.Send(EudemonPacket.Status(CSocket, Struct.StatusTypes.MAXMANA, CSocket.Client.MaxMP));
                                 //CSocket.Send(EudemonPacket.MiniMap(true));
                                 //PLEASE DO NOT REMOVE THIS CODE!
                                 //CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 0, 0, 0, 0, 0, Struct.DataType.ConfirmLoginComplete));
@@ -260,7 +261,33 @@ namespace GameServer
                                     Handler.Text("Welcome to the world of EOEmu!", CSocket);
                                     Handler.End(CSocket);
                                 }
-                                //EudemonPacket.ToServer(EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", CSocket.Client.Name + " has come online.", Struct.ChatType.Top), 0);
+                                EudemonPacket.ToServer(EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", CSocket.Client.Name + " has come online.", Struct.ChatType.System), 0);
+
+                                CSocket.Client.Save = new System.Timers.Timer();
+                                CSocket.Client.Save.Elapsed += delegate
+                                {
+                                    Database.Database.SaveCharacter(CSocket.Client);
+                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Saved " + CSocket.Client.Name, Struct.ChatType.System));
+                                };
+                                CSocket.Client.Save.Interval = 200000;
+                                CSocket.Client.Save.Start();
+                                CSocket.Client.UpStam = new System.Timers.Timer();
+                                CSocket.Client.UpStam.Interval = 1000;
+                                CSocket.Client.UpStam.Elapsed += delegate
+                                {
+                                    CSocket.AddStam();
+                                };
+                                CSocket.Client.UpStam.Start();
+                                CSocket.Client.LastAttack = System.Environment.TickCount;
+
+                                CSocket.Client.Tick = new System.Timers.Timer();
+                                CSocket.Client.Tick.Interval = 10000;
+                                CSocket.Client.Tick.Elapsed += delegate
+                                {
+                                    CSocket.Send(EudemonPacket.Tick(CSocket.Client.ID));
+                                };
+                                CSocket.Client.Tick.Start();
+                                CSocket.Send(EudemonPacket.Tick(CSocket.Client.ID));
                                 
                             }
                             else
@@ -579,8 +606,16 @@ namespace GameServer
                             //CSocket.Client.Y = RY;
                             int Direction = data[16] % 8;
                             int MoveMode = data[17];
-                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "X: " + RX + " Y: " + RY + " Direction: " + Direction + " Mode: " + ((Handler.MovementModes)MoveMode).ToString(), Struct.ChatType.Talk));
+                            //Debug Walk code.
+                            //CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "X: " + RX + " Y: " + RY + " Direction: " + Direction + " Mode: " + ((Handler.MovementModes)MoveMode).ToString(), Struct.ChatType.Talk));
                             Handler.Walk(Direction, (Handler.MovementModes)MoveMode, CSocket);
+                            break;
+                        }
+                    #endregion
+                    #region Tick Packet (1012)
+                    case 1012:
+                        {
+                            //@TODO: actually process and get the 1012
                             break;
                         }
                     #endregion
@@ -588,42 +623,27 @@ namespace GameServer
                     #region 0x3f2(1010) Multi-Function Packet
                     case 1010: // 0x3f2, Multi-Function Packet
                         {
-                            /*if (data.Length < 0x29)
-                                                    break;*/
                             int SubType = BitConverter.ToInt16(data, 24) - 9527;
-                            int Dir = BitConverter.ToInt16(data, 16);
+                            ushort Dir = BitConverter.ToUInt16(data, 16);
                             int idTarget = BitConverter.ToInt32(data, 20);
                             uint dwData = BitConverter.ToUInt32(data, 20);
+
                             switch ((Struct.DataType)SubType)
                             {
                                 case Struct.DataType.actionEnterMap: //Start login sequence. //actionEnterMap //14
                                     {
-                                        Console.WriteLine("[GameServer] "+ CSocket.Client.Name + "Is Entering the Map " + CSocket.Client.Map.ToString());
+                                        Console.WriteLine("[GameServer] "+ CSocket.Client.Name + " Is Entering the Map " + CSocket.Client.Map.ToString());
                                         CSocket.Send(EudemonPacket.General(1, (int)CSocket.Client.Map, CSocket.Client.X, CSocket.Client.Y, 0, (int)CSocket.Client.Map, Structs.Struct.DataType.actionEnterMap));
                                         EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                                         Spawn.All(CSocket);
-                                        CSocket.Client.Save = new System.Timers.Timer();
-                                        CSocket.Client.Save.Elapsed += delegate {
-                                            Database.Database.SaveCharacter(CSocket.Client);
-                                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Saved " + CSocket.Client.Name, Struct.ChatType.System));
-                                        };
-                                        CSocket.Client.Save.Interval = 200000;
-                                        CSocket.Client.Save.Start();
-                                        CSocket.Client.UpStam = new System.Timers.Timer();
-                                        CSocket.Client.UpStam.Interval = 1000;
-                                        CSocket.Client.UpStam.Elapsed += delegate { 
-                                            CSocket.AddStam();
-                                        };
-                                        CSocket.Client.UpStam.Start();
-                                        //CSocket.Send(EudemonPacket.Status(CSocket, 2, CSocket.Client.CurrentStam, Struct.StatusTypes.Stamina));
-                                        CSocket.Client.LastAttack = System.Environment.TickCount;
+                                        
                                         break;
                                     }
 
-                                case Struct.DataType.Direction:
+                                case Struct.DataType.actionChgDir:
                                     {
-                                        CSocket.Client.Direction = (ushort)Dir;
-                                        EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.Direction, 0), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
+                                        CSocket.Client.Direction = Dir;
+                                        EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.actionChgDir, 0), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                                         //@TODO broardcast to all but self.
                                         
                                         break;
@@ -661,6 +681,7 @@ namespace GameServer
    
                                 default:
                                     {
+                                        CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Handler-Error] Please report: Unable to handle packet 0x3F2 Sub type " + SubType, Struct.ChatType.System));
                                         Console.WriteLine("[GameServer] Unknown 0x3F2 Packet Subtype: " + SubType);
                                         break;
                                     }

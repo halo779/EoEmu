@@ -9,6 +9,8 @@ namespace GameServer.Structs
     {
         public enum DataType : int
         {
+            actionChgDir = 1,
+            actionChgMap= 7,
             actionGetItemSet = 15,
             actionSetPkMode = 29,
             actionGetWeaponSkillSet = 27,

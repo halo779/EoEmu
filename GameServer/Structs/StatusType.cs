@@ -12,6 +12,7 @@ namespace GameServer.Structs
         {
             Hp = 0, // ^ switch 2
             Mp = 2,// ^ switch 2
+            MAXMANA = 3,
             InvMoney = 4,// ?
             Exp = 5,// ?
             PKPoints = 6,//switch 2

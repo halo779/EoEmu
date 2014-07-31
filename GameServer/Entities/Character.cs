@@ -126,5 +126,6 @@ namespace GameServer.Entities
         public Timer UpStam;
         public Timer Save;
         public Timer FlashTimer;
+        public Timer Tick;
     }
 }
