@@ -11,11 +11,13 @@ namespace GameServer.Structs
         {
             actionChgDir = 1,
             actionChgMap= 7,
+            actionFlyMap = 8,
             actionGetItemSet = 15,
             actionSetPkMode = 29,
             actionGetWeaponSkillSet = 27,
             UnkownLogin = 210,//@TODO CHECK THIS - aka eudtype apparently.
             actionEnterMap = 14,
+            actionMapARGB = 40,
             actionKickBack = 57,
             HotKeys = 75,
             ConfirmFriends = 76,

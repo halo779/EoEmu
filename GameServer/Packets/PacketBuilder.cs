@@ -87,6 +87,10 @@ namespace GameServer.Packets
             _buffer[Position] = (byte)(value & 0xff);
             Position++;
         }
+        public void Byte(int value)
+        {
+            Int(value);
+        }
         public void Int(int value)
         {
             _buffer[Position] = (Convert.ToByte(value & 0xff));

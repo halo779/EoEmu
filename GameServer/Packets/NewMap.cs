@@ -8,25 +8,22 @@ namespace GameServer.Packets
     /// </summary>
     public partial class EudemonPacket
     {
-        public static byte[] NewMap(int MapID)
+        public static byte[] NewMap(int MapID, int MapType, int MapInstance)
+        {
+            PacketBuilder Packet = new PacketBuilder(1110, 16);
+            Packet.Long(MapID);
+            Packet.Long(MapInstance);
+            Packet.Long(MapType);
+            return Packet.getFinal();
+        }
+
+        public static byte[] NewMap(int MapID, int MapType)
         {
             PacketBuilder Packet = new PacketBuilder(1110, 16);
             Packet.Long(MapID);
             Packet.Long(MapID);
-            Packet.Long(65666);
+            Packet.Long(MapType);
             return Packet.getFinal();
         }
-        //public static byte[] NewMap(int MapID)
-        //{
-        //    PacketBuilder Packet = new PacketBuilder(1110, 28);
-        //    Packet.Long(13021937);
-        //    Packet.Long(MapID);
-        //    Packet.Short(294);
-        //    Packet.Short(412);
-        //    Packet.Long(0);
-        //    Packet.Long(MapID);
-        //    Packet.Long(9541);
-        //    return Packet.getFinal();
-        //}
     }
 }

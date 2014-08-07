@@ -634,6 +634,7 @@ namespace GameServer
                                     {
                                         Console.WriteLine("[GameServer] "+ CSocket.Client.Name + " Is Entering the Map " + CSocket.Client.Map.ToString());
                                         CSocket.Send(EudemonPacket.General(1, (int)CSocket.Client.Map, CSocket.Client.X, CSocket.Client.Y, 0, (int)CSocket.Client.Map, Structs.Struct.DataType.actionEnterMap));
+                                        CSocket.Send(EudemonPacket.NewMap((int)CSocket.Client.Map, 2097152, (int)CSocket.Client.Map)); //@TODO: Check for Instancing and Load map type from database.
                                         EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                                         Spawn.All(CSocket);
                                         
@@ -646,6 +647,17 @@ namespace GameServer
                                         EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.actionChgDir, 0), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                                         //@TODO broardcast to all but self.
                                         
+                                        break;
+                                    }
+                                case Struct.DataType.actionChgMap:
+                                    {
+                                        if (CSocket.Client.Dead)
+                                        {
+                                            //@TODO: handle making sure dead is dead.
+                                            break;
+                                        }
+                                        //@TODO: Make sure Player has stopped all actions.
+
                                         break;
                                     }
                                 case Struct.DataType.actionGetItemSet: //actionGetItemSet //15

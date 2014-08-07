@@ -197,6 +197,7 @@
     <Compile Include="Packets\Status.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Packets\String.cs" />
     <Compile Include="Packets\Team.cs">
       <SubType>Code</SubType>
     </Compile>
