@@ -337,7 +337,7 @@ namespace GameServer.Entities
             }
             Despawn.Stop();
             Despawn.Dispose();
-            EudemonPacket.ToLocal(EudemonPacket.General(UID, X, Y, 0, 0, 0, Struct.DataType.EntityRemove), X, Y, Map, 0, 0);
+            EudemonPacket.ToLocal(EudemonPacket.General(UID, (ushort)X, (ushort)Y, (ushort)Direction, Struct.DataType.EntityRemove, 0), X, Y, Map, 0, 0);//@TODO: Convert Moster to use ushorts.
         }
         public void TriggerMove()
         {

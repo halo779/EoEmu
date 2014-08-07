@@ -238,26 +238,6 @@ namespace GameServer.Handlers
                         }
                         switch (AttackSkill.ID)
                         {
-                            //TODO: Special effects for spells like FireOfHell, Revive, etc here
-                            case 1100://Revive!
-                                {
-                                    if (ASocket.Client.Dead)
-                                    {
-                                        ASocket.Client.CurrentHP = ASocket.Client.MaxHP;
-                                        ASocket.Client.Dead = false;
-                                        ASocket.Send(EudemonPacket.Status(ASocket, 2, 0, Struct.StatusTypes.StatusEffect));
-                                        ASocket.Send(EudemonPacket.Status(ASocket, 2, ASocket.Client.Model, Struct.StatusTypes.Model));
-                                        ASocket.Send(EudemonPacket.Status(ASocket, 2, ASocket.Client.CurrentHP, Struct.StatusTypes.Hp));
-                                        EudemonPacket.ToLocal(EudemonPacket.General(ASocket.Client.ID, ASocket.Client.X, ASocket.Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), ASocket.Client.X, ASocket.Client.Y, (int)ASocket.Client.Map, 0, ASocket.Client.ID);
-                                        EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(ASocket), ASocket.Client.X, ASocket.Client.Y, (int)ASocket.Client.Map, 0, 0);
-                                    }
-                                    Damage = 0;
-                                    Dictionary<int, int> Targets = new Dictionary<int, int>();
-                                    Targets.Add(AttackedChar.ID, Damage);
-                                    EudemonPacket.ToLocal(EudemonPacket.MagicAttack(CSocket.Client.ID, AttackSkill.ID, AttackSkill.Level, Targets, AttackedChar.X, AttackedChar.Y), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
-                                    Targets.Clear();
-                                    break;
-                                }
                             default:
                                 {
                                     Dictionary<int, int> Targets = new Dictionary<int, int>();

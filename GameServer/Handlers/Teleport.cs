@@ -21,7 +21,8 @@ namespace GameServer.Handlers
                 if (Instance == 0)
                     Instance = Map;
                 //@TODO: Check Map Pos is Valid.
-                EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
+                EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.EntityRemove, 0), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
+                //EudemonPacket.ToLocal(EudemonPacket.GeneralOld(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                 CSocket.Client.Map = (Struct.Maps)Map;
                 CSocket.Client.X = X;
                 CSocket.Client.Y = Y;
@@ -30,7 +31,7 @@ namespace GameServer.Handlers
                 CSocket.Send(EudemonPacket.NewMap((int)CSocket.Client.Map, 2097152, Instance));
                 EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                 //@TODO: work out the point of ARGB.
-                //CSocket.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.actionMapARGB, 65535));
+                //CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.actionMapARGB, 65535));
 
 
 

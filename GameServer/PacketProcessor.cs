@@ -192,7 +192,7 @@ namespace GameServer
                                 User.Expire(false);
                                 CSocket.Client = Database.Database.GetCharacter(User.Account);
 
-                                //CSocket.Send(EudemonPacket.General(0, 2024554494, 0, 0, 0, 2024554494, Struct.DataType.UnkownLogin)); // test byte in proper packet form - sets client to send 1010 packet
+                                //CSocket.Send(EudemonPacket.GeneralOld(0, 2024554494, 0, 0, 0, 2024554494, Struct.DataType.UnkownLogin)); // test byte in proper packet form - sets client to send 1010 packet
                                 if (CSocket.Client == null)
                                 {                                               
                                     Console.WriteLine("[" + Nano.AuthenticatedLogins[Keys].Key + "] Making account");
@@ -235,11 +235,11 @@ namespace GameServer
                                 CSocket.Send(EudemonPacket.Status(CSocket, Struct.StatusTypes.MAXMANA, CSocket.Client.MaxMP));
                                 //CSocket.Send(EudemonPacket.MiniMap(true));
                                 //PLEASE DO NOT REMOVE THIS CODE!
-                                //CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 0, 0, 0, 0, 0, Struct.DataType.ConfirmLoginComplete));
+                                //CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, 0, 0, 0, 0, 0, Struct.DataType.ConfirmLoginComplete));
                                 //CSocket.Send(EudemonPacket.Status(CSocket, 2, 0, Struct.StatusTypes.StatusEffect));
                                 //CSocket.Send(String_To_Bytes("3900F003000000007D494C5EA4410600B60BB80B01000400000000000000000000000000000000000000000000000000000000000000000100"));
                                 //CSocket.Send(EudemonPacket.ItemInfo(0,410020 ,50 , 0, 0, 2998, 3000, 4, 0, 0, 0));
-                                //CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, 40, 1, 0, 0, Struct.DataType.testingloginitemcount));
+                                //CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 40, 1, 0, 0, Struct.DataType.testingloginitemcount));
                                 foreach (KeyValuePair<int, Struct.ItemInfo> Item in CSocket.Client.Inventory)
                                 {
                                     //CSocket.Send(EudemonPacket.ItemInfo(Item.Value.UID, Item.Value.ItemID, Item.Value.Plus, Item.Value.Bless, Item.Value.Enchant, Item.Value.Soc1, Item.Value.Soc2, Item.Value.Dura, Item.Value.MaxDura, Item.Value.Position, Item.Value.Color));
@@ -247,7 +247,7 @@ namespace GameServer
                                 }
                                                                
                                 //CSocket.Send(EudemonPacket.EudemonTopIndicator(2024553253, 1071210));
-                                //CSocket.Send(EudemonPacket.General(0, 2024553253, 0, 0, 0, 2024553253, Struct.DataType.eudtype));
+                                //CSocket.Send(EudemonPacket.GeneralOld(0, 2024553253, 0, 0, 0, 2024553253, Struct.DataType.eudtype));
                                 //CSocket.Send(String_To_Bytes("B800F50701000000253BAC7815000000060000001400000007000000140000000A000000010000000800000064000000090000000000000037000000000000000C000000040000000E000000000000000F0000000000000010000000000000001100000000000000120000000000000013000000020000001500000008000000170000000100000019000000780900001A0000005D0400001B000000450800001C0000001400000032000000000000003300000000000000"));
                                 
 
@@ -633,7 +633,7 @@ namespace GameServer
                                 case Struct.DataType.actionEnterMap: //Start login sequence. //actionEnterMap //14
                                     {
                                         Console.WriteLine("[GameServer] "+ CSocket.Client.Name + " Is Entering the Map " + CSocket.Client.Map.ToString());
-                                        CSocket.Send(EudemonPacket.General(1, (int)CSocket.Client.Map, CSocket.Client.X, CSocket.Client.Y, 0, (int)CSocket.Client.Map, Structs.Struct.DataType.actionEnterMap));
+                                        CSocket.Send(EudemonPacket.GeneralOld(1, (int)CSocket.Client.Map, CSocket.Client.X, CSocket.Client.Y, 0, (int)CSocket.Client.Map, Structs.Struct.DataType.actionEnterMap));
                                         CSocket.Send(EudemonPacket.NewMap((int)CSocket.Client.Map, 2097152, (int)CSocket.Client.Map)); //@TODO: Check for Instancing and Load map type from database.
                                         EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                                         Spawn.All(CSocket);
@@ -662,7 +662,7 @@ namespace GameServer
                                     }
                                 case Struct.DataType.actionGetItemSet: //actionGetItemSet //15
                                     {
-                                        CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, 0, 0, 0, 1, Struct.DataType.actionSetPkMode));
+                                        CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 0, 0, 0, 1, Struct.DataType.actionSetPkMode));
 
                                         CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Class: " + CSocket.Client.Class, Struct.ChatType.Talk));
                                        break;
@@ -672,7 +672,7 @@ namespace GameServer
                                        Packet1.Long(410);
                                        //CSocket.Send(Packet1.getFinal());
 
-                                       //CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, 0, 0, 0, 0, Struct.DataType.UiMaybe2));
+                                       //CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 0, 0, 0, 0, Struct.DataType.UiMaybe2));
                                        PacketBuilder Packet2 = new PacketBuilder(1044, 12);
                                        Packet2.Long(1);
                                        Packet2.Long(0);
@@ -686,7 +686,7 @@ namespace GameServer
                                         if (PkType > 4)
                                             break; //spot of error checking
                                         CSocket.Client.PKMode = (Struct.PkType)PkType;
-                                        CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, 0, 0, 0, (int)PkType, Struct.DataType.actionSetPkMode));
+                                        CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 0, 0, 0, (int)PkType, Struct.DataType.actionSetPkMode));
                                         CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "PK Mode Changed to " + CSocket.Client.PKMode.ToString() + " Mode.", Struct.ChatType.System));
                                         break;
                                     }

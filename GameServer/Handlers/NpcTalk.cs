@@ -34,7 +34,7 @@ namespace GameServer.Handlers
                         }
                         else if (LinkBack == 1)
                         {
-                            CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, 319, 445, 4, 37, Struct.DataType.Dialog));
+                            CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 319, 445, 4, 37, Struct.DataType.Dialog));
                         }
                         break;
                     }
@@ -49,7 +49,7 @@ namespace GameServer.Handlers
                         }
                         else if (LinkBack == 1)
                         {
-                            CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, (int)Struct.Dialog.ItemHighBonus, Struct.DataType.Dialog));
+                            CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, (int)Struct.Dialog.ItemHighBonus, Struct.DataType.Dialog));
                         }
 
                         break;
@@ -65,34 +65,34 @@ namespace GameServer.Handlers
                         }
                         else if (LinkBack == 1)
                         {
-                            CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, (int)Struct.Dialog.ItemBonus, Struct.DataType.Dialog));
+                            CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, (int)Struct.Dialog.ItemBonus, Struct.DataType.Dialog));
                         }
                         
                         break;
                     }
                 case 10012://PC - WHS
                     {
-                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 10011://DC - WHS
                     {
-                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 10028://AM - WHS
                     {
-                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 10027://BI - WHS
                     {
-                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 44://MA - WHS
                     {
-                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
+                        CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, 4, 0, 0, 0, 0, Struct.DataType.Dialog));
                         break;
                     }
                 case 10050: //TC - Conductress

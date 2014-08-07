@@ -182,7 +182,7 @@ namespace GameServer.Connections
                                 Client.Team = null;
                             }
                         }
-                        EudemonPacket.ToLocal(EudemonPacket.General(Client.ID, Client.X, Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), Client.X, Client.Y, (int)Client.Map, 0, Client.ID);
+                        EudemonPacket.ToLocal(EudemonPacket.General(Client.ID, Client.X, Client.Y, Client.Direction, Struct.DataType.EntityRemove, 0), Client.X, Client.Y, (int)Client.Map, 0, Client.ID);
                     }
                     Database.Database.SaveCharacter(Client);
                     if (Client.UpStam != null)

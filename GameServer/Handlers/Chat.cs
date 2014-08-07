@@ -67,7 +67,8 @@ namespace GameServer.Handlers
                         case "dl":
                             {
                                 int type = Convert.ToInt16(Command[1]);
-                                CSocket.Send(EudemonPacket.General(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, type, Struct.DataType.Dialog));
+                                CSocket.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.Dialog, type));
+                                //CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, type, Struct.DataType.Dialog));
                                 break;
                             }
                         case "pos":
@@ -251,7 +252,7 @@ namespace GameServer.Handlers
                                         CSocket.Client.Invincible = false;
                                         CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "You are no longer flagged as invincible.", Struct.ChatType.System));
                                     }
-                                    EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
+                                    EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.EntityRemove, 0), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                                     EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
 
                                 }

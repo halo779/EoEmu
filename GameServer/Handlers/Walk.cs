@@ -117,7 +117,7 @@ namespace GameServer.Handlers
                             if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, C.Client.X, C.Client.Y))
                                 C.Send(WalkPacket);
                             else
-                                C.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, 0, 0, Struct.DataType.EntityRemove));
+                                C.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, 0, 0, Struct.DataType.EntityRemove));
                         }
                     }
                 }
