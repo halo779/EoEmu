@@ -15,6 +15,7 @@ namespace GameServer.Structs
             actionGetItemSet = 15,
             actionSetPkMode = 29,
             actionGetWeaponSkillSet = 27,
+            actionQueryPlayer = 38,
             UnkownLogin = 210,//@TODO CHECK THIS - aka eudtype apparently.
             actionEnterMap = 14,
             actionMapARGB = 40,

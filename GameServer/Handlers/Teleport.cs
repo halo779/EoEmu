@@ -22,7 +22,7 @@ namespace GameServer.Handlers
                     Instance = Map;
                 //@TODO: Check Map Pos is Valid.
                 EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.EntityRemove, 0), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
-                //EudemonPacket.ToLocal(EudemonPacket.GeneralOld(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 0, 0, 0, Struct.DataType.EntityRemove), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
+                
                 CSocket.Client.Map = (Struct.Maps)Map;
                 CSocket.Client.X = X;
                 CSocket.Client.Y = Y;

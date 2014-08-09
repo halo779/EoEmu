@@ -115,7 +115,10 @@ namespace GameServer.Handlers
                         else
                         {
                             if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, C.Client.X, C.Client.Y))
+                            {
                                 C.Send(WalkPacket);
+                                C.Send(EudemonPacket.Chat(0, "SYSTEM", C.Client.Name, "Player Moved to ." + CSocket.Client.X + ", " + CSocket.Client.Y, Struct.ChatType.System));
+                            }
                             else
                                 C.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, 0, 0, Struct.DataType.EntityRemove));
                         }

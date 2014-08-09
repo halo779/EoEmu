@@ -620,7 +620,7 @@ namespace GameServer
                         }
                     #endregion
 
-                    #region 0x3f2(1010) Multi-Function Packet
+                    #region Multi-Function Packet 0x3f2(1010)
                     case 1010: // 0x3f2, Multi-Function Packet
                         {
                             int SubType = BitConverter.ToInt16(data, 24) - 9527;
@@ -638,6 +638,46 @@ namespace GameServer
                                         EudemonPacket.ToLocal(EudemonPacket.SpawnCharacter(CSocket), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
                                         Spawn.All(CSocket);
                                         
+                                        break;
+                                    }
+                                case Struct.DataType.actionQueryPlayer:
+                                    {
+                                        ClientSocket targetCS = null;
+                                        try
+                                        {
+                                            Monitor.Enter(Nano.ClientPool);
+                                            foreach (KeyValuePair<int, ClientSocket> Tests in Nano.ClientPool)
+                                            {
+                                                ClientSocket C = Tests.Value;
+                                                if (C.Client.ID == idTarget)
+                                                    targetCS = C;
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.ToString());
+                                        }
+                                        finally
+                                        {
+                                            Monitor.Exit(Nano.ClientPool);
+                                        }
+                                        //@TODO: Move this to dedicated function.
+                                        if (targetCS != null)
+                                        {
+                                            if (Calculation.GetDistance(CSocket.Client.X, CSocket.Client.Y, targetCS.Client.X, targetCS.Client.Y) <= 18) //CELLS_PER_VIEW
+                                            {
+                                                CSocket.Send(EudemonPacket.SpawnCharacter(targetCS));
+                                                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Info] Querying Player.", Struct.ChatType.System));//@TODO: remove debug message.
+                                            }
+                                            else
+                                            {
+                                                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Too Far from Player.", Struct.ChatType.System));//@TODO: remove debug message.
+                                            }
+                                        }
+                                        else
+                                        {
+                                            CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid Player ID.", Struct.ChatType.System));
+                                        }
                                         break;
                                     }
 
