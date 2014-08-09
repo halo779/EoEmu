@@ -115,7 +115,7 @@ namespace GameServer.Connections
                 {
                     //Data = Crypt.Encrypt(Data);
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("[Packetlogger] Sending Packet: ");
+                    Console.WriteLine("[Packetlogger] Sending Packet to Client [" + Client.ID + " - " + Client.Name +"]: ");
                     Console.ResetColor();
                     Console.WriteLine(PacketProcessor.Dump(Data));
                     try

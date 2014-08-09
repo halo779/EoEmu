@@ -17,8 +17,6 @@ namespace GameServer.Entities
     {
         public static void All(ClientSocket CSocket)
         {
-            //lock(Nano.ClientPool)
-            //{
             try
             {
                 Monitor.Enter(Nano.ClientPool);
@@ -27,13 +25,12 @@ namespace GameServer.Entities
                     ClientSocket C = Locals.Value;
                     if ((int)C.Client.Map == (int)CSocket.Client.Map && CSocket.Client.ID != C.Client.ID)
                     {
-                        CSocket.Send(EudemonPacket.SpawnCharacter(C));//testing
                         if (!Calculation.CanSee(CSocket.Client.PrevX, CSocket.Client.PrevY, C.Client.X, C.Client.Y))
                         {
                             if (!Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, C.Client.X, C.Client.Y))
                                 CSocket.Send(EudemonPacket.SpawnCharacter(C));
                         }
-                        //TODO: Send guild string packet
+                        //@TODO: Send guild string packet
                     }
                 }
             }
@@ -45,9 +42,6 @@ namespace GameServer.Entities
             {
                 Monitor.Exit(Nano.ClientPool);
             }
-            //}
-            //lock(Nano.Monsters)
-            //{
             try
             {
                 Monitor.Enter(Nano.Monsters);
@@ -77,17 +71,13 @@ namespace GameServer.Entities
             {
                 Monitor.Exit(Nano.Monsters);
             }
-            //}
             foreach (KeyValuePair<int, Struct.NPC> Npcs in Nano.Npcs)
             {
                 Struct.NPC Npc = Npcs.Value;
                 if ((int)CSocket.Client.Map == Npc.Map)
                 {
-                    //CSocket.Send(EudemonPacket.Chat(0,"SYSTEM",CSocket.Client.Name,"NPC: " + Npc.ID.ToString() + Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, Npc.X, Npc.Y),Struct.ChatType.Talk));
-                    //if (!Calculation.CanSee(CSocket.Client.PrevX, CSocket.Client.PrevY, Npc.X, Npc.Y))
                     if(!(Calculation.GetDistance(CSocket.Client.PrevX,CSocket.Client.PrevY,Npc.X,Npc.Y) <= 15))
                     {
-                        //CSocket.Send(EudemonPacket.SpawnNPC(Npc.Type, Npc.X, Npc.Y, Npc.SubType, Npc.Direction, Npc.Flag));//testing purposes
                         if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, Npc.X, Npc.Y))
                         {
                             CSocket.Send(EudemonPacket.SpawnNPC(Npc.ID, Npc.X, Npc.Y, Npc.SubType, Npc.Direction, Npc.Flag));
@@ -95,8 +85,6 @@ namespace GameServer.Entities
                     }
                 }
             }
-            //lock(Nano.ItemFloor)
-            //{
             try
             {
                 Monitor.Enter(Nano.ItemFloor);
@@ -123,7 +111,6 @@ namespace GameServer.Entities
             {
                 Monitor.Exit(Nano.ItemFloor);
             }
-            //}
             foreach (KeyValuePair<int, Struct.TerrainNPC> Tnpcs in Nano.TerrainNpcs)
             {
                 Struct.TerrainNPC TNpc = Tnpcs.Value;

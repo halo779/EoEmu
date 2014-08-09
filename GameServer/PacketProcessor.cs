@@ -165,7 +165,10 @@ namespace GameServer
                 }
                 #endregion
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("[PacketLog] New Packet Received, Type: " + Type);
+                if(CSocket.Client != null)
+                    Console.WriteLine("[PacketLog] New Packet Received From [" + CSocket.Client.ID + " - " + CSocket.Client.Name + "] Packet Type: " + Type + " Packet Size: " + Length);
+                else
+                    Console.WriteLine("[PacketLog] New Packet Received From [Unknown Client] Packet Type: " + Type + " Packet Size: " + Length);
                 Console.ResetColor();
                 Console.WriteLine(Dump(data));
                 switch (Type)
@@ -587,8 +590,8 @@ namespace GameServer
                         }
 
                     #endregion
-                    #region 0x3ED(1005) Walk Packet
-                    case 3005: //Walk packet
+                    #region WalkRun Packet (3005)
+                    case 3005: //WalkRun packet
                         {
                             //CSocket.Client.LastAttack = 0;
                             if (CSocket.Client.Attack != null)
@@ -602,13 +605,10 @@ namespace GameServer
                             int RX = (BitConverter.ToInt16(data, 12));
                             int RY = (BitConverter.ToInt16(data, 14));
                             //@TODO: check last cords vs current.
-                            //CSocket.Client.X = RX;
-                            //CSocket.Client.Y = RY;
-                            int Direction = data[16] % 8;
-                            int MoveMode = data[17];
-                            //Debug Walk code.
-                            //CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "X: " + RX + " Y: " + RY + " Direction: " + Direction + " Mode: " + ((Handler.MovementModes)MoveMode).ToString(), Struct.ChatType.Talk));
-                            Handler.Walk(Direction, (Handler.MovementModes)MoveMode, CSocket);
+
+                            int ucDir = BitConverter.ToInt16(data, 16);
+
+                            Handler.Walk(ucDir, CSocket);
                             break;
                         }
                     #endregion

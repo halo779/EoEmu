@@ -11,7 +11,7 @@ using GameServer.Calculations;
 namespace GameServer.Handlers
 {
     /// <summary>
-    /// Description of Walk.
+    /// Description of WalkRun.
     /// </summary>
     public partial class Handler
     {
@@ -27,11 +27,8 @@ namespace GameServer.Handlers
 		    COLLIDE,
 		    SYNCHRO,					// to server only
 		    TRACK,
-
 		    RUN_DIR0 = 20,
-
 		    RUN_DIR7 = 27,
-
         };
 
         static readonly short[] _DELTA_X = { 0, -1, -1, -1, 0, 1, 1, 1, 0 };
@@ -39,10 +36,14 @@ namespace GameServer.Handlers
 
         const int MAX_DIRSIZE = 8;
 
-        public static void Walk(int Direction, MovementModes MMode, ClientSocket CSocket)
+        public static void Walk(int ucModeDir, ClientSocket CSocket)
         {
-            short DX = 0;
-            short DY = 0;
+            short newXPos = 0;
+            short newYPos = 0;
+
+            int Direction = ((ucModeDir >> 0) & 0xff) % 8;
+            MovementModes MMode = (MovementModes)((ucModeDir >> 8) & 0xff);
+
             if(Direction > MAX_DIRSIZE)
                 {
                     //Unknown Walking direction.
@@ -50,16 +51,15 @@ namespace GameServer.Handlers
                     CSocket.Disconnect();
                     return;
                 }
+            newXPos = (short) (CSocket.Client.X + _DELTA_X[Direction]);
+            newYPos = (short) (CSocket.Client.Y + _DELTA_Y[Direction]);
 
-            DX += _DELTA_X[Direction];
-            DY += _DELTA_Y[Direction];
-            CSocket.Client.PrevX = CSocket.Client.X;
-            CSocket.Client.PrevY = CSocket.Client.Y;
+
 
             if (Nano.Maps.ContainsKey((int)CSocket.Client.Map))
             {
                 Struct.DmapData Map = Nano.Maps[(int)CSocket.Client.Map];
-                if (!Map.CheckLoc(CSocket.Client.X + DX, CSocket.Client.Y + DY))
+                if (!Map.CheckLoc(newXPos, newYPos))
                 {
                     CSocket.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, CSocket.Client.Direction, Struct.DataType.actionKickBack, CSocket.Client.PrevX, CSocket.Client.PrevY));
                     CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid coordinates.", Struct.ChatType.System));
@@ -67,36 +67,38 @@ namespace GameServer.Handlers
                 }
             }
 
-            
-            CSocket.Client.X = (ushort)(CSocket.Client.X + DX);
-            CSocket.Client.Y = (ushort)(CSocket.Client.Y + DY);
-
             if (MMode >= MovementModes.RUN_DIR0 && MMode <= MovementModes.RUN_DIR7)
             {
-                DX = 0; DY = 0;
-
-                DX += _DELTA_X[MMode - MovementModes.RUN_DIR0];
-                DY += _DELTA_Y[MMode - MovementModes.RUN_DIR0];
+                newXPos += _DELTA_X[MMode - MovementModes.RUN_DIR0];
+                newYPos += _DELTA_Y[MMode - MovementModes.RUN_DIR0];
 
                 if (Nano.Maps.ContainsKey((int)CSocket.Client.Map))
                 {
                     Struct.DmapData Map = Nano.Maps[(int)CSocket.Client.Map];
-                    if (!Map.CheckLoc(CSocket.Client.X + DX, CSocket.Client.Y + DY))
+                    if (!Map.CheckLoc(newXPos, newYPos))
                     {
                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, CSocket.Client.Direction, Struct.DataType.actionKickBack, CSocket.Client.PrevX, CSocket.Client.PrevY));
                         CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Invalid coordinates.", Struct.ChatType.System));
                         return;
                     }
                 }
-
-                CSocket.Client.PrevX = CSocket.Client.X;
-                CSocket.Client.PrevY = CSocket.Client.Y;
-                CSocket.Client.X = (ushort)(CSocket.Client.X + DX);
-                CSocket.Client.Y = (ushort)(CSocket.Client.Y + DY);
             }
-            
+
+            if (newXPos < 0 || newYPos < 0)
+            {
+                CSocket.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, CSocket.Client.Direction, Struct.DataType.actionKickBack, CSocket.Client.PrevX, CSocket.Client.PrevY));
+                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Negetive coordinates.", Struct.ChatType.System));
+                return;
+            }
+            //Only set Previous values If dmap check has passed.
+            CSocket.Client.PrevX = CSocket.Client.X;
+            CSocket.Client.PrevY = CSocket.Client.Y;
+
+            CSocket.Client.X = Convert.ToUInt16(newXPos);
+            CSocket.Client.Y = Convert.ToUInt16(newYPos);
+
             //TODO: Map / Guild wall / other checks
-            byte[] WalkPacket = EudemonPacket.Walk(Direction, CSocket.Client.ID, CSocket.Client.X,CSocket.Client.Y);
+            byte[] WalkPacket = EudemonPacket.WalkRun(ucModeDir, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y);
             try
             {
                 Monitor.Enter(Nano.ClientPool);
@@ -117,7 +119,6 @@ namespace GameServer.Handlers
                             if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, C.Client.X, C.Client.Y))
                             {
                                 C.Send(WalkPacket);
-                                C.Send(EudemonPacket.Chat(0, "SYSTEM", C.Client.Name, "Player Moved to ." + CSocket.Client.X + ", " + CSocket.Client.Y, Struct.ChatType.System));
                             }
                             else
                                 C.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, 0, 0, Struct.DataType.EntityRemove));
