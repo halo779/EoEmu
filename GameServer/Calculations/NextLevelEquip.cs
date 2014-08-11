@@ -20,7 +20,7 @@ namespace GameServer.Calculations
         public static int NextEquipLevel(int ItemId)
         {
             int NewItem = ItemId;
-            Struct.ItemData Item = Nano.Items[ItemId];
+            Struct.ItemData Item = MainGS.Items[ItemId];
 
             if (ArmorType(ItemId) == false || WeaponType(Convert.ToString(ItemId)) == 117)
             {

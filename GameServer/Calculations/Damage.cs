@@ -21,7 +21,7 @@ namespace GameServer.Calculations
             }
             if (AType == 2)
             {
-                int Damage = Nano.Rand.Next(Attacker.MinAttack, Attacker.MaxAttack);
+                int Damage = MainGS.Rand.Next(Attacker.MinAttack, Attacker.MaxAttack);
                 Damage -= Attacked.Defense;
                 double Tort = 0;
                 Tort += Attacked.NBG * 0.05;
@@ -76,7 +76,7 @@ namespace GameServer.Calculations
             }
             else if (AType == 25)
             {
-                int Damage = Nano.Rand.Next(Attacker.MinAttack, Attacker.MaxAttack);
+                int Damage = MainGS.Rand.Next(Attacker.MinAttack, Attacker.MaxAttack);
                 if (Attacked.Dodge > 0)
                 {
                     double Dodge = 0;
@@ -114,7 +114,7 @@ namespace GameServer.Calculations
             //TODO: Magic, Archer
             if (AType == 2)
             {
-                int Damage = Nano.Rand.Next(Attacker.MinAttack, Attacker.MaxAttack);
+                int Damage = MainGS.Rand.Next(Attacker.MinAttack, Attacker.MaxAttack);
                 if (Attacked.Info.Name != "CoEmuGuard" && Attacked.Info.Name != "CoEmuPatrol" && Attacked.Info.Name != "GuildPatrol" && Attacked.Info.Name != "GuardReviver")
                 {
                     int Leveldiff = (Attacker.Level + 2) - Attacked.Level;
@@ -150,7 +150,7 @@ namespace GameServer.Calculations
             }
             else if (AType == 25)
             {
-                int Damage = Nano.Rand.Next(Attacker.MinAttack, Attacker.MaxAttack);
+                int Damage = MainGS.Rand.Next(Attacker.MinAttack, Attacker.MaxAttack);
                 if (Attacked.Info.Dodge > 0)
                 {
                     double Dodge = Attacked.Info.Dodge * 0.01;

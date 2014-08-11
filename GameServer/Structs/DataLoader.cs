@@ -66,10 +66,10 @@ namespace GameServer.Structs
 
                     NewItem.EPCost = (int)item.EPCost;
 
-                    if (!Nano.Items.ContainsKey(NewItem.ID))
-                        Nano.Items.Add(NewItem.ID, NewItem);
+                    if (!MainGS.Items.ContainsKey(NewItem.ID))
+                        MainGS.Items.Add(NewItem.ID, NewItem);
                 }
-                Console.WriteLine("[GameServer] Loaded: " + Nano.Items.Count + " items in " + (System.Environment.TickCount - start) + "MS");
+                Console.WriteLine("[GameServer] Loaded: " + MainGS.Items.Count + " items in " + (System.Environment.TickCount - start) + "MS");
             }
             else
             {
@@ -129,13 +129,13 @@ namespace GameServer.Structs
                                 NewItem.Range = Convert.ToInt32(data[31]);
                                 NewItem.Frequency = Convert.ToInt32(data[32]);
                                 NewItem.EPCost = Convert.ToInt32(data[36]);
-                                if (!Nano.Items.ContainsKey(NewItem.ID))
-                                    Nano.Items.Add(NewItem.ID, NewItem);
+                                if (!MainGS.Items.ContainsKey(NewItem.ID))
+                                    MainGS.Items.Add(NewItem.ID, NewItem);
                             }
                         }
                     }
                 }
-                Console.WriteLine("[GameServer] Loaded: " + Nano.Items.Count + " items in " + (System.Environment.TickCount - start) + "MS");
+                Console.WriteLine("[GameServer] Loaded: " + MainGS.Items.Count + " items in " + (System.Environment.TickCount - start) + "MS");
             }
             else
             {
@@ -147,7 +147,7 @@ namespace GameServer.Structs
         {
             int start = System.Environment.TickCount;
             Database.Database.LoadItemPluses();
-            Console.WriteLine("[GameServer] Loaded: " + Nano.ItemPluses.Count + " item plus data in " + (System.Environment.TickCount - start) + "MS");
+            Console.WriteLine("[GameServer] Loaded: " + MainGS.ItemPluses.Count + " item plus data in " + (System.Environment.TickCount - start) + "MS");
         }
 
         public static void LoadItemPluses(string FileLoc)
@@ -184,15 +184,15 @@ namespace GameServer.Structs
                                     //NewItem.AccuracyAdd = Convert.ToInt32(data[8]);
                                     NewItem.DodgeAdd = Convert.ToInt32(data[9]);
                                 }
-                                if (!Nano.ItemPluses.ContainsKey(NewItem.ID))
+                                if (!MainGS.ItemPluses.ContainsKey(NewItem.ID))
                                 {
                                     ItemPlusDB DB = new ItemPlusDB();
                                     DB.DB.Add(NewItem.Plus, NewItem);
-                                    Nano.ItemPluses.Add(NewItem.ID, DB);
+                                    MainGS.ItemPluses.Add(NewItem.ID, DB);
                                 }
                                 else
                                 {
-                                    ItemPlusDB DB = Nano.ItemPluses[NewItem.ID];
+                                    ItemPlusDB DB = MainGS.ItemPluses[NewItem.ID];
                                     if (!DB.DB.ContainsKey(NewItem.Plus))
                                         DB.DB.Add(NewItem.Plus, NewItem);
                                 }
@@ -200,7 +200,7 @@ namespace GameServer.Structs
                         }
                     }
                 }
-                Console.WriteLine("[GameServer] Loaded: " + Nano.ItemPluses.Count + " item plus data in " + (System.Environment.TickCount - start) + "MS");
+                Console.WriteLine("[GameServer] Loaded: " + MainGS.ItemPluses.Count + " item plus data in " + (System.Environment.TickCount - start) + "MS");
             }
             else
             {
@@ -211,13 +211,13 @@ namespace GameServer.Structs
         {
             Database.Database.LoadMonsters();
             Database.Database.LoadMonsterSpawns();
-            foreach (KeyValuePair<int, MonsterSpawn> Spawn in Nano.MonsterSpawns)
+            foreach (KeyValuePair<int, MonsterSpawn> Spawn in MainGS.MonsterSpawns)
             {
                 MonsterSpawn Mob = Spawn.Value;
                 MonsterInfo MobInfo = null;
-                if (Nano.BaseMonsters.ContainsKey(Mob.MobID))
+                if (MainGS.BaseMonsters.ContainsKey(Mob.MobID))
                 {
-                    MobInfo = Nano.BaseMonsters[Mob.MobID];
+                    MobInfo = MainGS.BaseMonsters[Mob.MobID];
                 }
                 if (MobInfo != null)
                 {
@@ -234,29 +234,29 @@ namespace GameServer.Structs
                             int MobY = 0;
                             int UID = 0;
                             //TODO: Dmaps
-                            //Mon.X = Nano.Rand.Next(X, XStop);
-                            //Mon.Y = Nano.Rand.Next(Y, YStop);
+                            //Mon.X = MainGS.Rand.Next(X, XStop);
+                            //Mon.Y = MainGS.Rand.Next(Y, YStop);
                             //Mon.X = Mon.SpawnX;
                             //Mon.Y = Mon.SpawnY;
-                            MobX = Nano.Rand.Next(Mob.X, (Mob.X + Mob.XStop));
-                            MobY = Nano.Rand.Next(Mob.Y, (Mob.Y + Mob.YStop));
-                            if (Nano.Maps.ContainsKey(Mob.Map))
+                            MobX = MainGS.Rand.Next(Mob.X, (Mob.X + Mob.XStop));
+                            MobY = MainGS.Rand.Next(Mob.Y, (Mob.Y + Mob.YStop));
+                            if (MainGS.Maps.ContainsKey(Mob.Map))
                             {
-                                DmapData Map = Nano.Maps[Mob.Map];
+                                DmapData Map = MainGS.Maps[Mob.Map];
                                 while (!Map.CheckLoc((ushort)MobX, (ushort)MobY))
                                 {
-                                    MobX = Nano.Rand.Next(Mob.X, (Mob.X + Mob.XStop));
-                                    MobY = Nano.Rand.Next(Mob.Y, (Mob.Y + Mob.YStop));
+                                    MobX = MainGS.Rand.Next(Mob.X, (Mob.X + Mob.XStop));
+                                    MobY = MainGS.Rand.Next(Mob.Y, (Mob.Y + Mob.YStop));
                                 }
                                 ValidMap = true;
                             }
                             if (ValidMap)
                             {
                                 Monster Mon = new Monster();
-                                UID = Nano.Rand.Next(200000, 600000);
-                                while (Nano.Monsters.ContainsKey(UID))
+                                UID = MainGS.Rand.Next(200000, 600000);
+                                while (MainGS.Monsters.ContainsKey(UID))
                                 {
-                                    UID = Nano.Rand.Next(200000, 600000);
+                                    UID = MainGS.Rand.Next(200000, 600000);
                                 }
                                 Mon.CurrentHP = MobInfo.MaxHP;
                                 Mon.MaxHP = MobInfo.MaxHP;
@@ -271,29 +271,29 @@ namespace GameServer.Structs
                                 Mon.Y = MobY;
                                 Mon.SpawnY = MobY;
                                 Mon.SpawnID = Mob.SpawnID;
-                                if (!Nano.Monsters.ContainsKey(Mon.UID))
+                                if (!MainGS.Monsters.ContainsKey(Mon.UID))
                                 {
-                                    Nano.Monsters.Add(Mon.UID, Mon);
+                                    MainGS.Monsters.Add(Mon.UID, Mon);
                                 }
                                 else
                                 {
-                                    while (Nano.Monsters.ContainsKey(Mon.UID))
+                                    while (MainGS.Monsters.ContainsKey(Mon.UID))
                                     {
-                                        Mon.UID = Nano.Rand.Next(200000, 600000);
+                                        Mon.UID = MainGS.Rand.Next(200000, 600000);
                                     }
-                                    Nano.Monsters.Add(Mon.UID, Mon);
+                                    MainGS.Monsters.Add(Mon.UID, Mon);
                                 }
                             }
                         }
                     }
-                    int RespawnTimer = Nano.Rand.Next(7000, 15000);
+                    int RespawnTimer = MainGS.Rand.Next(7000, 15000);
                     Mob.RespawnTimer = new System.Timers.Timer();
                     Mob.RespawnTimer.Interval = RespawnTimer;
                     Mob.RespawnTimer.Elapsed += delegate { Mob.Respawn(); };
                     Mob.RespawnTimer.Start();
                 }
             }
-            Console.WriteLine("[GameServer] Spawned " + Nano.Monsters.Count + " monsters into the world. ");
+            Console.WriteLine("[GameServer] Spawned " + MainGS.Monsters.Count + " monsters into the world. ");
         }
         public static void LoadNpcs()
         {
@@ -302,12 +302,12 @@ namespace GameServer.Structs
         public static void LoadServerskills()
         {
             Database.Database.GetServerSkills();
-            Console.WriteLine("[GameServer] Loaded " + Nano.ServerSkills.Count + " server skills.");
+            Console.WriteLine("[GameServer] Loaded " + MainGS.ServerSkills.Count + " server skills.");
         }
         public static void LoadTNpcs()
         {
             Database.Database.LoadTNpcs();
-            Console.WriteLine("[GameServer] Loaded " + Nano.TerrainNpcs.Count + " Terrain NPCs.");
+            Console.WriteLine("[GameServer] Loaded " + MainGS.TerrainNpcs.Count + " Terrain NPCs.");
         }
         public static void LoadPortals()
         {
@@ -325,10 +325,10 @@ namespace GameServer.Structs
                     string Path = "maps\\" + _Map.MapFile;
                     if (File.Exists(Path))
                     {
-                        if (!Nano.Maps.ContainsKey((int)_Map.MapId))
+                        if (!MainGS.Maps.ContainsKey((int)_Map.MapId))
                         {
                             DmapData NewMap = new DmapData(Path);
-                            Nano.Maps.Add((int)_Map.MapId, NewMap);
+                            MainGS.Maps.Add((int)_Map.MapId, NewMap);
                             Console.WriteLine("[GameServer] Loaded Dmap " + _Map.MapFile + "[" + _Map.MapId + "]");
                         }
                     }
@@ -339,7 +339,7 @@ namespace GameServer.Structs
                 }
             }
 
-            Console.WriteLine("[GameServer] Looked at: " + DMD.MapCount + " Maps, Loaded: " + Nano.Maps.Count + " DMaps in " + (System.Environment.TickCount - start) + "MS");
+            Console.WriteLine("[GameServer] Looked at: " + DMD.MapCount + " Maps, Loaded: " + MainGS.Maps.Count + " DMaps in " + (System.Environment.TickCount - start) + "MS");
         }
     }
 }

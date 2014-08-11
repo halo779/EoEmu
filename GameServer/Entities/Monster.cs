@@ -49,21 +49,21 @@ namespace GameServer.Entities
                 int Times = 1;
                 if (Calculation.PercentSuccess(15))
                 {
-                    Times = Nano.Rand.Next(1, 6);
+                    Times = MainGS.Rand.Next(1, 6);
                 }
                 for (int i = 0; i < Times; i++)
                 {
-                    int Money = Nano.Rand.Next(1, 10);
+                    int Money = MainGS.Rand.Next(1, 10);
                     if (Calculation.PercentSuccess(90))
-                        Money = Nano.Rand.Next(2, 240);
+                        Money = MainGS.Rand.Next(2, 240);
                     if (Calculation.PercentSuccess(70))
-                        Money = Nano.Rand.Next(60, 3000);
+                        Money = MainGS.Rand.Next(60, 3000);
                     if (Calculation.PercentSuccess(50))
-                        Money = Nano.Rand.Next(200, 4000);
+                        Money = MainGS.Rand.Next(200, 4000);
                     if (Calculation.PercentSuccess(30))
-                        Money = Nano.Rand.Next(1000, 30000);
+                        Money = MainGS.Rand.Next(1000, 30000);
                     if (Calculation.PercentSuccess(100))
-                        Money = Nano.Rand.Next(2000, 50000);
+                        Money = MainGS.Rand.Next(2000, 50000);
                     Money = Money / ((138 - Level) * 10);
                     if (Money < 1)
                         Money = 1;
@@ -82,22 +82,22 @@ namespace GameServer.Entities
                         IG.ItemID = 1091010;
                     else
                         IG.ItemID = 1091020;
-                    IG.UID = Nano.Rand.Next(1, 1000);
-                    while (Nano.ItemFloor.ContainsKey(IG.UID))
+                    IG.UID = MainGS.Rand.Next(1, 1000);
+                    while (MainGS.ItemFloor.ContainsKey(IG.UID))
                     {
-                        IG.UID = Nano.Rand.Next(1, 1000);
+                        IG.UID = MainGS.Rand.Next(1, 1000);
                     }
                     IG.Map = Map;
-                    IG.X = (X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                    IG.Y = (Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                    if (Nano.Maps.ContainsKey(IG.Map))
+                    IG.X = (X - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                    IG.Y = (Y - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                    if (MainGS.Maps.ContainsKey(IG.Map))
                     {
-                        Struct.DmapData Mapping = Nano.Maps[IG.Map];
+                        Struct.DmapData Mapping = MainGS.Maps[IG.Map];
                         byte tries = 0;
                         while (!Mapping.CheckLoc((ushort)IG.X, (ushort)IG.Y))
                         {
-                            IG.X = (X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                            IG.Y = (Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
+                            IG.X = (X - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                            IG.Y = (Y - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
                             tries++;
                             if (tries > 8)
                                 break;
@@ -113,12 +113,12 @@ namespace GameServer.Entities
                     IG.Dispose.Elapsed += delegate { IG.Disappear(); };
                     IG.Dispose.Start();
                     IG.OwnerOnly.Start();
-                    //lock(Nano.ItemFloor)
+                    //lock(MainGS.ItemFloor)
                     //{
                     try
                     {
-                        Monitor.Enter(Nano.ItemFloor);
-                        Nano.ItemFloor.Add(IG.UID, IG);
+                        Monitor.Enter(MainGS.ItemFloor);
+                        MainGS.ItemFloor.Add(IG.UID, IG);
                     }
                     catch (Exception e)
                     {
@@ -126,7 +126,7 @@ namespace GameServer.Entities
                     }
                     finally
                     {
-                        Monitor.Exit(Nano.ItemFloor);
+                        Monitor.Exit(MainGS.ItemFloor);
                     }
                     //}
                     EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
@@ -142,16 +142,16 @@ namespace GameServer.Entities
                     else
                         IG.ItemID = 1088001;
                     IG.Map = Map;
-                    IG.X = (X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                    IG.Y = (Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                    if (Nano.Maps.ContainsKey(IG.Map))
+                    IG.X = (X - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                    IG.Y = (Y - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                    if (MainGS.Maps.ContainsKey(IG.Map))
                     {
-                        Struct.DmapData Mapping = Nano.Maps[IG.Map];
+                        Struct.DmapData Mapping = MainGS.Maps[IG.Map];
                         byte tries = 0;
                         while (!Mapping.CheckLoc((ushort)IG.X, (ushort)IG.Y))
                         {
-                            IG.X = (X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                            IG.Y = (Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
+                            IG.X = (X - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                            IG.Y = (Y - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
                             tries++;
                             if (tries > 8)
                                 break;
@@ -161,10 +161,10 @@ namespace GameServer.Entities
                     IG.OwnerOnly.Interval = 10000;
                     IG.OwnerOnly.AutoReset = false;
                     IG.OwnerID = Killer;
-                    IG.UID = Nano.Rand.Next(1000, 9999999);
-                    while (Nano.ItemFloor.ContainsKey(IG.UID))
+                    IG.UID = MainGS.Rand.Next(1000, 9999999);
+                    while (MainGS.ItemFloor.ContainsKey(IG.UID))
                     {
-                        IG.UID = Nano.Rand.Next(1000, 9999999);
+                        IG.UID = MainGS.Rand.Next(1000, 9999999);
                     }
                     //TODO: UID generation that is better.
                     IG.Dispose = new System.Timers.Timer();
@@ -173,12 +173,12 @@ namespace GameServer.Entities
                     IG.Dispose.Elapsed += delegate { IG.Disappear(); };
                     IG.Dispose.Start();
                     IG.OwnerOnly.Start();
-                    //lock(Nano.ItemFloor)
+                    //lock(MainGS.ItemFloor)
                     //{
                     try
                     {
-                        Monitor.Enter(Nano.ItemFloor);
-                        Nano.ItemFloor.Add(IG.UID, IG);
+                        Monitor.Enter(MainGS.ItemFloor);
+                        MainGS.ItemFloor.Add(IG.UID, IG);
                     }
                     catch (Exception e)
                     {
@@ -186,14 +186,14 @@ namespace GameServer.Entities
                     }
                     finally
                     {
-                        Monitor.Exit(Nano.ItemFloor);
+                        Monitor.Exit(MainGS.ItemFloor);
                     }
                     //}
                     EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                 }
                 if (Calculation.PercentSuccess(27)) //Drop an item
                 {
-                    int Quality = Nano.Rand.Next(3, 6);
+                    int Quality = MainGS.Rand.Next(3, 6);
                     int Soc1 = 0;
                     int Soc2 = 0;
                     int Bless = 0;
@@ -236,10 +236,10 @@ namespace GameServer.Entities
                         }
                         if (Calculation.PercentSuccess(3))
                         {
-                            Bless = Nano.Rand.Next(1, 7);
+                            Bless = MainGS.Rand.Next(1, 7);
                             while (Bless != 1 && Bless != 3 && Bless != 5 && Bless != 7)
                             {
-                                Bless = Nano.Rand.Next(1, 7);
+                                Bless = MainGS.Rand.Next(1, 7);
                             }
                         }
                         Struct.ItemGround DropItem = new Struct.ItemGround();
@@ -247,22 +247,22 @@ namespace GameServer.Entities
                         DropItem.Plus = Plus;
                         DropItem.Soc1 = Soc1;
                         DropItem.Soc2 = Soc2;
-                        DropItem.Color = Nano.Rand.Next(3, 9);
-                        DropItem.MaxDura = Nano.Rand.Next(10, 70);
-                        DropItem.Dura = Nano.Rand.Next(0, DropItem.MaxDura);
+                        DropItem.Color = MainGS.Rand.Next(3, 9);
+                        DropItem.MaxDura = MainGS.Rand.Next(10, 70);
+                        DropItem.Dura = MainGS.Rand.Next(0, DropItem.MaxDura);
                         DropItem.Enchant = 0;
                         DropItem.ItemID = ItemID;
                         DropItem.Map = Map;
-                        DropItem.X = (X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                        DropItem.Y = (Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                        if (Nano.Maps.ContainsKey(DropItem.Map))
+                        DropItem.X = (X - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                        DropItem.Y = (Y - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                        if (MainGS.Maps.ContainsKey(DropItem.Map))
                         {
-                            Struct.DmapData Mapping = Nano.Maps[DropItem.Map];
+                            Struct.DmapData Mapping = MainGS.Maps[DropItem.Map];
                             byte tries = 0;
                             while (!Mapping.CheckLoc((ushort)DropItem.X, (ushort)DropItem.Y))
                             {
-                                DropItem.X = (X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                                DropItem.Y = (Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
+                                DropItem.X = (X - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                                DropItem.Y = (Y - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
                                 tries++;
                                 if (tries > 8)
                                     break;
@@ -276,17 +276,17 @@ namespace GameServer.Entities
                         DropItem.Dispose.Interval = 60000;
                         DropItem.Dispose.AutoReset = false;
                         DropItem.Dispose.Elapsed += delegate { DropItem.Disappear(); };
-                        DropItem.UID = Nano.Rand.Next(1000, 9999999);
-                        while (Nano.ItemFloor.ContainsKey(DropItem.UID))
+                        DropItem.UID = MainGS.Rand.Next(1000, 9999999);
+                        while (MainGS.ItemFloor.ContainsKey(DropItem.UID))
                         {
-                            DropItem.UID = Nano.Rand.Next(1000, 9999999);
+                            DropItem.UID = MainGS.Rand.Next(1000, 9999999);
                         }
-                        //lock(Nano.ItemFloor)
+                        //lock(MainGS.ItemFloor)
                         //{
                         try
                         {
-                            Monitor.Enter(Nano.ItemFloor);
-                            Nano.ItemFloor.Add(DropItem.UID, DropItem);
+                            Monitor.Enter(MainGS.ItemFloor);
+                            MainGS.ItemFloor.Add(DropItem.UID, DropItem);
                         }
                         catch (Exception e)
                         {
@@ -294,7 +294,7 @@ namespace GameServer.Entities
                         }
                         finally
                         {
-                            Monitor.Exit(Nano.ItemFloor);
+                            Monitor.Exit(MainGS.ItemFloor);
                         }
                         //}
                         DropItem.OwnerOnly.Start();
@@ -310,10 +310,10 @@ namespace GameServer.Entities
                     IG.Y = Y;
                     IG.Map = Map;
                     IG.OwnerOnly = new System.Timers.Timer();
-                    IG.UID = Nano.Rand.Next(1000, 9999999);
-                    while(Nano.ItemFloor.ContainsKey(IG.UID))
+                    IG.UID = MainGS.Rand.Next(1000, 9999999);
+                    while(MainGS.ItemFloor.ContainsKey(IG.UID))
                     {
-                        IG.UID = Nano.Rand.Next(1000, 9999999);
+                        IG.UID = MainGS.Rand.Next(1000, 9999999);
                     }
                     //TODO: UID generation that is better.
                     IG.Dispose = new System.Timers.Timer();
@@ -321,7 +321,7 @@ namespace GameServer.Entities
                     IG.Dispose.AutoReset = false;
                     IG.Dispose.Elapsed += delegate { IG.Disappear(); };
                     IG.Dispose.Start();
-                    Nano.ItemFloor.Add(IG.UID, IG);
+                    MainGS.ItemFloor.Add(IG.UID, IG);
                     EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                 }*/
             }
@@ -347,8 +347,8 @@ namespace GameServer.Entities
                 Distance = 14;
             try
             {
-                Monitor.Enter(Nano.ClientPool);
-                foreach (KeyValuePair<int, ClientSocket> Clients in Nano.ClientPool)
+                Monitor.Enter(MainGS.ClientPool);
+                foreach (KeyValuePair<int, ClientSocket> Clients in MainGS.ClientPool)
                 {
                     ClientSocket Client = Clients.Value;
                     if ((int)Client.Client.Map == Map)
@@ -390,7 +390,7 @@ namespace GameServer.Entities
             }
             finally
             {
-                Monitor.Exit(Nano.ClientPool);
+                Monitor.Exit(MainGS.ClientPool);
             }
             if (CharToAttack > -1 && CharToAttack > 0)
             {
@@ -408,7 +408,7 @@ namespace GameServer.Entities
                 return;
             if (CurrentHP == 0)
                 return;
-            if (!Nano.Monsters.ContainsKey(UID))
+            if (!MainGS.Monsters.ContainsKey(UID))
             {
                 if (Move != null)
                 {
@@ -418,7 +418,7 @@ namespace GameServer.Entities
                 }
                 return;
             }
-            if (!Nano.ClientPool.ContainsKey(Target))
+            if (!MainGS.ClientPool.ContainsKey(Target))
             {
                 if (Move != null)
                 {
@@ -434,7 +434,7 @@ namespace GameServer.Entities
             Move.AutoReset = false;
             Moving = true;
             int AttackRange = Info.AttackRange;
-            ClientSocket Attacked = Nano.ClientPool[Target];
+            ClientSocket Attacked = MainGS.ClientPool[Target];
             if (Attacked.Client.Dead)
             {
                 Moving = false;
@@ -496,9 +496,9 @@ namespace GameServer.Entities
                             break;
                         }
                 }
-                if (Nano.Maps.ContainsKey(Map))
+                if (MainGS.Maps.ContainsKey(Map))
                 {
-                    Struct.DmapData Mapping = Nano.Maps[Map];
+                    Struct.DmapData Mapping = MainGS.Maps[Map];
                     if (!Mapping.CheckLoc((ushort)(X + AddX), (ushort)(Y + AddY)))
                     {
                         Move = null;
@@ -516,9 +516,9 @@ namespace GameServer.Entities
             {
                 int Damage = 0;
                 if (Info.MinAttack < Info.MaxAttack)
-                    Damage = Nano.Rand.Next(Info.MinAttack, Info.MaxAttack);
+                    Damage = MainGS.Rand.Next(Info.MinAttack, Info.MaxAttack);
                 else
-                    Damage = Nano.Rand.Next(Info.MaxAttack, Info.MinAttack);
+                    Damage = MainGS.Rand.Next(Info.MaxAttack, Info.MinAttack);
                 Damage -= Attacked.Client.Defense;
                 double Tort = 0;
                 Tort += Attacked.Client.NBG * 0.05;
@@ -552,11 +552,11 @@ namespace GameServer.Entities
         {
             Move.Stop();
             Move.Dispose();
-            if (!Nano.ClientPool.ContainsKey(Target))
+            if (!MainGS.ClientPool.ContainsKey(Target))
             {
                 return;
             }
-            ClientSocket Attacked = Nano.ClientPool[Target];
+            ClientSocket Attacked = MainGS.ClientPool[Target];
             if (Calculation.InRange(Attacked.Client.X, Attacked.Client.Y, X, Y, Info.AggroRange))
             {
                 AttackMove(Target, false);

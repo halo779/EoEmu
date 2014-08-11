@@ -58,7 +58,7 @@ namespace GameServer.Calculations
                 }
                 if (ExpToGive > 0)
                 {
-                    ExpToGive *= Nano.EXP_MULTIPLER;
+                    ExpToGive *= MainGS.EXP_MULTIPLER;
                     CSocket.Client.Exp += (ulong)ExpToGive;
                     if (NeededExp(CSocket.Client.Level) <= CSocket.Client.Exp)
                     {
@@ -75,9 +75,9 @@ namespace GameServer.Calculations
         public static void TeamExp(Monster Attacked, ClientSocket CSocket)
         {
             bool noobexp = false;
-            if (Nano.ClientPool.ContainsKey(CSocket.Client.Team.LeaderID))
+            if (MainGS.ClientPool.ContainsKey(CSocket.Client.Team.LeaderID))
             {
-                ClientSocket Leader = Nano.ClientPool[CSocket.Client.Team.LeaderID];
+                ClientSocket Leader = MainGS.ClientPool[CSocket.Client.Team.LeaderID];
                 foreach (KeyValuePair<int, ClientSocket> Member in Leader.Client.Team.Members)
                 {
                     if ((Member.Value.Client.Level - Attacked.Level) < -20)
@@ -108,7 +108,7 @@ namespace GameServer.Calculations
                             ExpToGive *= 2;
                         if (ExpToGive > 0)
                         {
-                            ExpToGive *= Nano.EXP_MULTIPLER;
+                            ExpToGive *= MainGS.EXP_MULTIPLER;
                             if (noobexp && ((int)Member.Value.Client.Class >= 133 && (int)Member.Value.Client.Class <= 135))
                                 Member.Value.Send(EudemonPacket.Chat(0, "SYSTEM", Member.Value.Client.Name, "You gained " + ExpToGive + " exp from team killings, with additional exp for low level team-mates, and for being a water tao.", Struct.ChatType.System));
                             else if (!noobexp && ((int)Member.Value.Client.Class >= 133 && (int)Member.Value.Client.Class <= 135))

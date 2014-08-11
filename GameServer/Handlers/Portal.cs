@@ -17,9 +17,9 @@ namespace GameServer.Handlers
         public static void Portal(int X, int Y, ClientSocket CSocket)
         {
             string PID = X + "," + Y + "," + (int)CSocket.Client.Map + "," + 0;
-            if (Nano.Portals.ContainsKey(PID))
+            if (MainGS.Portals.ContainsKey(PID))
             {
-                Struct.Portal Port = Nano.Portals[PID];
+                Struct.Portal Port = MainGS.Portals[PID];
                 Handler.Teleport(Port.EndMap, (ushort)Port.EndX, (ushort)Port.EndY, Port.EndInstance, CSocket);
             }
             else

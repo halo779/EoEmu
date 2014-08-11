@@ -40,7 +40,6 @@ namespace GameServer
             // return the finished byte array of decimal values  
             return bytes;
         }
-
         public static int ReadLong(byte[] Data, int StartLocation)
         {
             if (Data.Length < StartLocation)
@@ -53,7 +52,6 @@ namespace GameServer
                 return 0;
             return ((Data[StartLocation + 1] << 8) + Data[StartLocation]);
         }
-
         private static string StrHexToAnsi(string StrHex)
         {
             string[] Data = StrHex.Split(new char[] { ' ' });
@@ -75,7 +73,6 @@ namespace GameServer
             }
             return Ansi;
         }
-
         public static object Dump(byte[] Bytes)
         {
             string Hex = "";
@@ -102,10 +99,6 @@ namespace GameServer
                 Out = Out + SubString + "\r\n";
             }
             return Out;
-        }
-        public void WritePacketToFile(byte[] data, int startid, bool Recv)
-        {
-            
         }
         public static void ProcessPacket(byte[] data, ClientSocket CSocket)
         {
@@ -187,16 +180,16 @@ namespace GameServer
                             Keys = (Keys << 8) | data[4];
                             Console.WriteLine("[GameServer] Confirming login with LoginServer");
                             
-                            if (Nano.AuthenticatedLogins.ContainsKey(Keys))
+                            if (MainGS.AuthenticatedLogins.ContainsKey(Keys))
                             {
-                                CSocket.AccountName = Nano.AuthenticatedLogins[Keys].Account;
+                                CSocket.AccountName = MainGS.AuthenticatedLogins[Keys].Account;
                                 Console.WriteLine("[GameServer] Authenticated Login.");
-                                ConnectionRequest User = Nano.AuthenticatedLogins[Keys];
+                                ConnectionRequest User = MainGS.AuthenticatedLogins[Keys];
                                 User.Expire(false);
                                 CSocket.Client = Database.Database.GetCharacter(User.Account);
                                 if (CSocket.Client == null)
                                 {                                               
-                                    Console.WriteLine("[" + Nano.AuthenticatedLogins[Keys].Key + "] Making account");
+                                    Console.WriteLine("[" + MainGS.AuthenticatedLogins[Keys].Key + "] Making account");
                                         
                                     CSocket.Send(EudemonPacket.Chat(5, "SYSTEM", "ALLUSERS", "NEW_ROLE", Struct.ChatType.LoginInformation));
                                     return;
@@ -212,16 +205,16 @@ namespace GameServer
                                     CSocket.Client.CurrentMP = CSocket.Client.MaxMP;
                                     CSocket.Client.CurrentHP = CSocket.Client.MaxHP;
                                 }
-                                if (Nano.ClientPool.ContainsKey(CSocket.Client.ID))
+                                if (MainGS.ClientPool.ContainsKey(CSocket.Client.ID))
                                 {
-                                    ClientSocket C = Nano.ClientPool[CSocket.Client.ID];
+                                    ClientSocket C = MainGS.ClientPool[CSocket.Client.ID];
                                     C.Send(EudemonPacket.Chat(0, "SYSTEM", C.Client.Name, "[ERROR] Your character has logged in from another location, you're being booted.", Struct.ChatType.Talk));
                                     C.Disconnect();
                                 }
                                 try
                                 {
-                                    Monitor.Enter(Nano.ClientPool);
-                                    Nano.ClientPool.Add(CSocket.Client.ID, CSocket);
+                                    Monitor.Enter(MainGS.ClientPool);
+                                    MainGS.ClientPool.Add(CSocket.Client.ID, CSocket);
                                 }
                                 catch (Exception e)
                                 {
@@ -229,7 +222,7 @@ namespace GameServer
                                 }
                                 finally
                                 {
-                                    Monitor.Exit(Nano.ClientPool);
+                                    Monitor.Exit(MainGS.ClientPool);
                                 }
                                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "ANSWER_OK", Struct.ChatType.LoginInformation));
                                 CSocket.Send(EudemonPacket.CharacterInfo(CSocket));
@@ -237,7 +230,7 @@ namespace GameServer
                                 
 
                                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Welcome to EO Emu, " + CSocket.Client.Name, Struct.ChatType.Talk));
-                                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "There are currently " + Nano.ClientPool.Count + " players online.", Struct.ChatType.Talk));
+                                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "There are currently " + MainGS.ClientPool.Count + " players online.", Struct.ChatType.Talk));
                                 
                                 if (CSocket.Client.First)
                                 {
@@ -450,7 +443,7 @@ namespace GameServer
                                                 break; //cant be a super yellow!
                                             }
 
-                                            Struct.ItemData iData = Nano.Items[Item.ItemID];
+                                            Struct.ItemData iData = MainGS.Items[Item.ItemID];
 
                                             double LessChance = iData.Level / 3;
 
@@ -626,8 +619,8 @@ namespace GameServer
                                         ClientSocket targetCS = null;
                                         try
                                         {
-                                            Monitor.Enter(Nano.ClientPool);
-                                            foreach (KeyValuePair<int, ClientSocket> Tests in Nano.ClientPool)
+                                            Monitor.Enter(MainGS.ClientPool);
+                                            foreach (KeyValuePair<int, ClientSocket> Tests in MainGS.ClientPool)
                                             {
                                                 ClientSocket C = Tests.Value;
                                                 if (C.Client.ID == idTarget)
@@ -640,7 +633,7 @@ namespace GameServer
                                         }
                                         finally
                                         {
-                                            Monitor.Exit(Nano.ClientPool);
+                                            Monitor.Exit(MainGS.ClientPool);
                                         }
                                         //@TODO: Move this to dedicated function.
                                         if (targetCS != null)
@@ -666,8 +659,6 @@ namespace GameServer
                                     {
                                         CSocket.Client.Direction = Dir;
                                         EudemonPacket.ToLocal(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.actionChgDir, 0), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, CSocket.Client.ID);
-                                        //@TODO broardcast to all but self.
-                                        
                                         break;
                                     }
                                 case Struct.DataType.actionChgMap:
@@ -787,9 +778,9 @@ namespace GameServer
                                             break;
                                         }
                                         int Leader = ReadLong(data, 8);
-                                        if (Nano.ClientPool.ContainsKey(Leader))
+                                        if (MainGS.ClientPool.ContainsKey(Leader))
                                         {
-                                            ClientSocket TeamLeader = Nano.ClientPool[Leader];
+                                            ClientSocket TeamLeader = MainGS.ClientPool[Leader];
                                             if (TeamLeader.Client.Team != null)
                                             {
                                                 if (TeamLeader.Client.Team.LeaderID == TeamLeader.Client.ID)
@@ -827,7 +818,7 @@ namespace GameServer
                                     {
                                         if (CSocket.Client.Team != null)
                                         {
-                                            ClientSocket Leader = Nano.ClientPool[CSocket.Client.Team.LeaderID];
+                                            ClientSocket Leader = MainGS.ClientPool[CSocket.Client.Team.LeaderID];
                                             foreach (KeyValuePair<int, ClientSocket> Member in Leader.Client.Team.Members)
                                             {
                                                 if (Member.Value.Client.ID != CSocket.Client.ID)
@@ -855,9 +846,9 @@ namespace GameServer
                                             break;
                                         }
                                         int Inviter = ReadLong(data, 8);
-                                        if (Nano.ClientPool.ContainsKey(Inviter))
+                                        if (MainGS.ClientPool.ContainsKey(Inviter))
                                         {
-                                            ClientSocket TeamLeader = Nano.ClientPool[Inviter];
+                                            ClientSocket TeamLeader = MainGS.ClientPool[Inviter];
                                             if (TeamLeader.Client.Team != null)
                                             {
                                                 if (TeamLeader.Client.Team.Members.Count < 5)
@@ -909,9 +900,9 @@ namespace GameServer
                                             }
                                         }
                                         int Invited = ReadLong(data, 8);
-                                        if (Nano.ClientPool.ContainsKey(Invited))
+                                        if (MainGS.ClientPool.ContainsKey(Invited))
                                         {
-                                            ClientSocket InvitedCSocket = Nano.ClientPool[Invited];
+                                            ClientSocket InvitedCSocket = MainGS.ClientPool[Invited];
                                             if (InvitedCSocket.Client.Team == null)
                                             {
                                                 if (!CSocket.Client.Team.Forbid)
@@ -951,9 +942,9 @@ namespace GameServer
                                             }
                                         }
                                         int ToJoin = ReadLong(data, 8);
-                                        if (Nano.ClientPool.ContainsKey(ToJoin))
+                                        if (MainGS.ClientPool.ContainsKey(ToJoin))
                                         {
-                                            ClientSocket Invited = Nano.ClientPool[ToJoin];
+                                            ClientSocket Invited = MainGS.ClientPool[ToJoin];
                                             if (Invited.Client.Team == null)
                                             {
                                                 if (!CSocket.Client.Team.Forbid)
@@ -1025,7 +1016,7 @@ namespace GameServer
                                             }
                                         }
                                         int Kick = ReadLong(data, 8);
-                                        if (Nano.ClientPool.ContainsKey(Kick))
+                                        if (MainGS.ClientPool.ContainsKey(Kick))
                                         {
                                             if (CSocket.Client.Team.Members.ContainsKey(Kick))
                                             {

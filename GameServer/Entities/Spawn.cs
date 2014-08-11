@@ -19,8 +19,8 @@ namespace GameServer.Entities
         {
             try
             {
-                Monitor.Enter(Nano.ClientPool);
-                foreach (KeyValuePair<int, ClientSocket> Locals in Nano.ClientPool)
+                Monitor.Enter(MainGS.ClientPool);
+                foreach (KeyValuePair<int, ClientSocket> Locals in MainGS.ClientPool)
                 {
                     ClientSocket C = Locals.Value;
                     if ((int)C.Client.Map == (int)CSocket.Client.Map && CSocket.Client.ID != C.Client.ID)
@@ -40,12 +40,12 @@ namespace GameServer.Entities
             }
             finally
             {
-                Monitor.Exit(Nano.ClientPool);
+                Monitor.Exit(MainGS.ClientPool);
             }
             try
             {
-                Monitor.Enter(Nano.Monsters);
-                foreach (KeyValuePair<int, Monster> Monsters in Nano.Monsters)
+                Monitor.Enter(MainGS.Monsters);
+                foreach (KeyValuePair<int, Monster> Monsters in MainGS.Monsters)
                 {
                     Monster Mob = Monsters.Value;
                     if ((int)CSocket.Client.Map == Mob.Map)
@@ -69,9 +69,9 @@ namespace GameServer.Entities
             }
             finally
             {
-                Monitor.Exit(Nano.Monsters);
+                Monitor.Exit(MainGS.Monsters);
             }
-            foreach (KeyValuePair<int, Struct.NPC> Npcs in Nano.Npcs)
+            foreach (KeyValuePair<int, Struct.NPC> Npcs in MainGS.Npcs)
             {
                 Struct.NPC Npc = Npcs.Value;
                 if ((int)CSocket.Client.Map == Npc.Map)
@@ -87,8 +87,8 @@ namespace GameServer.Entities
             }
             try
             {
-                Monitor.Enter(Nano.ItemFloor);
-                foreach (KeyValuePair<int, Struct.ItemGround> Ig in Nano.ItemFloor)
+                Monitor.Enter(MainGS.ItemFloor);
+                foreach (KeyValuePair<int, Struct.ItemGround> Ig in MainGS.ItemFloor)
                 {
                     Struct.ItemGround IG = Ig.Value;
                     if ((int)CSocket.Client.Map == IG.Map)
@@ -109,9 +109,9 @@ namespace GameServer.Entities
             }
             finally
             {
-                Monitor.Exit(Nano.ItemFloor);
+                Monitor.Exit(MainGS.ItemFloor);
             }
-            foreach (KeyValuePair<int, Struct.TerrainNPC> Tnpcs in Nano.TerrainNpcs)
+            foreach (KeyValuePair<int, Struct.TerrainNPC> Tnpcs in MainGS.TerrainNpcs)
             {
                 Struct.TerrainNPC TNpc = Tnpcs.Value;
                 if (TNpc.Map == (int)CSocket.Client.Map)
@@ -124,7 +124,7 @@ namespace GameServer.Entities
                             {
                                 if (TNpc.UID == 6700)
                                 {
-                                    CSocket.Send(EudemonPacket.TerrainNPC(TNpc.UID, TNpc.MaximumHP, TNpc.CurrentHP, TNpc.X, TNpc.Y, TNpc.Type, Nano.PoleHolder, TNpc.Flag));
+                                    CSocket.Send(EudemonPacket.TerrainNPC(TNpc.UID, TNpc.MaximumHP, TNpc.CurrentHP, TNpc.X, TNpc.Y, TNpc.Type, MainGS.PoleHolder, TNpc.Flag));
                                 }
                                 else
                                 {

@@ -34,20 +34,20 @@ namespace GameServer.Handlers
             if (itemexist(Convert.ToString(ID), Shop))
             {
                 Struct.ItemInfo Item = new Struct.ItemInfo();
-                if (Nano.Items.ContainsKey(ID))
+                if (MainGS.Items.ContainsKey(ID))
                 {
-                    Struct.ItemData NewItem = Nano.Items[ID];
+                    Struct.ItemData NewItem = MainGS.Items[ID];
                     if (NewItem.EPCost > 0)
                     {
                         if (CSocket.Client.EPs >= NewItem.EPCost)
                         {
                             Handler.CPs(NewItem.EPCost * -1, CSocket);
                             Item.ItemID = NewItem.ID;
-                            Item.UID = Nano.Rand.Next(1, 9999999);
+                            Item.UID = MainGS.Rand.Next(1, 9999999);
                             bool created = Database.Database.NewItem(Item, CSocket);
                             while (!created)
                             {
-                                Item.UID = Nano.Rand.Next(1, 9999999);
+                                Item.UID = MainGS.Rand.Next(1, 9999999);
                                 created = Database.Database.NewItem(Item, CSocket);
                             }
                             CSocket.Client.Inventory.Add(Item.UID, Item);
@@ -64,11 +64,11 @@ namespace GameServer.Handlers
                         {
                             Handler.Money(NewItem.Cost * -1, CSocket);
                             Item.ItemID = NewItem.ID;
-                            Item.UID = Nano.Rand.Next(1, 9999999);
+                            Item.UID = MainGS.Rand.Next(1, 9999999);
                             bool created = Database.Database.NewItem(Item, CSocket);
                             while (!created)
                             {
-                                Item.UID = Nano.Rand.Next(1, 9999999);
+                                Item.UID = MainGS.Rand.Next(1, 9999999);
                                 created = Database.Database.NewItem(Item, CSocket);
                             }
                             CSocket.Client.Inventory.Add(Item.UID, Item);
@@ -82,11 +82,11 @@ namespace GameServer.Handlers
                     else
                     {
                         Item.ItemID = NewItem.ID;
-                        Item.UID = Nano.Rand.Next(1, 9999999);
+                        Item.UID = MainGS.Rand.Next(1, 9999999);
                         bool created = Database.Database.NewItem(Item, CSocket);
                         while (!created)
                         {
-                            Item.UID = Nano.Rand.Next(1, 9999999);
+                            Item.UID = MainGS.Rand.Next(1, 9999999);
                             created = Database.Database.NewItem(Item, CSocket);
                         }
                         CSocket.Client.Inventory.Add(Item.UID, Item);

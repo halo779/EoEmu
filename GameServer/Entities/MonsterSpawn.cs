@@ -22,9 +22,9 @@ namespace GameServer.Entities
         public System.Timers.Timer RespawnTimer;
         public void Respawn()
         {
-            if (Nano.BaseMonsters.ContainsKey(MobID))
+            if (MainGS.BaseMonsters.ContainsKey(MobID))
             {
-                MonsterInfo MobInfo = Nano.BaseMonsters[MobID];
+                MonsterInfo MobInfo = MainGS.BaseMonsters[MobID];
                 if (SpawnNumber != MaxSpawnNumber)
                 {
                     while (SpawnNumber < MaxSpawnNumber)
@@ -35,25 +35,25 @@ namespace GameServer.Entities
                         int MobY = 0;
                         int UID = 0;
                         //TODO: Dmaps
-                        //Mon.X = Nano.Rand.Next(X, XStop);
-                        //Mon.Y = Nano.Rand.Next(Y, YStop);
+                        //Mon.X = MainGS.Rand.Next(X, XStop);
+                        //Mon.Y = MainGS.Rand.Next(Y, YStop);
                         //Mon.X = Mon.SpawnX;
                         //Mon.Y = Mon.SpawnY;
-                        MobX = Nano.Rand.Next(X, (X + XStop));
-                        MobY = Nano.Rand.Next(Y, (Y + YStop));
-                        if (Nano.Maps.ContainsKey(Map))
+                        MobX = MainGS.Rand.Next(X, (X + XStop));
+                        MobY = MainGS.Rand.Next(Y, (Y + YStop));
+                        if (MainGS.Maps.ContainsKey(Map))
                         {
-                            Structs.Struct.DmapData Mapping = Nano.Maps[Map];
+                            Structs.Struct.DmapData Mapping = MainGS.Maps[Map];
                             while (!Mapping.CheckLoc((ushort)MobX, (ushort)MobY))
                             {
-                                MobX = Nano.Rand.Next(X, (X + XStop));
-                                MobY = Nano.Rand.Next(Y, (Y + YStop));
+                                MobX = MainGS.Rand.Next(X, (X + XStop));
+                                MobY = MainGS.Rand.Next(Y, (Y + YStop));
                             }
                         }
-                        UID = Nano.Rand.Next(200000, 600000);
-                        while (Nano.Monsters.ContainsKey(UID))
+                        UID = MainGS.Rand.Next(200000, 600000);
+                        while (MainGS.Monsters.ContainsKey(UID))
                         {
-                            UID = Nano.Rand.Next(200000, 600000);
+                            UID = MainGS.Rand.Next(200000, 600000);
                         }
                         Mon.CurrentHP = MobInfo.MaxHP;
                         Mon.MaxHP = MobInfo.MaxHP;
@@ -68,14 +68,14 @@ namespace GameServer.Entities
                         Mon.Y = MobY;
                         Mon.SpawnY = MobY;
                         Mon.SpawnID = SpawnID;
-                        if (!Nano.Monsters.ContainsKey(Mon.UID))
+                        if (!MainGS.Monsters.ContainsKey(Mon.UID))
                         {
-                            //lock(Nano.Monsters)
+                            //lock(MainGS.Monsters)
                             //{
                             try
                             {
-                                Monitor.Enter(Nano.Monsters);
-                                Nano.Monsters.Add(Mon.UID, Mon);
+                                Monitor.Enter(MainGS.Monsters);
+                                MainGS.Monsters.Add(Mon.UID, Mon);
                             }
                             catch (Exception e)
                             {
@@ -83,22 +83,22 @@ namespace GameServer.Entities
                             }
                             finally
                             {
-                                Monitor.Exit(Nano.Monsters);
+                                Monitor.Exit(MainGS.Monsters);
                             }
                             //}
                         }
                         else
                         {
-                            while (Nano.Monsters.ContainsKey(Mon.UID))
+                            while (MainGS.Monsters.ContainsKey(Mon.UID))
                             {
-                                Mon.UID = Nano.Rand.Next(200000, 600000);
+                                Mon.UID = MainGS.Rand.Next(200000, 600000);
                             }
-                            //lock(Nano.Monsters)
+                            //lock(MainGS.Monsters)
                             //{
                             try
                             {
-                                Monitor.Enter(Nano.Monsters);
-                                Nano.Monsters.Add(Mon.UID, Mon);
+                                Monitor.Enter(MainGS.Monsters);
+                                MainGS.Monsters.Add(Mon.UID, Mon);
                             }
                             catch (Exception e)
                             {
@@ -106,7 +106,7 @@ namespace GameServer.Entities
                             }
                             finally
                             {
-                                Monitor.Exit(Nano.Monsters);
+                                Monitor.Exit(MainGS.Monsters);
                             }
                             //}
                         }

@@ -12,22 +12,22 @@ using GameServer.Database;
 namespace GameServer.Handlers
 {
     /// <summary>
-    /// Handles picking up items off of Nano.ItemFloor
+    /// Handles picking up items off of MainGS.ItemFloor
     /// </summary>
     public partial class Handler
     {
         public static void PickupItem(int UID, ClientSocket CSocket)
         {
             CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Pickup: " + UID, Struct.ChatType.Normal));
-            foreach (Struct.ItemGround IG in Nano.ItemFloor.Values)
+            foreach (Struct.ItemGround IG in MainGS.ItemFloor.Values)
             {
                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Item On Ground: " + IG.UID, Struct.ChatType.Normal));
             }
             if (CSocket.Client.Inventory.Count < 40)
             {
-                if (Nano.ItemFloor.ContainsKey(UID))
+                if (MainGS.ItemFloor.ContainsKey(UID))
                 {
-                    Struct.ItemGround IG = Nano.ItemFloor[UID];
+                    Struct.ItemGround IG = MainGS.ItemFloor[UID];
                     if (IG.X == CSocket.Client.X && IG.Y == CSocket.Client.Y && IG.Map == (int)CSocket.Client.Map)
                     {
                         if (IG.OwnerOnly.Enabled)
@@ -36,7 +36,7 @@ namespace GameServer.Handlers
                             int TeamLeaderID = 0;
                             if (CSocket.Client.Team != null)
                             {
-                                ClientSocket Leader = Nano.ClientPool[CSocket.Client.Team.LeaderID];
+                                ClientSocket Leader = MainGS.ClientPool[CSocket.Client.Team.LeaderID];
                                 if (IG.Money > 0)
                                 {
                                     if (!Leader.Client.Team.ForbidMoney)
@@ -51,14 +51,14 @@ namespace GameServer.Handlers
                             if (IG.OwnerID == CSocket.Client.ID || IG.OwnerID == TeamLeaderID)
                             {
                                 IG.Stop();
-                                if (Nano.ItemFloor.ContainsKey(UID))
+                                if (MainGS.ItemFloor.ContainsKey(UID))
                                 {
-                                    //lock(Nano.ItemFloor)
+                                    //lock(MainGS.ItemFloor)
                                     //{
                                     try
                                     {
-                                        Monitor.Enter(Nano.ItemFloor);
-                                        Nano.ItemFloor.Remove(UID);
+                                        Monitor.Enter(MainGS.ItemFloor);
+                                        MainGS.ItemFloor.Remove(UID);
                                     }
                                     catch (Exception e)
                                     {
@@ -66,7 +66,7 @@ namespace GameServer.Handlers
                                     }
                                     finally
                                     {
-                                        Monitor.Exit(Nano.ItemFloor);
+                                        Monitor.Exit(MainGS.ItemFloor);
                                     }
                                     //}
                                 }
@@ -80,7 +80,7 @@ namespace GameServer.Handlers
                                 }
                                 EudemonPacket.ToLocal(EudemonPacket.RemoveItemDrop(UID), IG.X, IG.Y, IG.Map, 0, 0);
                                 Struct.ItemInfo Item = new Struct.ItemInfo();
-                                Struct.ItemData iData = Nano.Items[IG.ItemID];
+                                Struct.ItemData iData = MainGS.Items[IG.ItemID];
                                 Item.Bless = IG.Bless;
                                 Item.Dura = IG.Dura;
                                 Item.Enchant = IG.Enchant;
@@ -95,7 +95,7 @@ namespace GameServer.Handlers
                                 bool created = Database.Database.NewItem(Item, CSocket);
                                 while (!created)
                                 {
-                                    Item.UID = Nano.Rand.Next(1000, 9999999);
+                                    Item.UID = MainGS.Rand.Next(1000, 9999999);
                                     created = Database.Database.NewItem(Item, CSocket);
                                 }
                                 CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
@@ -111,14 +111,14 @@ namespace GameServer.Handlers
                         else
                         {
                             IG.Stop();
-                            if (Nano.ItemFloor.ContainsKey(UID))
+                            if (MainGS.ItemFloor.ContainsKey(UID))
                             {
-                                //lock(Nano.ItemFloor)
+                                //lock(MainGS.ItemFloor)
                                 //{
                                 try
                                 {
-                                    Monitor.Enter(Nano.ItemFloor);
-                                    Nano.ItemFloor.Remove(UID);
+                                    Monitor.Enter(MainGS.ItemFloor);
+                                    MainGS.ItemFloor.Remove(UID);
                                 }
                                 catch (Exception e)
                                 {
@@ -126,7 +126,7 @@ namespace GameServer.Handlers
                                 }
                                 finally
                                 {
-                                    Monitor.Exit(Nano.ItemFloor);
+                                    Monitor.Exit(MainGS.ItemFloor);
                                 }
                                 //}
                             }
@@ -140,7 +140,7 @@ namespace GameServer.Handlers
                             }
                             EudemonPacket.ToLocal(EudemonPacket.RemoveItemDrop(UID), IG.X, IG.Y, IG.Map, 0, 0);
                             Struct.ItemInfo Item = new Struct.ItemInfo();
-                            Struct.ItemData iData = Nano.Items[IG.ItemID];
+                            Struct.ItemData iData = MainGS.Items[IG.ItemID];
                             Item.Bless = IG.Bless;
                             Item.Dura = IG.Dura;
                             Item.Enchant = IG.Enchant;
@@ -155,7 +155,7 @@ namespace GameServer.Handlers
                             bool created = Database.Database.NewItem(Item, CSocket);
                             while (!created)
                             {
-                                Item.UID = Nano.Rand.Next(1000, 9999999);
+                                Item.UID = MainGS.Rand.Next(1000, 9999999);
                                 created = Database.Database.NewItem(Item, CSocket);
                             }
                             Database.Database.NewItem(Item, CSocket);

@@ -61,15 +61,15 @@ namespace GameServer.Handlers
                     int ID = Calculation.WeaponType(Convert.ToString(CSocket.Client.Equipment[5].ItemID));
                 }
             }
-            if (Nano.ClientPool.ContainsKey(Target))
+            if (MainGS.ClientPool.ContainsKey(Target))
             {
-                ASocket = Nano.ClientPool[Target];
-                AttackedChar = Nano.ClientPool[Target].Client;
+                ASocket = MainGS.ClientPool[Target];
+                AttackedChar = MainGS.ClientPool[Target].Client;
             }
-            else if (Nano.Monsters.ContainsKey(Target))
-                AttackedMob = Nano.Monsters[Target];
-            else if (Nano.TerrainNpcs.ContainsKey(Target))
-                AttackedTNpc = Nano.TerrainNpcs[Target];
+            else if (MainGS.Monsters.ContainsKey(Target))
+                AttackedMob = MainGS.Monsters[Target];
+            else if (MainGS.TerrainNpcs.ContainsKey(Target))
+                AttackedTNpc = MainGS.TerrainNpcs[Target];
             else if (Target > 0)
             {
                 //CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Target not found.", Struct.ChatType.Top));
@@ -188,7 +188,7 @@ namespace GameServer.Handlers
                         return;
                     }
                     if (CSocket.Client.MinAttack < CSocket.Client.MaxAttack)
-                        Damage = Nano.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
+                        Damage = MainGS.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
                     Calculation.doTNpc(CSocket, AttackedTNpc, Damage, AType);
 
                     if (CSocket.Client.Attack != null)
@@ -448,7 +448,7 @@ namespace GameServer.Handlers
                         return;
                     }
                     if (CSocket.Client.MinAttack < CSocket.Client.MaxAttack)
-                        Damage = Nano.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
+                        Damage = MainGS.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
                     Calculation.doTNpc(CSocket, AttackedTNpc, Damage, AType);
                     if (CSocket.Client.Attack != null)
                     {
@@ -518,12 +518,12 @@ namespace GameServer.Handlers
                     {
                         Dictionary<int, Monster> ToDo = new Dictionary<int, Monster>();
                         Dictionary<int, int> Targets = new Dictionary<int, int>();
-                        //lock(Nano.Monsters)
+                        //lock(MainGS.Monsters)
                         //{
                         try
                         {
-                            Monitor.Enter(Nano.Monsters);
-                            foreach (KeyValuePair<int, Monster> Mob in Nano.Monsters)
+                            Monitor.Enter(MainGS.Monsters);
+                            foreach (KeyValuePair<int, Monster> Mob in MainGS.Monsters)
                             {
                                 if ((int)CSocket.Client.Map == Mob.Value.Map)
                                 {
@@ -552,15 +552,15 @@ namespace GameServer.Handlers
                         }
                         finally
                         {
-                            Monitor.Exit(Nano.Monsters);
+                            Monitor.Exit(MainGS.Monsters);
                         }
                         //}
-                        //lock(Nano.ClientPool)
+                        //lock(MainGS.ClientPool)
                         //{
                         try
                         {
-                            Monitor.Enter(Nano.ClientPool);
-                            foreach (KeyValuePair<int, ClientSocket> Clients in Nano.ClientPool)
+                            Monitor.Enter(MainGS.ClientPool);
+                            foreach (KeyValuePair<int, ClientSocket> Clients in MainGS.ClientPool)
                             {
                                 ClientSocket ASocket = Clients.Value;
                                 if ((int)CSocket.Client.Map == (int)ASocket.Client.Map && CSocket.Client.ID != ASocket.Client.ID)
@@ -584,10 +584,10 @@ namespace GameServer.Handlers
                         }
                         finally
                         {
-                            Monitor.Exit(Nano.ClientPool);
+                            Monitor.Exit(MainGS.ClientPool);
                         }
                         //}
-                        foreach (KeyValuePair<int, Struct.TerrainNPC> TNPCS in Nano.TerrainNpcs)
+                        foreach (KeyValuePair<int, Struct.TerrainNPC> TNPCS in MainGS.TerrainNpcs)
                         {
                             Struct.TerrainNPC Tnpc = TNPCS.Value;
                             if ((int)CSocket.Client.Map == Tnpc.Map)
@@ -596,7 +596,7 @@ namespace GameServer.Handlers
                                 {
                                     int Damage = 0;
                                     if (CSocket.Client.MinAttack < CSocket.Client.MaxAttack)
-                                        Damage = Nano.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
+                                        Damage = MainGS.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
                                     Calculation.doTNpc(CSocket, Tnpc, Damage, 21);
                                     if (!Targets.ContainsKey(Tnpc.UID))
                                         Targets.Add(Tnpc.UID, Damage);
@@ -633,12 +633,12 @@ namespace GameServer.Handlers
                         {
                             int HitX = HitCoords[0];
                             int HitY = HitCoords[1];
-                            //lock(Nano.ClientPool)
+                            //lock(MainGS.ClientPool)
                             //{
                             try
                             {
-                                Monitor.Enter(Nano.ClientPool);
-                                foreach (KeyValuePair<int, ClientSocket> Clients in Nano.ClientPool)
+                                Monitor.Enter(MainGS.ClientPool);
+                                foreach (KeyValuePair<int, ClientSocket> Clients in MainGS.ClientPool)
                                 {
                                     ClientSocket ASocket = Clients.Value;
                                     if ((int)CSocket.Client.Map == (int)ASocket.Client.Map && CSocket.Client.ID != ASocket.Client.ID)
@@ -664,16 +664,16 @@ namespace GameServer.Handlers
                             }
                             finally
                             {
-                                Monitor.Exit(Nano.ClientPool);
+                                Monitor.Exit(MainGS.ClientPool);
                             }
                             //}
                             Dictionary<int, Monster> ToDo = new Dictionary<int, Monster>();
-                            //lock(Nano.Monsters)
+                            //lock(MainGS.Monsters)
                             //{
                             try
                             {
-                                Monitor.Enter(Nano.Monsters);
-                                foreach (KeyValuePair<int, Monster> Mob in Nano.Monsters)
+                                Monitor.Enter(MainGS.Monsters);
+                                foreach (KeyValuePair<int, Monster> Mob in MainGS.Monsters)
                                 {
                                     if ((int)CSocket.Client.Map == Mob.Value.Map)
                                     {
@@ -705,10 +705,10 @@ namespace GameServer.Handlers
                             }
                             finally
                             {
-                                Monitor.Exit(Nano.Monsters);
+                                Monitor.Exit(MainGS.Monsters);
                             }
                             //}
-                            foreach (KeyValuePair<int, Struct.TerrainNPC> TNPCS in Nano.TerrainNpcs)
+                            foreach (KeyValuePair<int, Struct.TerrainNPC> TNPCS in MainGS.TerrainNpcs)
                             {
                                 Struct.TerrainNPC Tnpc = TNPCS.Value;
                                 if ((int)CSocket.Client.Map == Tnpc.Map)
@@ -719,7 +719,7 @@ namespace GameServer.Handlers
                                         {
                                             int Damage = 0;
                                             if (CSocket.Client.MinAttack < CSocket.Client.MaxAttack)
-                                                Damage = Nano.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
+                                                Damage = MainGS.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
                                             Calculation.doTNpc(CSocket, Tnpc, Damage, 21);
                                             if (!Targets.ContainsKey(Tnpc.UID))
                                                 Targets.Add(Tnpc.UID, Damage);
@@ -760,12 +760,12 @@ namespace GameServer.Handlers
                         {
                             int HitX = HitCoords[0];
                             int HitY = HitCoords[1];
-                            //lock(Nano.ClientPool)
+                            //lock(MainGS.ClientPool)
                             //{
                             try
                             {
-                                Monitor.Enter(Nano.ClientPool);
-                                foreach (KeyValuePair<int, ClientSocket> Clients in Nano.ClientPool)
+                                Monitor.Enter(MainGS.ClientPool);
+                                foreach (KeyValuePair<int, ClientSocket> Clients in MainGS.ClientPool)
                                 {
                                     ClientSocket ASocket = Clients.Value;
                                     if ((int)CSocket.Client.Map == (int)ASocket.Client.Map)
@@ -792,15 +792,15 @@ namespace GameServer.Handlers
                             }
                             finally
                             {
-                                Monitor.Exit(Nano.ClientPool);
+                                Monitor.Exit(MainGS.ClientPool);
                             }
                             Dictionary<int, Monster> ToDo = new Dictionary<int, Monster>();
-                            //lock(Nano.Monsters)
+                            //lock(MainGS.Monsters)
                             //{
                             try
                             {
-                                Monitor.Enter(Nano.Monsters);
-                                foreach (KeyValuePair<int, Monster> Mob in Nano.Monsters)
+                                Monitor.Enter(MainGS.Monsters);
+                                foreach (KeyValuePair<int, Monster> Mob in MainGS.Monsters)
                                 {
                                     if ((int)CSocket.Client.Map == Mob.Value.Map)
                                     {
@@ -833,9 +833,9 @@ namespace GameServer.Handlers
                             }
                             finally
                             {
-                                Monitor.Exit(Nano.Monsters);
+                                Monitor.Exit(MainGS.Monsters);
                             }
-                            foreach (KeyValuePair<int, Struct.TerrainNPC> TNPCS in Nano.TerrainNpcs)
+                            foreach (KeyValuePair<int, Struct.TerrainNPC> TNPCS in MainGS.TerrainNpcs)
                             {
                                 Struct.TerrainNPC Tnpc = TNPCS.Value;
                                 if ((int)CSocket.Client.Map == Tnpc.Map)
@@ -846,7 +846,7 @@ namespace GameServer.Handlers
                                         {
                                             int Damage = 0;
                                             if (CSocket.Client.MinAttack < CSocket.Client.MaxAttack)
-                                                Damage = Nano.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
+                                                Damage = MainGS.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
                                             Calculation.doTNpc(CSocket, Tnpc, Damage, 21);
                                             if (!Targets.ContainsKey(Tnpc.UID))
                                                 Targets.Add(Tnpc.UID, Damage);
@@ -885,12 +885,12 @@ namespace GameServer.Handlers
                             Distance = 3;
                         Dictionary<int, Monster> ToDo = new Dictionary<int, Monster>();
                         Dictionary<int, int> Targets = new Dictionary<int, int>();
-                        //lock(Nano.Monsters)
+                        //lock(MainGS.Monsters)
                         //{
                         try
                         {
-                            Monitor.Enter(Nano.Monsters);
-                            foreach (KeyValuePair<int, Monster> Mob in Nano.Monsters)
+                            Monitor.Enter(MainGS.Monsters);
+                            foreach (KeyValuePair<int, Monster> Mob in MainGS.Monsters)
                             {
                                 if ((int)CSocket.Client.Map == Mob.Value.Map)
                                 {
@@ -920,14 +920,14 @@ namespace GameServer.Handlers
                         }
                         finally
                         {
-                            Monitor.Exit(Nano.Monsters);
+                            Monitor.Exit(MainGS.Monsters);
                         }
-                        //lock(Nano.ClientPool)
+                        //lock(MainGS.ClientPool)
                         //{
                         try
                         {
-                            Monitor.Enter(Nano.ClientPool);
-                            foreach (KeyValuePair<int, ClientSocket> Clients in Nano.ClientPool)
+                            Monitor.Enter(MainGS.ClientPool);
+                            foreach (KeyValuePair<int, ClientSocket> Clients in MainGS.ClientPool)
                             {
                                 ClientSocket ASocket = Clients.Value;
                                 if ((int)CSocket.Client.Map == (int)ASocket.Client.Map && CSocket.Client.ID != ASocket.Client.ID)
@@ -953,9 +953,9 @@ namespace GameServer.Handlers
                         }
                         finally
                         {
-                            Monitor.Exit(Nano.ClientPool);
+                            Monitor.Exit(MainGS.ClientPool);
                         }
-                        foreach (KeyValuePair<int, Struct.TerrainNPC> TNPCS in Nano.TerrainNpcs)
+                        foreach (KeyValuePair<int, Struct.TerrainNPC> TNPCS in MainGS.TerrainNpcs)
                         {
                             Struct.TerrainNPC Tnpc = TNPCS.Value;
                             if ((int)CSocket.Client.Map == Tnpc.Map)
@@ -965,7 +965,7 @@ namespace GameServer.Handlers
                                     int Damage = 0;
                                     if (CSocket.Client.MinAttack < CSocket.Client.MaxAttack)
                                     {
-                                        Damage = Nano.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
+                                        Damage = MainGS.Rand.Next(CSocket.Client.MinAttack, CSocket.Client.MaxAttack);
                                         Damage = (Damage / 3);
                                     }
                                     Calculation.doTNpc(CSocket, Tnpc, Damage, 21);
@@ -1024,9 +1024,9 @@ namespace GameServer.Handlers
             {
                 if (CSocket.Client.Team != null)
                 {
-                    if (Nano.ClientPool.ContainsKey(CSocket.Client.Team.LeaderID))
+                    if (MainGS.ClientPool.ContainsKey(CSocket.Client.Team.LeaderID))
                     {
-                        ClientSocket Leader = Nano.ClientPool[CSocket.Client.Team.LeaderID];
+                        ClientSocket Leader = MainGS.ClientPool[CSocket.Client.Team.LeaderID];
                         if (Leader.Client.Team.Members.ContainsKey(ASocket.Client.ID))
                             return false;
                         else

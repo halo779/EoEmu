@@ -90,7 +90,6 @@
     <Compile Include="Connections\ConnectionRequest.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
-    <Compile Include="Encryption\GameEncryption.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Monster.cs" />
     <Compile Include="Entities\MonsterInfo.cs" />

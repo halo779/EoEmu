@@ -19,10 +19,10 @@ namespace GameServer
             Console.WriteLine("The CoEMUv2 source can be found at: http://tinyurl.com/coemuv2");
             Console.WriteLine("\n[GameServer] Starting Server");
             Console.ResetColor();
-            Nano.StartServer();
+            MainGS.StartServer();
             Console.ReadKey();
-            Nano.GameServerNano.Close();
-            Nano.AuthServer.Close();
+            MainGS.GameServerNano.Close();
+            MainGS.AuthServer.Close();
             //TODO: Get rid of connected clients...
             //Done
             Console.WriteLine("[GameServer] Server over. Goodbye.");

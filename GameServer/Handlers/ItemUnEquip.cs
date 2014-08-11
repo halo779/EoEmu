@@ -141,9 +141,9 @@ namespace GameServer.Handlers
                                     break;
                                 }
                         }
-                        if (Nano.Items.ContainsKey(Item.ItemID))
+                        if (MainGS.Items.ContainsKey(Item.ItemID))
                         {
-                            Struct.ItemData ItemD = Nano.Items[Item.ItemID];
+                            Struct.ItemData ItemD = MainGS.Items[Item.ItemID];
                             CSocket.Client.BaseMagicAttack -= ItemD.MinMagicAttack;
                             if (Location == 5)
                             {
@@ -198,9 +198,9 @@ namespace GameServer.Handlers
                                 s_ItemID = s_ItemID.Insert((s_ItemID.Length), "0");
                                 itemidsimple = Convert.ToInt32(s_ItemID);
                             }
-                            if (Nano.ItemPluses.ContainsKey(itemidsimple))
+                            if (MainGS.ItemPluses.ContainsKey(itemidsimple))
                             {
-                                Struct.ItemPlusDB IPlus = Nano.ItemPluses[itemidsimple];
+                                Struct.ItemPlusDB IPlus = MainGS.ItemPluses[itemidsimple];
                                 if (IPlus.DB.ContainsKey(Item.Plus))
                                 {
                                     Struct.ItemPlus iPlus = IPlus.DB[Item.Plus];

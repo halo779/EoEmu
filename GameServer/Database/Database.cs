@@ -256,7 +256,7 @@ namespace GameServer.Database
             while (DR.Read())
             {
                 int ID = Convert.ToInt32(DR["type"]);
-                if (!Nano.ServerSkills.ContainsKey(ID))
+                if (!MainGS.ServerSkills.ContainsKey(ID))
                 {
                     Struct.ServerSkill Skill = new Struct.ServerSkill();
                     Skill.ID = ID;
@@ -268,11 +268,11 @@ namespace GameServer.Database
                     Needs[0] = NeedExp;
                     Needs[1] = NeedLevel;
                     Skill.RequiredExp.Add(Level, Needs);
-                    Nano.ServerSkills.Add(ID, Skill);
+                    MainGS.ServerSkills.Add(ID, Skill);
                 }
                 else
                 {
-                    Struct.ServerSkill Skill = Nano.ServerSkills[ID];
+                    Struct.ServerSkill Skill = MainGS.ServerSkills[ID];
                     int Level = Convert.ToInt32(DR["level"]);
                     if (Level > Skill.MaxLevel)
                         Skill.MaxLevel = Level;
@@ -357,7 +357,7 @@ namespace GameServer.Database
                     Tnpc.Level = 115;
                 else if (Tnpc.Type == 1020 || Tnpc.Type == 1030)
                     Tnpc.Level = 120;
-                Nano.TerrainNpcs.Add(Tnpc.UID, Tnpc);
+                MainGS.TerrainNpcs.Add(Tnpc.UID, Tnpc);
             }
             DR.Close();
             Cmd.Dispose();
@@ -449,12 +449,12 @@ namespace GameServer.Database
                 MI.MinAttack = Convert.ToInt32(DR["atkmin"]);
                 MI.Name = Convert.ToString(DR["name"]);
                 MI.Speed = Convert.ToInt32(DR["speed"]);
-                if (!Nano.BaseMonsters.ContainsKey(MI.ID))
+                if (!MainGS.BaseMonsters.ContainsKey(MI.ID))
                 {
-                    Nano.BaseMonsters.Add(MI.ID, MI);
+                    MainGS.BaseMonsters.Add(MI.ID, MI);
                 }
             }
-            Console.WriteLine("[GameServer] Loaded " + Nano.BaseMonsters.Count + " base monster info from the DB.");
+            Console.WriteLine("[GameServer] Loaded " + MainGS.BaseMonsters.Count + " base monster info from the DB.");
             DR.Close();
             Cmd.Dispose();
         }
@@ -476,12 +476,12 @@ namespace GameServer.Database
                 MS.XStop = Convert.ToInt32(DR["x-stop"]);
                 MS.Y = Convert.ToInt32(DR["y-start"]);
                 MS.YStop = Convert.ToInt32(DR["y-stop"]);
-                if (!Nano.MonsterSpawns.ContainsKey(MS.SpawnID))
+                if (!MainGS.MonsterSpawns.ContainsKey(MS.SpawnID))
                 {
-                    Nano.MonsterSpawns.Add(MS.SpawnID, MS);
+                    MainGS.MonsterSpawns.Add(MS.SpawnID, MS);
                 }
             }
-            Console.WriteLine("[GameServer] Loaded " + Nano.MonsterSpawns.Count + " unique monster spawns.");
+            Console.WriteLine("[GameServer] Loaded " + MainGS.MonsterSpawns.Count + " unique monster spawns.");
             Console.WriteLine("[GameServer] Will theoretically spawn " + TotalSpawns + " monsters into the world.");
             DR.Close();
             Cmd.Dispose();
@@ -501,10 +501,10 @@ namespace GameServer.Database
                 NPC.Type = Convert.ToInt32(DR["NpcType"]);
                 NPC.X = Convert.ToInt32(DR["Xcord"]);
                 NPC.Y = Convert.ToInt32(DR["Ycord"]);
-                if (!Nano.Npcs.ContainsKey(NPC.ID))
-                    Nano.Npcs.Add(NPC.ID, NPC);
+                if (!MainGS.Npcs.ContainsKey(NPC.ID))
+                    MainGS.Npcs.Add(NPC.ID, NPC);
             }
-            Console.WriteLine("[GameServer] Loaded " + Nano.Npcs.Count + " npcs into the world.");
+            Console.WriteLine("[GameServer] Loaded " + MainGS.Npcs.Count + " npcs into the world.");
             DR.Close();
             Cmd.Dispose();
         }
@@ -530,15 +530,15 @@ namespace GameServer.Database
                     NewItem.DexAdd = Convert.ToInt32(DR["dexterity"]);
                     NewItem.DodgeAdd = Convert.ToInt32(DR["dodge"]);
                 }
-                if (!Nano.ItemPluses.ContainsKey(NewItem.ID))
+                if (!MainGS.ItemPluses.ContainsKey(NewItem.ID))
                 {
                     Struct.ItemPlusDB DB = new Struct.ItemPlusDB();
                     DB.DB.Add(NewItem.Plus, NewItem);
-                    Nano.ItemPluses.Add(NewItem.ID, DB);
+                    MainGS.ItemPluses.Add(NewItem.ID, DB);
                 }
                 else
                 {
-                    Struct.ItemPlusDB DB = Nano.ItemPluses[NewItem.ID];
+                    Struct.ItemPlusDB DB = MainGS.ItemPluses[NewItem.ID];
                     if (!DB.DB.ContainsKey(NewItem.Plus))
                         DB.DB.Add(NewItem.Plus, NewItem);
                 }
@@ -561,11 +561,11 @@ namespace GameServer.Database
                 Port.EndX = Convert.ToInt32(DR["EndX"]);
                 Port.EndY = Convert.ToInt32(DR["EndY"]);
                 string PID = Port.StartX + "," + Port.StartY + "," + Port.StartMap + "," + Port.StartInstance;
-                Nano.Portals.Add(PID, Port);
+                MainGS.Portals.Add(PID, Port);
             }
             DR.Close();
             Cmd.Dispose();
-            Console.WriteLine("[GameServer] Loaded " + Nano.Portals.Count + " portals into the world.");
+            Console.WriteLine("[GameServer] Loaded " + MainGS.Portals.Count + " portals into the world.");
         }
         public static void PurgeGuilds()
         {

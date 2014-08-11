@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using GameServer.Encryption;
 using GameServer.Packets;
 using GameServer.Entities;
 using GameServer.Structs;
@@ -20,10 +19,8 @@ namespace GameServer.Connections
         protected Socket CSocket;
         protected bool Continue = true;
         protected byte[] CSocketBuffer = new byte[1024]; //Maximum data size of 1024 bytes...Quite a bit :)
-        protected GameEncryption Crypt;
         protected bool ServerShake = false;
         protected bool ClientShake = false;
-        protected ServerKeyExchange SKE;
         protected object SyncRecv;
         protected object SyncSend;
         #endregion
@@ -38,14 +35,11 @@ namespace GameServer.Connections
             CSocket.NoDelay = true;
             SyncRecv = new object();
             SyncSend = new object();
-            //SKE = new ServerKeyExchange();
-            //Crypt = new GameEncryption("DR654dt34trg4UI6");
-            //this.Send(SKE.CreateServerKeyPacket());
         }
 
         public void Run()
         {
-            while (Continue & Nano.Continue)
+            while (Continue & MainGS.Continue)
             {
                 if (CSocket.Connected)
                 {
@@ -84,13 +78,10 @@ namespace GameServer.Connections
                         if (Data != null && Data.Length > 3)
                         {
                             ClientShake = true;
-                            //Data = Crypt.Decrypt(Data);
                             if (!ClientShake)
                             {
                                 ClientShake = true;
-                                string Key = new ClientKeyPacket(Data).PublicKey;
                                 Console.WriteLine("Client replying to handshake.");
-                                //Crypt = SKE.HandleClientKeyPacket(Key, Crypt);
                             }
                             else
                             {
@@ -113,7 +104,6 @@ namespace GameServer.Connections
             {
                 if (CSocket.Connected)
                 {
-                    //Data = Crypt.Encrypt(Data);
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("[Packetlogger] Sending Packet to Client [" + Client.ID + " - " + Client.Name +"]: ");
                     Console.ResetColor();
@@ -149,9 +139,9 @@ namespace GameServer.Connections
                     Client.Equipment.Clear();
                     Client.Skills.Clear();
                     Client.TCWhs.Clear();
-                    Monitor.Enter(Nano.ClientPool);
-                    Nano.ClientPool.Remove(Client.ID);
-                    if (Nano.Continue)
+                    Monitor.Enter(MainGS.ClientPool);
+                    MainGS.ClientPool.Remove(Client.ID);
+                    if (MainGS.Continue)
                     {
                         if (Client.Team != null)
                         {
@@ -169,7 +159,7 @@ namespace GameServer.Connections
                             }
                             else
                             {
-                                ClientSocket Leader = Nano.ClientPool[Client.Team.LeaderID];
+                                ClientSocket Leader = MainGS.ClientPool[Client.Team.LeaderID];
                                 Leader.Client.Team.Members.Remove(Client.ID);
                                 foreach (KeyValuePair<int, ClientSocket> Member in Leader.Client.Team.Members)
                                 {
@@ -206,7 +196,7 @@ namespace GameServer.Connections
             finally
             {
                 if (Client != null)
-                    Monitor.Exit(Nano.ClientPool);
+                    Monitor.Exit(MainGS.ClientPool);
                 this.CSocket.Close();
             }
         }
@@ -219,13 +209,12 @@ namespace GameServer.Connections
                     if (Client.CurrentStam != 99)
                     {
                         Client.CurrentStam += 10;
-                       // Send(EudemonPacket.Status(this, 2, Client.CurrentStam, Struct.StatusTypes.Stamina));
+
                         Send(EudemonPacket.Status(this, Struct.StatusTypes.Stamina, Client.CurrentStam));
                     }
                     else
                     {
                         Client.CurrentStam += 1;
-                        //Send(EudemonPacket.Status(this, 2, Client.CurrentStam, Struct.StatusTypes.Stamina));
                         Send(EudemonPacket.Status(this, Struct.StatusTypes.Stamina, Client.CurrentStam));
                     }
                 }

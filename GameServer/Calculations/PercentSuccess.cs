@@ -13,7 +13,7 @@ namespace GameServer.Calculations
     {
         public static bool PercentSuccess(double percent)
         {
-            return ((double)Nano.Rand.Next(1, 1000000)) / 10000 >= 100 - percent;
+            return ((double)MainGS.Rand.Next(1, 1000000)) / 10000 >= 100 - percent;
         }
     }
 }

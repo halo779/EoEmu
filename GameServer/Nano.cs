@@ -10,12 +10,7 @@ using OpenSSL;
 
 namespace GameServer
 {
-    /// <summary>
-    /// Nano, CoEmu v2's Leveling server 'nickname' is hence forth the primary location of threaded operations.
-    /// This class holds all data which is to be shared amongst connected players, that being said
-    /// it is here entirely to be a 'dataholder' as seen in CoEmu v2's initial release.
-    /// </summary>
-    public static class Nano
+    public static class MainGS
     {
         public const int VIEW_THRESHOLD = 18;
         public static string PoleHolder = "None";
@@ -59,12 +54,12 @@ namespace GameServer
             //Database.Database.PurgeGuilds();
 
             Console.WriteLine("[GameServer-Init] Creating Game Thread..");
-            Nano.GameServerNano = new MasterSocket("GameServer");
-            new Thread(Nano.GameServerNano.AcceptNewConnections).Start();
+            MainGS.GameServerNano = new MasterSocket("GameServer");
+            new Thread(MainGS.GameServerNano.AcceptNewConnections).Start();
             Console.WriteLine("[GameServer-Init](Game Thread) Success.");
             Console.WriteLine("[GameServer-Init] Creating Auth Thread..");
-            Nano.AuthServer = new MasterSocket("AuthServer");
-            new Thread(Nano.AuthServer.AcceptNewConnections).Start();
+            MainGS.AuthServer = new MasterSocket("AuthServer");
+            new Thread(MainGS.AuthServer.AcceptNewConnections).Start();
             Console.WriteLine("[GameServer-Init](Auth Thread) Success.");
             ConsoleCommands();
         }
@@ -99,8 +94,8 @@ namespace GameServer
             GameServer.Packets.EudemonPacket.ToServer(GameServer.Packets.EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 2 seconds.", GameServer.Structs.Struct.ChatType.Talk), 0);
             Thread.Sleep(1000);
             GameServer.Packets.EudemonPacket.ToServer(GameServer.Packets.EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "[GameServer] Shutting down in 1 second.", GameServer.Structs.Struct.ChatType.Talk), 0);
-            Nano.AuthServer.Close();
-            Nano.GameServerNano.Close();
+            MainGS.AuthServer.Close();
+            MainGS.GameServerNano.Close();
             System.Environment.Exit(1);
         }
     }

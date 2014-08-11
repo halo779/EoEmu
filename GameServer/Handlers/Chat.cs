@@ -100,8 +100,8 @@ namespace GameServer.Handlers
                                     bool kicked = false;
                                     try
                                     {
-                                        Monitor.Enter(Nano.ClientPool);
-                                        foreach (KeyValuePair<int, ClientSocket> Player in Nano.ClientPool)
+                                        Monitor.Enter(MainGS.ClientPool);
+                                        foreach (KeyValuePair<int, ClientSocket> Player in MainGS.ClientPool)
                                         {
                                             if (Player.Value.Client.Name.ToLower() == Command[1].ToLower())
                                             {
@@ -123,7 +123,7 @@ namespace GameServer.Handlers
                                     }
                                     finally
                                     {
-                                        Monitor.Exit(Nano.ClientPool);
+                                        Monitor.Exit(MainGS.ClientPool);
                                     }
                                     if (!kicked)
                                     {
@@ -145,8 +145,8 @@ namespace GameServer.Handlers
                                     Database.Database.BanPlayer(Command[1]);
                                     try
                                     {
-                                        Monitor.Enter(Nano.ClientPool);
-                                        foreach (KeyValuePair<int, ClientSocket> Player in Nano.ClientPool)
+                                        Monitor.Enter(MainGS.ClientPool);
+                                        foreach (KeyValuePair<int, ClientSocket> Player in MainGS.ClientPool)
                                         {
                                             if (Player.Value.Client.Name.ToLower() == Command[1].ToLower())
                                             {
@@ -163,7 +163,7 @@ namespace GameServer.Handlers
                                     }
                                     finally
                                     {
-                                        Monitor.Exit(Nano.ClientPool);
+                                        Monitor.Exit(MainGS.ClientPool);
                                     }
                                     if (!kicked)
                                     {
@@ -186,27 +186,27 @@ namespace GameServer.Handlers
                                     {
                                         case "portals":
                                             {
-                                                Nano.Portals.Clear();
+                                                MainGS.Portals.Clear();
                                                 Struct.LoadPortals();
                                                 break;
                                             }
                                         case "monsters":
                                             {
-                                                Nano.BaseMonsters.Clear();
-                                                Nano.MonsterSpawns.Clear();
-                                                Nano.Monsters.Clear();
+                                                MainGS.BaseMonsters.Clear();
+                                                MainGS.MonsterSpawns.Clear();
+                                                MainGS.Monsters.Clear();
                                                 Struct.LoadMonsters();
                                                 break;
                                             }
                                         case "npcs":
                                             {
-                                                Nano.Npcs.Clear();
+                                                MainGS.Npcs.Clear();
                                                 Struct.LoadNpcs();
                                                 break;
                                             }
                                         case "tnpcs":
                                             {
-                                                Nano.TerrainNpcs.Clear();
+                                                MainGS.TerrainNpcs.Clear();
                                                 Struct.LoadTNpcs();
                                                 break;
                                             }
@@ -299,21 +299,21 @@ namespace GameServer.Handlers
                                         int Times = 1;
                                         if (Calculation.PercentSuccess(15))
                                         {
-                                            Times = Nano.Rand.Next(1, 6);
+                                            Times = MainGS.Rand.Next(1, 6);
                                         }
                                         for (int i = 0; i < Times; i++)
                                         {
-                                            int Money = Nano.Rand.Next(1, 10);
+                                            int Money = MainGS.Rand.Next(1, 10);
                                             if (Calculation.PercentSuccess(90))
-                                                Money = Nano.Rand.Next(2, 240);
+                                                Money = MainGS.Rand.Next(2, 240);
                                             if (Calculation.PercentSuccess(70))
-                                                Money = Nano.Rand.Next(60, 3000);
+                                                Money = MainGS.Rand.Next(60, 3000);
                                             if (Calculation.PercentSuccess(50))
-                                                Money = Nano.Rand.Next(200, 4000);
+                                                Money = MainGS.Rand.Next(200, 4000);
                                             if (Calculation.PercentSuccess(30))
-                                                Money = Nano.Rand.Next(1000, 30000);
+                                                Money = MainGS.Rand.Next(1000, 30000);
                                             if (Calculation.PercentSuccess(100))
-                                                Money = Nano.Rand.Next(2000, 50000);
+                                                Money = MainGS.Rand.Next(2000, 50000);
                                             Money = Money / ((138 - Level) * 10);
                                             if (Money < 1)
                                                 Money = 1;
@@ -331,10 +331,10 @@ namespace GameServer.Handlers
                                                 IG.ItemID = 1091010;
                                             else
                                                 IG.ItemID = 1091020;
-                                            IG.UID = Nano.Rand.Next(1, 1000);
-                                            while (Nano.ItemFloor.ContainsKey(IG.UID))
+                                            IG.UID = MainGS.Rand.Next(1, 1000);
+                                            while (MainGS.ItemFloor.ContainsKey(IG.UID))
                                             {
-                                                IG.UID = Nano.Rand.Next(1, 1000);
+                                                IG.UID = MainGS.Rand.Next(1, 1000);
                                             }
                                             IG.X = CSocket.Client.X;
                                             IG.Y = CSocket.Client.Y;
@@ -345,7 +345,7 @@ namespace GameServer.Handlers
                                             IG.Dispose.AutoReset = false;
                                             IG.Dispose.Elapsed += delegate { IG.Disappear(); };
                                             IG.Dispose.Start();
-                                            Nano.ItemFloor.Add(IG.UID, IG);
+                                            MainGS.ItemFloor.Add(IG.UID, IG);
                                             EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                                         }
                                     }
@@ -359,17 +359,17 @@ namespace GameServer.Handlers
                                             IG.Y = CSocket.Client.Y;
                                             IG.Map = (int)CSocket.Client.Map;
                                             IG.OwnerOnly = new System.Timers.Timer();
-                                            IG.UID = Nano.Rand.Next(1000, 9999999);
-                                            while (Nano.ItemFloor.ContainsKey(IG.UID))
+                                            IG.UID = MainGS.Rand.Next(1000, 9999999);
+                                            while (MainGS.ItemFloor.ContainsKey(IG.UID))
                                             {
-                                                IG.UID = Nano.Rand.Next(1000, 9999999);
+                                                IG.UID = MainGS.Rand.Next(1000, 9999999);
                                             }
                                             //TODO: UID generation that is better.
                                             IG.Dispose.Interval = 10000;
                                             IG.Dispose.AutoReset = false;
                                             IG.Dispose.Elapsed += delegate { IG.Disappear(); };
                                             IG.Dispose.Start();
-                                            Nano.ItemFloor.Add(IG.UID, IG);
+                                            MainGS.ItemFloor.Add(IG.UID, IG);
                                             EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                                         }
                                         else if (Calculation.PercentSuccess(3))
@@ -380,17 +380,17 @@ namespace GameServer.Handlers
                                             IG.Y = CSocket.Client.Y;
                                             IG.Map = (int)CSocket.Client.Map;
                                             IG.OwnerOnly = new System.Timers.Timer();
-                                            IG.UID = Nano.Rand.Next(1000, 9999999);
-                                            while (Nano.ItemFloor.ContainsKey(IG.UID))
+                                            IG.UID = MainGS.Rand.Next(1000, 9999999);
+                                            while (MainGS.ItemFloor.ContainsKey(IG.UID))
                                             {
-                                                IG.UID = Nano.Rand.Next(1000, 9999999);
+                                                IG.UID = MainGS.Rand.Next(1000, 9999999);
                                             }
                                             //TODO: UID generation that is better.
                                             IG.Dispose.Interval = 10000;
                                             IG.Dispose.AutoReset = false;
                                             IG.Dispose.Elapsed += delegate { IG.Disappear(); };
                                             IG.Dispose.Start();
-                                            Nano.ItemFloor.Add(IG.UID, IG);
+                                            MainGS.ItemFloor.Add(IG.UID, IG);
                                             EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                                         }
                                     }
@@ -406,8 +406,8 @@ namespace GameServer.Handlers
                                         ClientSocket Target = null;
                                         try
                                         {
-                                            Monitor.Enter(Nano.ClientPool);
-                                            foreach (KeyValuePair<int, ClientSocket> Clients in Nano.ClientPool)
+                                            Monitor.Enter(MainGS.ClientPool);
+                                            foreach (KeyValuePair<int, ClientSocket> Clients in MainGS.ClientPool)
                                             {
                                                 if (Clients.Value.Client.Name == Command[1])
                                                 {
@@ -422,7 +422,7 @@ namespace GameServer.Handlers
                                         }
                                         finally
                                         {
-                                            Monitor.Exit(Nano.ClientPool);
+                                            Monitor.Exit(MainGS.ClientPool);
                                         }
                                         if (Target != null)
                                         {
@@ -446,8 +446,8 @@ namespace GameServer.Handlers
                                         ClientSocket Target = null;
                                         try
                                         {
-                                            Monitor.Enter(Nano.ClientPool);
-                                            foreach (KeyValuePair<int, ClientSocket> Clients in Nano.ClientPool)
+                                            Monitor.Enter(MainGS.ClientPool);
+                                            foreach (KeyValuePair<int, ClientSocket> Clients in MainGS.ClientPool)
                                             {
                                                 if (Clients.Value.Client.Name == Command[1])
                                                 {
@@ -463,7 +463,7 @@ namespace GameServer.Handlers
                                         }
                                         finally
                                         {
-                                            Monitor.Exit(Nano.ClientPool);
+                                            Monitor.Exit(MainGS.ClientPool);
                                         }
                                         if (Target != null)
                                         {
@@ -509,11 +509,11 @@ namespace GameServer.Handlers
                                     NewItem.Soc1 = 0;
                                     NewItem.Soc2 = 0;
                                     NewItem.Color = 0;
-                                    NewItem.UID = Nano.Rand.Next(1, 9999999);
+                                    NewItem.UID = MainGS.Rand.Next(1, 9999999);
                                     bool created = Database.Database.NewItem(NewItem, CSocket);
                                     while (!created)
                                     {
-                                        NewItem.UID = Nano.Rand.Next(1, 9999999);
+                                        NewItem.UID = MainGS.Rand.Next(1, 9999999);
                                         created = Database.Database.NewItem(NewItem, CSocket);
                                     }
                                     CSocket.Client.Inventory.Add(NewItem.UID, NewItem);
@@ -545,7 +545,7 @@ namespace GameServer.Handlers
                                             CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Your inventory is full.", Struct.ChatType.System));
                                             break;
                                         }
-                                        foreach (KeyValuePair<int, Struct.ItemData> Items in Nano.Items)
+                                        foreach (KeyValuePair<int, Struct.ItemData> Items in MainGS.Items)
                                         {
                                             Struct.ItemData Item = Items.Value;
                                             if (Item.Name.ToLower() == Command[1].ToLower())
@@ -1033,11 +1033,11 @@ namespace GameServer.Handlers
                                                 NewItem.Soc1 = Soc1;
                                                 NewItem.Soc2 = Soc2;
                                                 NewItem.Color = Color;
-                                                NewItem.UID = Nano.Rand.Next(1, 9999999);
+                                                NewItem.UID = MainGS.Rand.Next(1, 9999999);
                                                 bool created = Database.Database.NewItem(NewItem, CSocket);
                                                 while (!created)
                                                 {
-                                                    NewItem.UID = Nano.Rand.Next(1, 9999999);
+                                                    NewItem.UID = MainGS.Rand.Next(1, 9999999);
                                                     created = Database.Database.NewItem(NewItem, CSocket);
                                                 }
                                                 CSocket.Client.Inventory.Add(NewItem.UID, NewItem);
@@ -1157,9 +1157,9 @@ namespace GameServer.Handlers
                                 if (CSocket.Client.isPM || CSocket.Client.isGM)
                                 {
                                     CSocket.Send(EudemonPacket.Chat(0, "", "", "", Struct.ChatType.ClearTopRight));
-                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Players online: " + Nano.ClientPool.Count, Struct.ChatType.TopRight));
-                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Monsters spawned: " + Nano.Monsters.Count, Struct.ChatType.TopRight));
-                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Exp/Prof/Skill Rates: " + Nano.EXP_MULTIPLER + "/" + Nano.PROF_MULTIPLER + "/" + Nano.SKILL_MULTIPLER, Struct.ChatType.TopRight));
+                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Players online: " + MainGS.ClientPool.Count, Struct.ChatType.TopRight));
+                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Monsters spawned: " + MainGS.Monsters.Count, Struct.ChatType.TopRight));
+                                    CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Exp/Prof/Skill Rates: " + MainGS.EXP_MULTIPLER + "/" + MainGS.PROF_MULTIPLER + "/" + MainGS.SKILL_MULTIPLER, Struct.ChatType.TopRight));
                                 }
                                 break;
                             }
@@ -1182,11 +1182,11 @@ namespace GameServer.Handlers
                                 if(CSocket.Client.isPM)
                                 {
                                     Dictionary<int, Monster> Mobs = new Dictionary<int, Monster>();
-                                    foreach(KeyValuePair<int, Monster> Mon in Nano.Monsters)
+                                    foreach(KeyValuePair<int, Monster> Mon in MainGS.Monsters)
                                     {
                                         Mobs.Add(Mon.Key, Mon.Value);
                                     }
-                                    Nano.Monsters.Clear();
+                                    MainGS.Monsters.Clear();
                                     foreach(KeyValuePair<int, Monster> Mon in Mobs)
                                     {
                                         Handler.doMonster(Mon.Value, Mon.Value.CurrentHP, 2, CSocket);
@@ -1219,9 +1219,9 @@ namespace GameServer.Handlers
                             {
                                 if (CSocket.Client.Team != null)
                                 {
-                                    if (Nano.ClientPool.ContainsKey(CSocket.Client.Team.LeaderID))
+                                    if (MainGS.ClientPool.ContainsKey(CSocket.Client.Team.LeaderID))
                                     {
-                                        ClientSocket Leader = Nano.ClientPool[CSocket.Client.Team.LeaderID];
+                                        ClientSocket Leader = MainGS.ClientPool[CSocket.Client.Team.LeaderID];
                                         foreach (KeyValuePair<int, ClientSocket> Member in Leader.Client.Team.Members)
                                         {
                                             if (Member.Value.Client.ID != CSocket.Client.ID)
@@ -1239,12 +1239,12 @@ namespace GameServer.Handlers
                         case Struct.ChatType.Whisper:
                             {
                                 bool online = false;
-                                //lock(Nano.ClientPool)
+                                //lock(MainGS.ClientPool)
                                 //{
                                 try
                                 {
-                                    Monitor.Enter(Nano.ClientPool);
-                                    foreach (KeyValuePair<int, ClientSocket> Player in Nano.ClientPool)
+                                    Monitor.Enter(MainGS.ClientPool);
+                                    foreach (KeyValuePair<int, ClientSocket> Player in MainGS.ClientPool)
                                     {
                                         if (Player.Value.Client.Name == To)
                                         {
@@ -1261,7 +1261,7 @@ namespace GameServer.Handlers
                                 }
                                 finally
                                 {
-                                    Monitor.Exit(Nano.ClientPool);
+                                    Monitor.Exit(MainGS.ClientPool);
                                 }
                                 //}
                                 if (!online)

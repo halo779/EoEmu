@@ -34,8 +34,6 @@ namespace GameServer.Structs
                         dmReader.ReadUInt16();
                         if (Access != 1)
                         {
-                            /*Tiles.Add(Count, new DmapTile(x, y));
-                            Count++;*/
                             Tiles[x, y] = 1;
                         }
                         else

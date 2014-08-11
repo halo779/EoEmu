@@ -19,9 +19,9 @@ namespace GameServer.Handlers
             {
                 Struct.ItemInfo Item = new Struct.ItemInfo();
                 Item = CSocket.Client.Inventory[ItemUID];
-                if (Nano.Items.ContainsKey(Item.ItemID))
+                if (MainGS.Items.ContainsKey(Item.ItemID))
                 {
-                    Struct.ItemData iData = Nano.Items[Item.ItemID];
+                    Struct.ItemData iData = MainGS.Items[Item.ItemID];
                     int Money = iData.Cost / 3;
                     if (Money > 0)
                     {

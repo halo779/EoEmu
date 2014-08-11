@@ -26,16 +26,16 @@ namespace GameServer.Handlers
                 IG.CopyItem(Ii);
                 IG.Position = (int)Struct.ItemPosition.Ground;
                 IG.Map = (int)CSocket.Client.Map;
-                IG.X = (CSocket.Client.X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                IG.Y = (CSocket.Client.Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                if (Nano.Maps.ContainsKey(IG.Map))
+                IG.X = (CSocket.Client.X - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                IG.Y = (CSocket.Client.Y - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                if (MainGS.Maps.ContainsKey(IG.Map))
                 {
-                    Struct.DmapData Mapping = Nano.Maps[IG.Map];
+                    Struct.DmapData Mapping = MainGS.Maps[IG.Map];
                     byte tries = 0;
                     while (!Mapping.CheckLoc((ushort)IG.X, (ushort)IG.Y))
                     {
-                        IG.X = (CSocket.Client.X - Nano.Rand.Next(4) + Nano.Rand.Next(4));
-                        IG.Y = (CSocket.Client.Y - Nano.Rand.Next(4) + Nano.Rand.Next(4));
+                        IG.X = (CSocket.Client.X - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
+                        IG.Y = (CSocket.Client.Y - MainGS.Rand.Next(4) + MainGS.Rand.Next(4));
                         tries++;
                         if (tries > 8)
                             break;
@@ -52,7 +52,7 @@ namespace GameServer.Handlers
                 IG.Dispose.Elapsed += delegate { IG.Disappear(); };
                 IG.OwnerOnly.Start();
                 IG.Dispose.Start();
-                if (!Nano.ItemFloor.ContainsKey(UID))
+                if (!MainGS.ItemFloor.ContainsKey(UID))
                 {
                     Database.Database.DeleteItem(UID);
                     CSocket.Client.Inventory.Remove(UID);
@@ -61,12 +61,12 @@ namespace GameServer.Handlers
                     EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
                     CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Ground UID: " + IG.UID + " Dropped at X:  " + IG.X + " Y: " + IG.Y, Struct.ChatType.Normal));
 
-                    //lock(Nano.ItemFloor)
+                    //lock(MainGS.ItemFloor)
                     //{
                     try
                     {
-                        Monitor.Enter(Nano.ItemFloor);
-                        Nano.ItemFloor.Add(IG.UID, IG);
+                        Monitor.Enter(MainGS.ItemFloor);
+                        MainGS.ItemFloor.Add(IG.UID, IG);
                     }
                     catch (Exception e)
                     {
@@ -74,7 +74,7 @@ namespace GameServer.Handlers
                     }
                     finally
                     {
-                        Monitor.Exit(Nano.ItemFloor);
+                        Monitor.Exit(MainGS.ItemFloor);
                     }
                     //}
                 }

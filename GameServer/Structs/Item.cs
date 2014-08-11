@@ -158,14 +158,14 @@ namespace GameServer.Structs
             public int Money;
             public void Disappear()
             {
-                if (Nano.ItemFloor.ContainsKey(UID))
+                if (MainGS.ItemFloor.ContainsKey(UID))
                 {
-                    //lock(Nano.ItemFloor)
+                    //lock(MainGS.ItemFloor)
                     //{
                     try
                     {
-                        Monitor.Enter(Nano.ItemFloor);
-                        Nano.ItemFloor.Remove(UID);
+                        Monitor.Enter(MainGS.ItemFloor);
+                        MainGS.ItemFloor.Remove(UID);
                     }
                     catch (Exception e)
                     {
@@ -173,7 +173,7 @@ namespace GameServer.Structs
                     }
                     finally
                     {
-                        Monitor.Exit(Nano.ItemFloor);
+                        Monitor.Exit(MainGS.ItemFloor);
                     }
                     //}
                 }

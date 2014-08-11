@@ -16,16 +16,16 @@ namespace GameServer.Calculations
             int FinalID = -1;
             int tries;
             /*if (PercentSuccess(35))
-                tries = Nano.Rand.Next(1, 8);
+                tries = MainGS.Rand.Next(1, 8);
             else if (PercentSuccess(35))
-                tries = Nano.Rand.Next(1, 16);
+                tries = MainGS.Rand.Next(1, 16);
             else
-            	tries = Nano.Rand.Next(1, 32);*/
-            tries = Nano.Rand.Next(1, 7);
+            	tries = MainGS.Rand.Next(1, 32);*/
+            tries = MainGS.Rand.Next(1, 7);
             int count = 0;
             int ItemType1 = 0;
             int ItemType0 = 0;
-            int nr = Nano.Rand.Next(1, 7);
+            int nr = MainGS.Rand.Next(1, 7);
             if (nr == 1)
                 ItemType1 = 11;
             else if (nr == 2)
@@ -41,7 +41,7 @@ namespace GameServer.Calculations
             else if (nr == 7)
                 ItemType1 = 16;
 
-            nr = Nano.Rand.Next(1, 17);
+            nr = MainGS.Rand.Next(1, 17);
             if (nr == 1)
                 ItemType0 = 410;
             else if (nr == 2)
@@ -76,7 +76,7 @@ namespace GameServer.Calculations
                 ItemType0 = 561;
             else if (nr == 17)
                 ItemType0 = 580;
-            foreach (KeyValuePair<int, Struct.ItemData> Items in Nano.Items)
+            foreach (KeyValuePair<int, Struct.ItemData> Items in MainGS.Items)
             {
                 Struct.ItemData Item = Items.Value;
                 if ((Item.Level - 10 < Level && Item.Level + 30 > Level) && Item.Level != 0)

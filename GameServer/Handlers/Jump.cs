@@ -35,9 +35,9 @@ namespace GameServer.Handlers
                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[ERROR] Jump too large!", Struct.ChatType.System));
                 return;
             }
-            if (Nano.Maps.ContainsKey((int)CSocket.Client.Map))
+            if (MainGS.Maps.ContainsKey((int)CSocket.Client.Map))
             {
-                Struct.DmapData Map = Nano.Maps[(int)CSocket.Client.Map];
+                Struct.DmapData Map = MainGS.Maps[(int)CSocket.Client.Map];
                 if (!Map.CheckLoc((ushort)X, (ushort)Y))
                 {
                     CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, 0, 0, CSocket.Client.X, CSocket.Client.Y, 0, Struct.DataType.CorrectCords));
@@ -57,12 +57,12 @@ namespace GameServer.Handlers
             CSocket.Client.X = X;
             CSocket.Client.Y = Y;
             byte[] JumpPacket = EudemonPacket.GeneralOld(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.PrevX, CSocket.Client.PrevY, 0, Struct.DataType.Jump);
-            //lock(Nano.ClientPool)
+            //lock(MainGS.ClientPool)
             //{
             try
             {
-                Monitor.Enter(Nano.ClientPool);
-                foreach (KeyValuePair<int, ClientSocket> Tests in Nano.ClientPool)
+                Monitor.Enter(MainGS.ClientPool);
+                foreach (KeyValuePair<int, ClientSocket> Tests in MainGS.ClientPool)
                 {
                     ClientSocket C = Tests.Value;
                     if ((int)C.Client.Map == (int)CSocket.Client.Map)
@@ -92,7 +92,7 @@ namespace GameServer.Handlers
             }
             finally
             {
-                Monitor.Exit(Nano.ClientPool);
+                Monitor.Exit(MainGS.ClientPool);
             }
             Spawn.All(CSocket);
         }

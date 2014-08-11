@@ -141,7 +141,7 @@ namespace GameServer.Connections
             Continue = false;
             if (ServerName == "GameServer")
             {
-                Nano.Continue = false;
+                MainGS.Continue = false;
             }
         }
     }

@@ -56,9 +56,9 @@ namespace GameServer.Handlers
 
 
 
-            if (Nano.Maps.ContainsKey((int)CSocket.Client.Map))
+            if (MainGS.Maps.ContainsKey((int)CSocket.Client.Map))
             {
-                Struct.DmapData Map = Nano.Maps[(int)CSocket.Client.Map];
+                Struct.DmapData Map = MainGS.Maps[(int)CSocket.Client.Map];
                 if (!Map.CheckLoc(newXPos, newYPos))
                 {
                     CSocket.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, CSocket.Client.Direction, Struct.DataType.actionKickBack, CSocket.Client.PrevX, CSocket.Client.PrevY));
@@ -72,9 +72,9 @@ namespace GameServer.Handlers
                 newXPos += _DELTA_X[MMode - MovementModes.RUN_DIR0];
                 newYPos += _DELTA_Y[MMode - MovementModes.RUN_DIR0];
 
-                if (Nano.Maps.ContainsKey((int)CSocket.Client.Map))
+                if (MainGS.Maps.ContainsKey((int)CSocket.Client.Map))
                 {
-                    Struct.DmapData Map = Nano.Maps[(int)CSocket.Client.Map];
+                    Struct.DmapData Map = MainGS.Maps[(int)CSocket.Client.Map];
                     if (!Map.CheckLoc(newXPos, newYPos))
                     {
                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.PrevX, CSocket.Client.PrevY, CSocket.Client.Direction, Struct.DataType.actionKickBack, CSocket.Client.PrevX, CSocket.Client.PrevY));
@@ -101,8 +101,8 @@ namespace GameServer.Handlers
             byte[] WalkPacket = EudemonPacket.WalkRun(ucModeDir, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y);
             try
             {
-                Monitor.Enter(Nano.ClientPool);
-                foreach (KeyValuePair<int, ClientSocket> Tests in Nano.ClientPool)
+                Monitor.Enter(MainGS.ClientPool);
+                foreach (KeyValuePair<int, ClientSocket> Tests in MainGS.ClientPool)
                 {
                     ClientSocket C = Tests.Value;
                     if ((int)C.Client.Map == (int)CSocket.Client.Map && C.Client.ID != CSocket.Client.ID)
@@ -132,7 +132,7 @@ namespace GameServer.Handlers
             }
             finally
             {
-                Monitor.Exit(Nano.ClientPool);
+                Monitor.Exit(MainGS.ClientPool);
             }
             Spawn.All(CSocket);
         }

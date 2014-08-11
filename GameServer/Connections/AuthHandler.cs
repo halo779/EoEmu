@@ -5,7 +5,7 @@ using System.Net.Sockets;
 namespace GameServer.Connections
 {
     /// <summary>
-    /// Handles Auth connections from the login server and stores data into Nano.AuthenticatedLogins.
+    /// Handles Auth connections from the login server and stores data into MainGS.AuthenticatedLogins.
     /// </summary>
     public static class AuthHandler
     {

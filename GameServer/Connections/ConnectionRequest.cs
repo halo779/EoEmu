@@ -16,9 +16,9 @@ namespace GameServer.Connections
         {
             Key = _Key;
             Account = User;
-            if (!Nano.AuthenticatedLogins.ContainsKey(Key))
+            if (!MainGS.AuthenticatedLogins.ContainsKey(Key))
             {
-                Nano.AuthenticatedLogins.Add(Key, this);
+                MainGS.AuthenticatedLogins.Add(Key, this);
             }
             Console.WriteLine("[" + Key + "] " + Account + " authenticated from LoginServer.");
             Timeout = new Timer();
@@ -32,9 +32,9 @@ namespace GameServer.Connections
             Timeout.Dispose();
             if (TimedOut)
                 Console.WriteLine(Account + "'s connection timed out.");
-            if (Nano.AuthenticatedLogins.ContainsKey(Key))
+            if (MainGS.AuthenticatedLogins.ContainsKey(Key))
             {
-                Nano.AuthenticatedLogins.Remove(Key);
+                MainGS.AuthenticatedLogins.Remove(Key);
             }
         }
     }

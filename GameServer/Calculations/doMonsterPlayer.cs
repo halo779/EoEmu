@@ -43,12 +43,12 @@ namespace GameServer.Calculations
                 if (AType != 21)
                     EudemonPacket.ToLocal(EudemonPacket.Attack(Attacker.ID, AttackedMob.UID, Attacker.X, Attacker.Y, Damage, AType), AttackedMob.X, AttackedMob.Y, AttackedMob.Map, 0, 0);
                 EudemonPacket.ToLocal(EudemonPacket.Attack(Attacker.ID, AttackedMob.UID, Attacker.X, Attacker.Y, Damage, 14), AttackedMob.X, AttackedMob.Y, (int)AttackedMob.Map, 0, 0);
-                //lock(Nano.Monsters)
+                //lock(MainGS.Monsters)
                 //{
                 try
                 {
-                    Monitor.Enter(Nano.Monsters);
-                    Nano.Monsters.Remove(AttackedMob.UID);
+                    Monitor.Enter(MainGS.Monsters);
+                    MainGS.Monsters.Remove(AttackedMob.UID);
                 }
                 catch (Exception e)
                 {
@@ -56,7 +56,7 @@ namespace GameServer.Calculations
                 }
                 finally
                 {
-                    Monitor.Exit(Nano.Monsters);
+                    Monitor.Exit(MainGS.Monsters);
                 }
                 //}
                 AttackedMob.Die(CSocket.Client.ID);
@@ -64,8 +64,8 @@ namespace GameServer.Calculations
                 {
                     GiveExp(CSocket, AttackedMob, Damage, true);
                 }
-                if (Nano.MonsterSpawns.ContainsKey(AttackedMob.SpawnID))
-                    Interlocked.Add(ref Nano.MonsterSpawns[AttackedMob.SpawnID].SpawnNumber, -1);
+                if (MainGS.MonsterSpawns.ContainsKey(AttackedMob.SpawnID))
+                    Interlocked.Add(ref MainGS.MonsterSpawns[AttackedMob.SpawnID].SpawnNumber, -1);
                 return true;
             }
         }

@@ -23,9 +23,9 @@ namespace GameServer.Calculations
             if (CSocket.Client.Skills.ContainsKey(SkillID))
             {
                 Struct.CharSkill Skill = CSocket.Client.Skills[SkillID];
-                if (Nano.ServerSkills.ContainsKey(SkillID))
+                if (MainGS.ServerSkills.ContainsKey(SkillID))
                 {
-                    Struct.ServerSkill ServerSkill = Nano.ServerSkills[SkillID];
+                    Struct.ServerSkill ServerSkill = MainGS.ServerSkills[SkillID];
                     if (Skill.Level < ServerSkill.MaxLevel)
                     {
                         if (ServerSkill.RequiredExp.ContainsKey(Skill.Level))
@@ -35,7 +35,7 @@ namespace GameServer.Calculations
                             int ReqLevel = LevelExp[1];
                             if (CSocket.Client.Level >= ReqLevel)
                             {
-                                AddExp *= Nano.SKILL_MULTIPLER;
+                                AddExp *= MainGS.SKILL_MULTIPLER;
                                 if (AddExp > 0)
                                 {
                                     Skill.Exp += (uint)AddExp;
