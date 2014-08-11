@@ -127,5 +127,13 @@ namespace GameServer.Entities
         public Timer Save;
         public Timer FlashTimer;
         public Timer Tick;
+
+        public Struct.Sex GetSex()
+        {
+            if (Model % 2 == 0) 
+                return Struct.Sex.WOMAN; 
+            else
+                return Struct.Sex.MAN;
+        }
     }
 }

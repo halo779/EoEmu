@@ -54,6 +54,8 @@ namespace GameServer.Handlers
                     #region ItemCalculations
                     switch (Item.Soc1)
                     {
+                        case 0:
+                            break;
                         case 11:
                             {
                                 CSocket.Client.NCG++;
@@ -93,6 +95,8 @@ namespace GameServer.Handlers
                     }
                     switch (Item.Soc2)
                     {
+                        case 0:
+                            break;
                         case 11:
                             {
                                 CSocket.Client.NCG++;
@@ -286,6 +290,45 @@ namespace GameServer.Handlers
                 return 12;
             }
             return -1;
+        }
+
+        public static bool CheckCommonNonUsageItemCauses(int ItemUID, int ItemPos, ClientSocket CSocket)
+        {
+            if (!CSocket.Client.Inventory.ContainsKey(ItemUID))
+            {
+                return false;
+            }
+
+            Struct.ItemInfo Item = CSocket.Client.Inventory[ItemUID];
+
+            if (Item.IsTaskItem() || Item.Identity)
+                return false;
+
+            if (Item.RequiredLevel > CSocket.Client.Level)
+                return false;
+
+            if (Item.RequiredSex != 0)
+                if (Item.RequiredSex != (int)CSocket.Client.GetSex())
+                    return false;
+
+            //Check If Mount
+
+            //Check Metempsychosis/Reborns - @TODO Does EO even have Reborns coded into it...
+
+            if (Item.RequiredClass != 0)
+            {
+                if (Item.RequiredClass != (int)CSocket.Client.Class)
+                    return false;
+                //@TODO: Possibly Check Class "Level"
+            }
+
+            if (Item.RequiredDex > CSocket.Client.Dexterity)
+                return false;
+            //@TODO: Handle other Required Types.
+
+            return true;
+
+
         }
     }
 }

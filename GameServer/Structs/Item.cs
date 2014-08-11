@@ -78,8 +78,55 @@ namespace GameServer.Structs
             public int Soc2;
             public int Dura;
             public int MaxDura;
+            public int RequiredLevel;
+            public int RequiredSex;
+            public int RequiredClass;
             public int Position;
             public int Color = 4;
+            public bool Identity;
+
+            public int RequiredForce;
+            public int RequiredDex;
+            public int RequiredHealth;
+            public int RequiredSoul;
+
+            public int GetItemSort()
+            {
+                return (ItemID % 10000000) / 100000;
+            }
+            public int GetItemBaseType()
+            {
+                return ((ItemID % 100000) / 10000) * 10000;
+            }
+            public bool IsMount()
+            {
+                return (GetItemSort() == (int)ItemSorts.HORSE);
+            }
+            public bool IsSprite()
+            {
+                return GetItemSort() == (int)ItemSorts.CONSUMABLE && GetItemBaseType() == (int)ItemBaseTypes.Sprite;
+            }
+            public bool IsEudemon()
+            {
+                return GetItemSort() == (int)ItemSorts.CONSUMABLE && GetItemBaseType() == (int)ItemBaseTypes.Eudemon;
+            }
+            public bool IsEudemonEgg()
+            {
+                return GetItemSort() == (int)ItemSorts.CONSUMABLE && GetItemBaseType() == (int)ItemBaseTypes.EudemonEgg;
+            }
+            public bool IsOther()
+            {
+                return GetItemSort() == (int)ItemSorts.OTHER;
+            }
+            public bool IsTaskItem()
+            {
+                return IsOther() && GetItemBaseType() == (int)ItemBaseTypes.TaskItem;
+            }
+
+            public bool IsEquipment()
+            {
+                return (GetItemSort() >= (int)ItemSorts.CLOTHING && GetItemSort() <= (int)ItemSorts.WEAPON1);
+            }
         }
         public class ItemPlus
         {

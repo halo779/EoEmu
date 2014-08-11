@@ -13,6 +13,7 @@ namespace GameServer.Structs
             actionChgMap= 7,
             actionFlyMap = 8,
             actionGetItemSet = 15,
+            actionGetGoodFriend = 16,
             actionSetPkMode = 29,
             actionGetWeaponSkillSet = 27,
             actionQueryPlayer = 38,

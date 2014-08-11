@@ -194,8 +194,6 @@ namespace GameServer
                                 ConnectionRequest User = Nano.AuthenticatedLogins[Keys];
                                 User.Expire(false);
                                 CSocket.Client = Database.Database.GetCharacter(User.Account);
-
-                                //CSocket.Send(EudemonPacket.GeneralOld(0, 2024554494, 0, 0, 0, 2024554494, Struct.DataType.UnkownLogin)); // test byte in proper packet form - sets client to send 1010 packet
                                 if (CSocket.Client == null)
                                 {                                               
                                     Console.WriteLine("[" + Nano.AuthenticatedLogins[Keys].Key + "] Making account");
@@ -236,28 +234,11 @@ namespace GameServer
                                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", "ALLUSERS", "ANSWER_OK", Struct.ChatType.LoginInformation));
                                 CSocket.Send(EudemonPacket.CharacterInfo(CSocket));
                                 CSocket.Send(EudemonPacket.Status(CSocket, Struct.StatusTypes.MAXMANA, CSocket.Client.MaxMP));
-                                //CSocket.Send(EudemonPacket.MiniMap(true));
-                                //PLEASE DO NOT REMOVE THIS CODE!
-                                //CSocket.Send(EudemonPacket.GeneralOld(CSocket.Client.ID, 0, 0, 0, 0, 0, Struct.DataType.ConfirmLoginComplete));
-                                //CSocket.Send(EudemonPacket.Status(CSocket, 2, 0, Struct.StatusTypes.StatusEffect));
-                                //CSocket.Send(String_To_Bytes("3900F003000000007D494C5EA4410600B60BB80B01000400000000000000000000000000000000000000000000000000000000000000000100"));
-                                //CSocket.Send(EudemonPacket.ItemInfo(0,410020 ,50 , 0, 0, 2998, 3000, 4, 0, 0, 0));
-                                //CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 40, 1, 0, 0, Struct.DataType.testingloginitemcount));
-                                foreach (KeyValuePair<int, Struct.ItemInfo> Item in CSocket.Client.Inventory)
-                                {
-                                    //CSocket.Send(EudemonPacket.ItemInfo(Item.Value.UID, Item.Value.ItemID, Item.Value.Plus, Item.Value.Bless, Item.Value.Enchant, Item.Value.Soc1, Item.Value.Soc2, Item.Value.Dura, Item.Value.MaxDura, Item.Value.Position, Item.Value.Color));
-                                    CSocket.Send(EudemonPacket.ItemInfo(Item.Value.UID, Item.Value.ItemID, Item.Value.Plus, Item.Value.Soc1, Item.Value.Soc2, Item.Value.Dura, Item.Value.MaxDura, Item.Value.Position, 0, 0, 0));
-                                }
-                                                               
-                                //CSocket.Send(EudemonPacket.EudemonTopIndicator(2024553253, 1071210));
-                                //CSocket.Send(EudemonPacket.GeneralOld(0, 2024553253, 0, 0, 0, 2024553253, Struct.DataType.eudtype));
-                                //CSocket.Send(String_To_Bytes("B800F50701000000253BAC7815000000060000001400000007000000140000000A000000010000000800000064000000090000000000000037000000000000000C000000040000000E000000000000000F0000000000000010000000000000001100000000000000120000000000000013000000020000001500000008000000170000000100000019000000780900001A0000005D0400001B000000450800001C0000001400000032000000000000003300000000000000"));
                                 
-
 
                                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Welcome to EO Emu, " + CSocket.Client.Name, Struct.ChatType.Talk));
                                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "There are currently " + Nano.ClientPool.Count + " players online.", Struct.ChatType.Talk));
-                                //CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Be kind to your fellow player and have a good time.", Struct.ChatType.Talk));
+                                
                                 if (CSocket.Client.First)
                                 {
                                     Database.Database.SaveCharacter(CSocket.Client);
@@ -702,23 +683,30 @@ namespace GameServer
                                     }
                                 case Struct.DataType.actionGetItemSet: //actionGetItemSet //15
                                     {
-                                        CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 0, 0, 0, 1, Struct.DataType.actionSetPkMode));
-
-                                        CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "Class: " + CSocket.Client.Class, Struct.ChatType.Talk));
-                                       break;
-                                        /*CSocket.Send(EudemonPacket.Chat(2357, "SYSTEM", CSocket.Client.Name, "PK mode has been set to Peace Mode!", Struct.ChatType.Top));
-                                       PacketBuilder Packet1 = new PacketBuilder(2036, 12);
-                                       Packet1.Long(473);
-                                       Packet1.Long(410);
-                                       //CSocket.Send(Packet1.getFinal());
-
-                                       //CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 0, 0, 0, 0, Struct.DataType.UiMaybe2));
-                                       PacketBuilder Packet2 = new PacketBuilder(1044, 12);
-                                       Packet2.Long(1);
-                                       Packet2.Long(0);
-                                       //CSocket.Send(Packet2.getFinal());*/
-                                        //CSocket.Send(String_To_Bytes("1c00f20330709948c602e400000000000000000001000000542500005400ec030000ff00d507000035090000ffffffff00000000040653595354454d0b48616c6f3737395b504d5d0023504b206d6f646520686173206265656e2073657420746f205065616365204d6f6465210000000c00f407d90100009a0100001c00f20330709948c602e400000000000000000000000000522500000c0014040100000000000000"));
+                                        foreach (KeyValuePair<int, Struct.ItemInfo> Item in CSocket.Client.Inventory)
+                                        {
+                                            CSocket.Send(EudemonPacket.ItemInfo(Item.Value.UID, Item.Value.ItemID, Item.Value.Plus, Item.Value.Soc1, Item.Value.Soc2, Item.Value.Dura, Item.Value.MaxDura, Item.Value.Position, 0, 0, 0));
+                                        }
+                                        foreach (KeyValuePair<int, Struct.ItemInfo> Item in CSocket.Client.Equipment)
+                                        {
+                                            CSocket.Send(EudemonPacket.ItemInfo(Item.Value.UID, Item.Value.ItemID, Item.Value.Plus, Item.Value.Soc1, Item.Value.Soc2, Item.Value.Dura, Item.Value.MaxDura, Item.Value.Position, 0, 0, 0));
+                                        }
                                         
+                                        CSocket.Send(EudemonPacket.General(0, 0, 0, 0, Struct.DataType.actionGetItemSet, 0)); //@NOTE: DO NOT SEND CLIENT ID HERE. - @TODO: Work out why this causes odd issues.
+                                        CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, 0, 0, 0, 1, Struct.DataType.actionSetPkMode)); //Make sure Client is in sync.
+                                       break;                                       
+                                    }
+                                case Struct.DataType.actionGetGoodFriend:
+                                    {
+                                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 0, 0, 0, Struct.DataType.actionGetGoodFriend, 0));
+                                        //@TODO: actually handle this.
+                                        break;
+                                    }
+                                case Struct.DataType.actionGetWeaponSkillSet:
+                                    {
+                                        CSocket.Send(EudemonPacket.General(CSocket.Client.ID, 0, 0, 0, Struct.DataType.actionGetWeaponSkillSet, 0));
+                                        //@TODO: actually handle this.
+                                        break;
                                     }
                                 case Struct.DataType.actionSetPkMode: //PK Mode //29
                                     {

@@ -28,7 +28,7 @@ namespace GameServer.Handlers
                         Item.Position = 50;
                         CSocket.Client.Inventory.Add(Item.UID, Item);
                         Database.Database.UpdateItem(Item);
-                        CSocket.Send(EudemonPacket.ItemUsage(UID, Location, Struct.ItemUsage.UpdateItem));
+                        CSocket.Send(EudemonPacket.ItemUsage(UID, Location, Struct.ItemUsage.UnequipItem));
                         //CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
                         #region ItemCalculations
                         switch (Item.Soc1)
