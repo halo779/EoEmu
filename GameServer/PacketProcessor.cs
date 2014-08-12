@@ -99,7 +99,7 @@ namespace GameServer
                 Out = Out + SubString + "\r\n";
             }
             return Out;
-        }
+        }   
         public static void ProcessPacket(byte[] data, ClientSocket CSocket)
         {
             try

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-    using System.Text;
+using System.Text;
+
 namespace EO_Proxy.Functions
 {
     public class PacketSniffing
@@ -116,7 +117,7 @@ namespace EO_Proxy.Functions
             }
         }
 
-        private static string AddSpacesToSentence(string text)
+        public static string AddSpacesToSentence(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return "";

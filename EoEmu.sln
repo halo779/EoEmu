@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginServer", "LoginServer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PacketSplitter", "PacketSplitter\PacketSplitter.csproj", "{2BF1784A-8AEB-46CB-B213-5900C2EEF866}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EO Proxy", "Proxy\Proxy Phoenix\EO Proxy.csproj", "{52D06846-FFA6-4819-94DE-75AB5BADD220}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,12 @@ Global
 		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Release|Any CPU.ActiveCfg = Release|x86
 		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Release|x86.ActiveCfg = Release|x86
 		{2BF1784A-8AEB-46CB-B213-5900C2EEF866}.Release|x86.Build.0 = Release|x86
+		{52D06846-FFA6-4819-94DE-75AB5BADD220}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{52D06846-FFA6-4819-94DE-75AB5BADD220}.Debug|x86.ActiveCfg = Debug|x86
+		{52D06846-FFA6-4819-94DE-75AB5BADD220}.Debug|x86.Build.0 = Debug|x86
+		{52D06846-FFA6-4819-94DE-75AB5BADD220}.Release|Any CPU.ActiveCfg = Release|x86
+		{52D06846-FFA6-4819-94DE-75AB5BADD220}.Release|x86.ActiveCfg = Release|x86
+		{52D06846-FFA6-4819-94DE-75AB5BADD220}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -106,7 +106,13 @@ namespace EO_Proxy.Connections
             }
             if (Program.ConsoleLogging && send)//hides any command to the proxy
             {
-                Console.WriteLine("New packet passed from client -> server | Packet ID: " + id + " | Size: " + length);
+                int PacketID = id;
+                string PacketName = "";
+                if (Enum.IsDefined(typeof(Connections.Packets.Packets.PacketsEnum), PacketID))
+                {
+                    PacketName = " (" + PacketSniffing.AddSpacesToSentence(Enum.GetName(typeof(Connections.Packets.Packets.PacketsEnum), PacketID)) + ")";
+                }
+                Console.WriteLine("New packet passed from client -> server | Packet ID: " + id + PacketName + " | Size: " + length);
                 Console.ResetColor();
                 Console.WriteLine(PacketOutput.Dump(buffer));
                 Console.ForegroundColor = ConsoleColor.White;

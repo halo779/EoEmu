@@ -126,7 +126,7 @@
     <Compile Include="Packets\Chat.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Packets\ConquerPacket.cs">
+    <Compile Include="Packets\EudemonPacket.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Packets\DropItem.cs">
