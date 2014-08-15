@@ -49,6 +49,7 @@ namespace EO_Proxy.Functions
             if (Enum.IsDefined(typeof(Connections.Packets.Packets.PacketsEnum), PacketID))
                 dataString += " (" + AddSpacesToSentence(Enum.GetName(typeof(Connections.Packets.Packets.PacketsEnum), PacketID)) + ")";
 
+            dataString += " - " + DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
             dataString += Environment.NewLine;
 
             if (!PacketTypes.Contains(new KeyValuePair<int, string>(PacketID, from)))

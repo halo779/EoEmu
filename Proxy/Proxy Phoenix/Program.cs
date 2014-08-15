@@ -19,8 +19,12 @@ namespace EO_Proxy
 
         protected static void Main(string[] args)
         {
+            DateTime buildDate = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).LastWriteTime;
+            string buildDateStr = buildDate.ToString("G");
+            
             Console.Title = "EO Proxy";
-            Console.WriteLine("EO Proxy\n\n");
+            Console.WriteLine("EO Proxy =-= Build : " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion + " (" + buildDateStr + ")\n");
+            Console.WriteLine();
 
             Console.WriteLine("Loading Configs\n\n");
             IniParser.FileIniDataParser parser = new FileIniDataParser();
