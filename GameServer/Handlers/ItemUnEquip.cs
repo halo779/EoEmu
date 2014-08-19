@@ -33,6 +33,8 @@ namespace GameServer.Handlers
                         #region ItemCalculations
                         switch (Item.Soc1)
                         {
+                            case 0:
+                                break;
                             case 11:
                                 {
                                     CSocket.Client.NCG--;
@@ -72,6 +74,8 @@ namespace GameServer.Handlers
                         }
                         switch (Item.Soc2)
                         {
+                            case 0:
+                                break;
                             case 11:
                                 {
                                     CSocket.Client.NCG--;

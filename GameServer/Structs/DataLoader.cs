@@ -253,10 +253,10 @@ namespace GameServer.Structs
                             if (ValidMap)
                             {
                                 Monster Mon = new Monster();
-                                UID = MainGS.Rand.Next(200000, 600000);
+                                UID = MainGS.Rand.Next(400000, 600000);
                                 while (MainGS.Monsters.ContainsKey(UID))
                                 {
-                                    UID = MainGS.Rand.Next(200000, 600000);
+                                    UID = MainGS.Rand.Next(400000, 600000);
                                 }
                                 Mon.CurrentHP = MobInfo.MaxHP;
                                 Mon.MaxHP = MobInfo.MaxHP;
@@ -279,7 +279,7 @@ namespace GameServer.Structs
                                 {
                                     while (MainGS.Monsters.ContainsKey(Mon.UID))
                                     {
-                                        Mon.UID = MainGS.Rand.Next(200000, 600000);
+                                        Mon.UID = MainGS.Rand.Next(400000, 600000);
                                     }
                                     MainGS.Monsters.Add(Mon.UID, Mon);
                                 }

@@ -50,15 +50,16 @@ namespace GameServer.Entities
                                 MobY = MainGS.Rand.Next(Y, (Y + YStop));
                             }
                         }
-                        UID = MainGS.Rand.Next(200000, 600000);
+                        UID = MainGS.Rand.Next(400000, 600000);
                         while (MainGS.Monsters.ContainsKey(UID))
                         {
-                            UID = MainGS.Rand.Next(200000, 600000);
+                            UID = MainGS.Rand.Next(400000, 600000);
                         }
                         Mon.CurrentHP = MobInfo.MaxHP;
                         Mon.MaxHP = MobInfo.MaxHP;
                         Mon.UID = UID;
-                        Mon.Direction = 0;
+                        //Mon.Direction = MainGS.Rand.Next(1,7); //@TODO: Fix Monster Directions..
+                        Mon.Direction = 2;
                         Mon.ID = MobInfo.ID;
                         Mon.Info = MobInfo;
                         Mon.Level = MobInfo.Level;
@@ -91,7 +92,7 @@ namespace GameServer.Entities
                         {
                             while (MainGS.Monsters.ContainsKey(Mon.UID))
                             {
-                                Mon.UID = MainGS.Rand.Next(200000, 600000);
+                                Mon.UID = MainGS.Rand.Next(400000, 600000);
                             }
                             //lock(MainGS.Monsters)
                             //{

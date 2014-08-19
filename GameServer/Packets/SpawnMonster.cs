@@ -8,7 +8,51 @@ namespace GameServer.Packets
     /// </summary>
     public partial class EudemonPacket
     {
+
         public static byte[] SpawnMonster(int UID, int Mesh, int X, int Y, string Name, int HP, int Level, int Direction)
+        {
+            PacketBuilder Packet = new PacketBuilder(1014, 89 + Name.Length);
+            Packet.Long(UID);
+            Packet.Long(Mesh);
+            Packet.Long(0);//@TODO: Monster Status Mask
+            
+            Packet.Long(0);
+            Packet.Long(0);
+            Packet.Long(0);
+
+            Packet.Long(HP);
+
+            Packet.Long(0);
+            Packet.Long(0);
+
+            Packet.Long(HP);
+            Packet.Long(Level);
+            Packet.Short(X);
+            Packet.Short(Y);
+
+            Packet.Long(0);
+
+            Packet.Long(Direction);
+            Packet.Long(1010);//@TODO: Monstertype?
+
+            Packet.Long(0);
+            Packet.Long(0);
+            Packet.Long(0);
+            Packet.Long(0);
+            Packet.Long(0);
+            Packet.Short(0);
+            Packet.Byte(0);
+            Packet.Byte(1);//StringCount
+            Packet.Byte(Name.Length);
+            Packet.Text(Name);
+
+            return Packet.getFinal();
+        }
+
+        /// <summary>
+        /// Old. Dont use.
+        /// </summary>
+        public static byte[] SpawnMonsterOLD(int UID, int Mesh, int X, int Y, string Name, int HP, int Level, int Direction)
         {
             PacketBuilder Packet = new PacketBuilder(1014, 97 + Name.Length);
             Packet.Long(UID);

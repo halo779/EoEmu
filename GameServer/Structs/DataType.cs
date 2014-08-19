@@ -20,6 +20,7 @@ namespace GameServer.Structs
             actionQueryPlayer = 38,
             UnkownLogin = 210,//@TODO CHECK THIS - aka eudtype apparently.
             actionEnterMap = 14,
+            actionSoundEffect = 60,// to client only, client play sound effect, dwData is monster type
             actionMapARGB = 40,
             actionKickBack = 57,
             HotKeys = 75,

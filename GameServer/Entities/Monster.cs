@@ -508,8 +508,8 @@ namespace GameServer.Entities
                 }
                 X += AddX;
                 Y += AddY;
-                //EudemonPacket.ToLocal(EudemonPacket.Walk(ToDir, UID), X, Y, Map, 0, 0);
-                //EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "Rawr! I must move to attack " + Attacked.Client.Name + "!, But I cannot for I am too lazy.", Struct.ChatType.Talk), X, Y, Map, 0, 0);
+                EudemonPacket.ToLocal(EudemonPacket.Walk(ToDir, UID, X, Y), X, Y, Map, 0, 0);
+                //EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "Rawr! I must move to attack " + Attacked.Client.Name + "!, But I cannot for I am too lazy.", Struct.ChatType.Talk), X, Y, Map, 0, 0); //Debug Code
                 Move.Start();
             }
             else if (Calculation.InRange(Attacked.Client.X, Attacked.Client.Y, X, Y, Info.AggroRange) && Calculation.InRange(Attacked.Client.X, Attacked.Client.Y, X, Y, AttackRange))

@@ -46,14 +46,9 @@ namespace GameServer.Packets
                 Packet.Long(1);
             else*/
                 Packet.Long(0);
-            //Packet.Long(CSocket.Client.Test); //Unknown
             //Packet.Short(0); //TODO: Guilds
-            //Packet.Int(0); //Unknown
             //Packet.Int(0); //GuildRank
             Packet.Long(0); //Unknown
-            //Packet.Long(0); //Unknown
-            //Packet.Long(0); //Unknown
-            //Packet.Long(0); //Unknown
             Packet.Long(0);
             Packet.Long(0);
             if (!CSocket.Client.Dead && !CSocket.Client.Transformed)
@@ -104,5 +99,7 @@ namespace GameServer.Packets
             Packet.Text(CSocket.Client.Name);
             return Packet.getFinal();
         }
+
+        
     }
 }

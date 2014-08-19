@@ -55,7 +55,8 @@ namespace GameServer.Entities
                             if (Calculation.CanSee(CSocket.Client.X, CSocket.Client.Y, Mob.X, Mob.Y))
                             {
                                 CSocket.Send(EudemonPacket.SpawnMonster(Mob.UID, Mob.Info.Mesh, Mob.X, Mob.Y, Mob.Info.Name, Mob.CurrentHP, Mob.Level, Mob.Direction));
-                                //Mob.TriggerMove();
+                                Mob.TriggerMove();
+                                //CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Info] Spawning Monster " + Mob.UID + " X: " + Mob.X + " Y:" + Mob.Y, Struct.ChatType.Talk)); //Debug Code
                             }
                         }
                         if (Calculation.InRange(CSocket.Client.X, CSocket.Client.Y, Mob.X, Mob.Y, Mob.Info.AggroRange))
