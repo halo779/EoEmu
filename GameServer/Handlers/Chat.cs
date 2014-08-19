@@ -64,11 +64,6 @@ namespace GameServer.Handlers
                                 CSocket.Disconnect();
                                 break;
                             }
-                        case "spawnmob":
-                            {
-                                EudemonPacket.ToLocal(EudemonPacket.SpawnMonster(4656, 441, CSocket.Client.X, CSocket.Client.Y, "Test", 6, 1, 1), CSocket.Client.X, CSocket.Client.Y, (int)CSocket.Client.Map, 0, 0);
-                                break;
-                            }
                         case "dl":
                             {
                                 int type = Convert.ToInt16(Command[1]);

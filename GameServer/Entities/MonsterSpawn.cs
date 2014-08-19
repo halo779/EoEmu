@@ -112,7 +112,7 @@ namespace GameServer.Entities
                             //}
                         }
                         EudemonPacket.ToLocal(EudemonPacket.SpawnMonster(Mon.UID, MobInfo.Mesh, Mon.X, Mon.Y, MobInfo.Name, Mon.CurrentHP, Mon.Level, Mon.Direction), Mon.X, Mon.Y, Mon.Map, 0, 0);
-                        EudemonPacket.ToLocal(EudemonPacket.MobSpawnEffect(Mon.UID, Mon.X, Mon.Y, Mon.Direction, 131), Mon.X, Mon.Y, Mon.Map, 0, 0);
+                        EudemonPacket.ToLocal(EudemonPacket.General(Mon.UID, (ushort)Mon.X, (ushort)Mon.Y, (ushort)Mon.Direction, Structs.Struct.DataType.actionSoundEffect, Mon.ID), Mon.X, Mon.Y, Mon.Map, 0, 0);//Spawns Monster Effect.
                         Interlocked.Add(ref SpawnNumber, 1);
                     }
                 }

@@ -160,9 +160,6 @@
     <Compile Include="Packets\MiniMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Packets\MobSpawnEffect.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Packets\NewMap.cs">
       <SubType>Code</SubType>
     </Compile>
