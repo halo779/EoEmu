@@ -29,7 +29,6 @@ namespace GameServer.Handlers
                         CSocket.Client.Inventory.Add(Item.UID, Item);
                         Database.Database.UpdateItem(Item);
                         CSocket.Send(EudemonPacket.ItemUsage(UID, Location, Struct.ItemUsage.UnequipItem));
-                        //CSocket.Send(EudemonPacket.ItemInfo(Item.UID, Item.ItemID, Item.Plus, Item.Bless, Item.Enchant, Item.Soc1, Item.Soc2, Item.Dura, Item.MaxDura, Item.Position, Item.Color));
                         #region ItemCalculations
                         switch (Item.Soc1)
                         {
@@ -172,10 +171,6 @@ namespace GameServer.Handlers
                             int itemidsimple = 0;
                             if ((Item.ItemID >= 900000 && Item.ItemID <= 900999) || (Item.ItemID >= 111303 && Item.ItemID <= 118999) || (Item.ItemID >= 130003 && Item.ItemID <= 139999))//Shields, Helms, Armors
                             {
-                                /*s_ItemID = s_ItemID.Remove((s_ItemID.Length - 3), 1);
-                                s_ItemID = s_ItemID.Insert((s_ItemID.Length - 2), "0");
-                                s_ItemID = s_ItemID.Remove((s_ItemID.Length - 1), 1);
-                                s_ItemID = s_ItemID.Insert((s_ItemID.Length), "0");*/
                                 s_ItemID = s_ItemID.Remove((s_ItemID.Length - 1), 1);
                                 s_ItemID = s_ItemID.Insert(s_ItemID.Length, "0");
                                 itemidsimple = Convert.ToInt32(s_ItemID);

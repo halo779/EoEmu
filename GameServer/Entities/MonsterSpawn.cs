@@ -29,16 +29,10 @@ namespace GameServer.Entities
                 {
                     while (SpawnNumber < MaxSpawnNumber)
                     {
-                        //Console.WriteLine("[Monster-Respawns] Respawning " + SpawnID);
                         Monster Mon = new Monster();
                         int MobX = 0;
                         int MobY = 0;
                         int UID = 0;
-                        //TODO: Dmaps
-                        //Mon.X = MainGS.Rand.Next(X, XStop);
-                        //Mon.Y = MainGS.Rand.Next(Y, YStop);
-                        //Mon.X = Mon.SpawnX;
-                        //Mon.Y = Mon.SpawnY;
                         MobX = MainGS.Rand.Next(X, (X + XStop));
                         MobY = MainGS.Rand.Next(Y, (Y + YStop));
                         if (MainGS.Maps.ContainsKey(Map))
@@ -71,8 +65,6 @@ namespace GameServer.Entities
                         Mon.SpawnID = SpawnID;
                         if (!MainGS.Monsters.ContainsKey(Mon.UID))
                         {
-                            //lock(MainGS.Monsters)
-                            //{
                             try
                             {
                                 Monitor.Enter(MainGS.Monsters);
@@ -86,7 +78,6 @@ namespace GameServer.Entities
                             {
                                 Monitor.Exit(MainGS.Monsters);
                             }
-                            //}
                         }
                         else
                         {
@@ -94,8 +85,6 @@ namespace GameServer.Entities
                             {
                                 Mon.UID = MainGS.Rand.Next(400000, 600000);
                             }
-                            //lock(MainGS.Monsters)
-                            //{
                             try
                             {
                                 Monitor.Enter(MainGS.Monsters);
@@ -109,7 +98,6 @@ namespace GameServer.Entities
                             {
                                 Monitor.Exit(MainGS.Monsters);
                             }
-                            //}
                         }
                         EudemonPacket.ToLocal(EudemonPacket.SpawnMonster(Mon.UID, MobInfo.Mesh, Mon.X, Mon.Y, MobInfo.Name, Mon.CurrentHP, Mon.Level, Mon.Direction), Mon.X, Mon.Y, Mon.Map, 0, 0);
                         EudemonPacket.ToLocal(EudemonPacket.General(Mon.UID, (ushort)Mon.X, (ushort)Mon.Y, (ushort)Mon.Direction, Structs.Struct.DataType.actionSoundEffect, Mon.ID), Mon.X, Mon.Y, Mon.Map, 0, 0);//Spawns Monster Effect.

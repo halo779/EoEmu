@@ -59,6 +59,12 @@ namespace GameServer.Handlers
                                 CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[GameServer] Healed " + CSocket.Client.Name, Struct.ChatType.System));
                                 break;
                             }
+                        case "bp":
+                            {
+                                Calculation.BP(CSocket.Client);
+                                CSocket.Send(EudemonPacket.Chat(0, "SYSTEM", CSocket.Client.Name, "[Info] Current BP " + CSocket.Client.BP, Struct.ChatType.System));
+                                break;
+                            }
                         case "dc":
                             {
                                 CSocket.Disconnect();
@@ -68,7 +74,6 @@ namespace GameServer.Handlers
                             {
                                 int type = Convert.ToInt16(Command[1]);
                                 CSocket.Send(EudemonPacket.General(CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, CSocket.Client.Direction, Struct.DataType.Dialog, type));
-                                //CSocket.Send(EudemonPacket.GeneralOld(0, CSocket.Client.ID, CSocket.Client.X, CSocket.Client.Y, 1, type, Struct.DataType.Dialog));
                                 break;
                             }
                         case "pos":

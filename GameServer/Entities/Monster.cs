@@ -11,7 +11,7 @@ using GameServer.Packets;
 namespace GameServer.Entities
 {
     /// <summary>
-    ///  A conquer online Monster. This is a NPC(non-player character) which is controlled and given intelligence by the server.
+    ///  A Monster. This is a NPC(non-player character) which is controlled and given intelligence by the server.
     /// </summary>
     public class Monster
     {
@@ -43,7 +43,6 @@ namespace GameServer.Entities
         }
         public void GenerateDrop(int Killer)
         {
-            //Partial credit: LOTF Core
             if (Calculation.PercentSuccess(30))
             {
                 int Times = 1;
@@ -302,28 +301,6 @@ namespace GameServer.Entities
                         EudemonPacket.ToLocal(EudemonPacket.DropItem(DropItem.UID, DropItem.ItemID, DropItem.X, DropItem.Y), X, Y, Map, 0, 0);
                     }
                 }
-                /*if(Calculation.PercentSuccess(3))
-                {
-                    Struct.ItemGround IG = new Struct.ItemGround();
-                    IG.ItemID = 1088000;
-                    IG.X = X;
-                    IG.Y = Y;
-                    IG.Map = Map;
-                    IG.OwnerOnly = new System.Timers.Timer();
-                    IG.UID = MainGS.Rand.Next(1000, 9999999);
-                    while(MainGS.ItemFloor.ContainsKey(IG.UID))
-                    {
-                        IG.UID = MainGS.Rand.Next(1000, 9999999);
-                    }
-                    //TODO: UID generation that is better.
-                    IG.Dispose = new System.Timers.Timer();
-                    IG.Dispose.Interval = 10000;
-                    IG.Dispose.AutoReset = false;
-                    IG.Dispose.Elapsed += delegate { IG.Disappear(); };
-                    IG.Dispose.Start();
-                    MainGS.ItemFloor.Add(IG.UID, IG);
-                    EudemonPacket.ToLocal(EudemonPacket.DropItem(IG.UID, IG.ItemID, IG.X, IG.Y), IG.X, IG.Y, IG.Map, 0, 0);
-                }*/
             }
         }
         protected void FinalDie()
@@ -509,7 +486,6 @@ namespace GameServer.Entities
                 X += AddX;
                 Y += AddY;
                 EudemonPacket.ToLocal(EudemonPacket.Walk(ToDir, UID, X, Y), X, Y, Map, 0, 0);
-                //EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "Rawr! I must move to attack " + Attacked.Client.Name + "!, But I cannot for I am too lazy.", Struct.ChatType.Talk), X, Y, Map, 0, 0); //Debug Code
                 Move.Start();
             }
             else if (Calculation.InRange(Attacked.Client.X, Attacked.Client.Y, X, Y, Info.AggroRange) && Calculation.InRange(Attacked.Client.X, Attacked.Client.Y, X, Y, AttackRange))
@@ -540,8 +516,7 @@ namespace GameServer.Entities
                     EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "How dare you try to PK here, " + Attacked.Client.Name + ", you must die!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
                 else if (Info.Name == "CoEmuPatrol")
                     EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "How dare you shows your shamed face here, " + Attacked.Client.Name + ", you must die!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
-                //EudemonPacket.ToLocal(EudemonPacket.Chat(0, Info.Name, "ALL", "Die, " + Attacked.Client.Name +"!!!", Struct.ChatType.Talk), X, Y, Map, 0, 0);
-            }
+              }
             else
             {
                 Move = null;
